@@ -11,6 +11,7 @@ on:
       - ".github/workflows/collect.yml"
       - ".github/workflows/discover.yml"
       - ".github/workflows/deploy.yml"
+      # Note: discover.yml is added here proactively; it will be created in Phase 2.
 
 concurrency:
   group: ci-${{ github.ref }}
@@ -35,8 +36,11 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: TypeScript type check
+      - name: TypeScript type check (src)
         run: npx tsc --noEmit
+
+      - name: TypeScript type check (node — vite/vitest/playwright/collect)
+        run: npx tsc -p tsconfig.node.json --noEmit
 
   # ─── Job 2: Unit Tests ──────────────────────────────────────────────────────
   test-unit:

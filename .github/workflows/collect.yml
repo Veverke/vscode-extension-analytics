@@ -1,3 +1,10 @@
+# Collect Extension Stats
+#
+# Purpose: Scheduled data collection pipeline that keeps the time-series stats
+# up to date. Runs every 6 hours, fetching the latest install counts, ratings,
+# and trending figures from both the VS Code Marketplace and Open VSX for every
+# extension listed in data/extensions.json, then commits the new data points
+# back to the repository. Can also be triggered manually via workflow_dispatch.
 name: Collect Extension Stats
 
 on:
@@ -17,9 +24,14 @@ jobs:
           node-version: "20"
           cache: "npm"
       - run: npm ci
+
+      # Reads data/extensions.json, fetches stats from both registries in parallel,
+      # and appends a new DataPoint to each extension's time-series JSON file
       - run: node --loader ts-node/esm collect/index.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Only commits when new data was actually written; [skip ci] prevents a CI loop
       - name: Commit and push data
         run: |
           git config user.name "analytics-bot"

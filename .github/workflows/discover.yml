@@ -1,0 +1,44 @@
+# Discover VS Code Extensions
+#
+# Purpose: Weekly auto-discovery pipeline that scans the configured GitHub
+# user's repositories for VS Code extensions (identified by engines.vscode in
+# package.json) and updates data/extensions.json with any newly found ones.
+# This keeps the tracked-extension registry in sync with the developer's GitHub
+# account without manual intervention. Runs every Sunday at midnight UTC and
+# can also be triggered manually via workflow_dispatch.
+name: Discover VS Code Extensions
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"  # weekly, Sunday midnight
+  workflow_dispatch:
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+
+      # Paginates through all repos for GITHUB_USER, checks each package.json for
+      # engines.vscode, and merges any new extensions into data/extensions.json
+      - run: node --loader ts-node/esm collect/discover.ts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Set GITHUB_USER in repository Variables (Settings → Variables)
+          GITHUB_USER: ${{ vars.GITHUB_USER }}
+
+      # Only commits when the registry actually changed; [skip ci] prevents a CI loop
+      - name: Commit and push updated registry
+        run: |
+          git config user.name "analytics-bot"
+          git config user.email "analytics-bot@users.noreply.github.com"
+          git add data/extensions.json
+          git diff --staged --quiet || git commit -m "chore: update extension registry [skip ci]"
+          git push

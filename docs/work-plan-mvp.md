@@ -47,7 +47,7 @@ Build the React application skeleton: routing, layout, navigation, and the mecha
 
 ---
 
-### Phase 4 â€” Core Charts & Data Display
+### Phase 4 — Core Charts & Data Display ✅ Completed
 Build the data-loading hooks and the primary visualization components: installs over time, rating over time, and summary stat cards. Uses real fixture data for development and tests.
 
 **Deliverable:** Extension detail page shows installs chart, rating chart, and stat cards populated from the JSON time series.

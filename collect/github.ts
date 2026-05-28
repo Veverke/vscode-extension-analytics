@@ -54,6 +54,7 @@ export async function discoverVSCodeExtensions(
     }
 
     for (const repo of repos) {
+      try {
         const pkgResponse = await fetch(
           `https://api.github.com/repos/${repo.full_name}/contents/package.json`,
           { headers, signal: AbortSignal.timeout(30_000) }
@@ -98,8 +99,8 @@ export async function discoverVSCodeExtensions(
           continue;
         }
 
-        if (!pkgJson.publisher) {
-          console.log(`[discover] ${repo.full_name}: skipped (missing publisher in package.json)`);
+        if (!pkgJson.publisher || !pkgJson.name) {
+          console.log(`[discover] ${repo.full_name}: skipped (missing publisher or name)`);
           continue;
         }
 
@@ -107,9 +108,14 @@ export async function discoverVSCodeExtensions(
           githubRepo: repo.full_name,
           extensionId: `${pkgJson.publisher}.${pkgJson.name}`,
           namespace: pkgJson.publisher,
-          name: pkgJson.name ?? '',
-          displayName: pkgJson.displayName ?? pkgJson.name ?? '',
+          name: pkgJson.name,
+          displayName: pkgJson.displayName ?? pkgJson.name,
         });
+      } catch (err) {
+        console.error(
+          `[discover] ${repo.full_name}: skipped due to error: ${err instanceof Error ? err.message : String(err)}`
+        );
+      }
     }
 
     if (repos.length < perPage) break;

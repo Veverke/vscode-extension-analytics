@@ -10,7 +10,9 @@ describe('marketplace', () => {
 
   it('parseMarketplaceResponse — maps all fields correctly', async () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(marketplaceFixture),
+      text: () => Promise.resolve(''),
     } as unknown as typeof fetch);
 
     const result = await fetchMarketplaceStats('Veverke.chatwizard');
@@ -33,7 +35,9 @@ describe('marketplace', () => {
       );
 
     global.fetch = vi.fn().mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(modifiedFixture),
+      text: () => Promise.resolve(''),
     } as unknown as typeof fetch);
 
     const result = await fetchMarketplaceStats('Veverke.chatwizard');
@@ -51,10 +55,36 @@ describe('marketplace', () => {
       );
 
     global.fetch = vi.fn().mockResolvedValueOnce({
+      ok: true,
       json: () => Promise.resolve(modifiedFixture),
+      text: () => Promise.resolve(''),
     } as unknown as typeof fetch);
 
     const result = await fetchMarketplaceStats('Veverke.chatwizard');
     expect(result.averageRating).toBeUndefined();
+  });
+
+  it('fetchMarketplaceStats — throws on non-ok HTTP response', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      ok: false,
+      status: 503,
+      statusText: 'Service Unavailable',
+      json: () => Promise.resolve({}),
+      text: () => Promise.resolve('Service down'),
+    } as unknown as typeof fetch);
+
+    await expect(fetchMarketplaceStats('Veverke.chatwizard')).rejects.toThrow('503');
+  });
+
+  it('fetchMarketplaceStats — throws when extension not found in response', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve({ results: [] }),
+      text: () => Promise.resolve(''),
+    } as unknown as typeof fetch);
+
+    await expect(fetchMarketplaceStats('Veverke.chatwizard')).rejects.toThrow(
+      'No marketplace result',
+    );
   });
 });

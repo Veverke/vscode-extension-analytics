@@ -6,6 +6,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
+    setupFiles: ['tests/setup.ts'],
     include: [
       'tests/unit/**/*.test.{ts,tsx}',
       'src/**/*.test.{ts,tsx}',
@@ -13,10 +14,14 @@ export default defineConfig({
     ],
     coverage: {
       provider: 'v8',
-      include: ['collect/**'],
+      include: ['collect/**', 'src/**/*.{ts,tsx}'],
       exclude: [
         'collect/__tests__/**',
         'node_modules/**',
+        'src/main.tsx',
+        'src/**/*.test.{ts,tsx}',
+        'src/styles/**',
+        'src/types/**',
       ],
       thresholds: {
         lines: 90,

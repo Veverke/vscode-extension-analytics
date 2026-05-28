@@ -99,12 +99,17 @@ export async function discoverVSCodeExtensions(
           continue;
         }
 
+        if (!pkgJson.publisher || !pkgJson.name) {
+          console.log(`[discover] ${repo.full_name}: skipped (missing publisher or name)`);
+          continue;
+        }
+
         extensions.push({
           githubRepo: repo.full_name,
-          extensionId: `${pkgJson.publisher ?? ''}.${pkgJson.name ?? ''}`,
-          namespace: pkgJson.publisher ?? '',
-          name: pkgJson.name ?? '',
-          displayName: pkgJson.displayName ?? pkgJson.name ?? '',
+          extensionId: `${pkgJson.publisher}.${pkgJson.name}`,
+          namespace: pkgJson.publisher,
+          name: pkgJson.name,
+          displayName: pkgJson.displayName ?? pkgJson.name,
         });
       } catch (err) {
         console.error(

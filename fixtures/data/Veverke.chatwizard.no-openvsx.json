@@ -9,11 +9,7 @@
       "trendingWeekly": 0,
       "trendingMonthly": 0
     },
-    "openVsx": {
-      "downloads": 233,
-      "averageRating": null,
-      "ratingCount": 0
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-20T18:00:00Z",
@@ -25,11 +21,7 @@
       "trendingWeekly": 0,
       "trendingMonthly": 0
     },
-    "openVsx": {
-      "downloads": 237,
-      "averageRating": null,
-      "ratingCount": 0
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-21T00:00:00Z",
@@ -41,11 +33,7 @@
       "trendingWeekly": 0,
       "trendingMonthly": 0
     },
-    "openVsx": {
-      "downloads": 244,
-      "averageRating": null,
-      "ratingCount": 0
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-21T06:00:00Z",
@@ -57,11 +45,7 @@
       "trendingWeekly": 0,
       "trendingMonthly": 0
     },
-    "openVsx": {
-      "downloads": 255,
-      "averageRating": 4.12,
-      "ratingCount": 1
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-21T12:00:00Z",
@@ -73,11 +57,7 @@
       "trendingWeekly": 0.134892,
       "trendingMonthly": 0.566546
     },
-    "openVsx": {
-      "downloads": 263,
-      "averageRating": 4.14,
-      "ratingCount": 1
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-21T18:00:00Z",
@@ -89,11 +69,7 @@
       "trendingWeekly": 0.105079,
       "trendingMonthly": 0.441332
     },
-    "openVsx": {
-      "downloads": 272,
-      "averageRating": 4.15,
-      "ratingCount": 1
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-22T00:00:00Z",
@@ -105,11 +81,7 @@
       "trendingWeekly": 0.120069,
       "trendingMonthly": 0.50429
     },
-    "openVsx": {
-      "downloads": 271,
-      "averageRating": 4.15,
-      "ratingCount": 1
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-22T06:00:00Z",
@@ -121,11 +93,7 @@
       "trendingWeekly": 0.108878,
       "trendingMonthly": 0.457288
     },
-    "openVsx": {
-      "downloads": 284,
-      "averageRating": 4.13,
-      "ratingCount": 1
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-22T12:00:00Z",
@@ -137,11 +105,7 @@
       "trendingWeekly": 0.540984,
       "trendingMonthly": 2.272133
     },
-    "openVsx": {
-      "downloads": 287,
-      "averageRating": 4.1,
-      "ratingCount": 1
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-22T18:00:00Z",
@@ -153,11 +117,7 @@
       "trendingWeekly": 0.473373,
       "trendingMonthly": 1.988167
     },
-    "openVsx": {
-      "downloads": 319,
-      "averageRating": 4.06,
-      "ratingCount": 2
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-23T00:00:00Z",
@@ -169,11 +129,7 @@
       "trendingWeekly": 0.439189,
       "trendingMonthly": 1.844594
     },
-    "openVsx": {
-      "downloads": 343,
-      "averageRating": 4.02,
-      "ratingCount": 2
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-23T06:00:00Z",
@@ -185,11 +141,7 @@
       "trendingWeekly": 0.391304,
       "trendingMonthly": 1.643477
     },
-    "openVsx": {
-      "downloads": 378,
-      "averageRating": 3.98,
-      "ratingCount": 2
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-23T12:00:00Z",
@@ -201,11 +153,7 @@
       "trendingWeekly": 0.080645,
       "trendingMonthly": 0.338709
     },
-    "openVsx": {
-      "downloads": 404,
-      "averageRating": 3.93,
-      "ratingCount": 2
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-23T18:00:00Z",
@@ -217,11 +165,7 @@
       "trendingWeekly": 0.085034,
       "trendingMonthly": 0.357143
     },
-    "openVsx": {
-      "downloads": 414,
-      "averageRating": 3.9,
-      "ratingCount": 2
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-24T00:00:00Z",
@@ -233,11 +177,7 @@
       "trendingWeekly": 0.06689,
       "trendingMonthly": 0.280938
     },
-    "openVsx": {
-      "downloads": 417,
-      "averageRating": 3.87,
-      "ratingCount": 3
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-24T06:00:00Z",
@@ -249,11 +189,7 @@
       "trendingWeekly": 0.077008,
       "trendingMonthly": 0.323434
     },
-    "openVsx": {
-      "downloads": 428,
-      "averageRating": 3.85,
-      "ratingCount": 3
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-24T12:00:00Z",
@@ -265,11 +201,7 @@
       "trendingWeekly": 0.07584,
       "trendingMonthly": 0.318528
     },
-    "openVsx": {
-      "downloads": 436,
-      "averageRating": 3.85,
-      "ratingCount": 3
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-24T18:00:00Z",
@@ -281,11 +213,7 @@
       "trendingWeekly": 0.06937,
       "trendingMonthly": 0.291354
     },
-    "openVsx": {
-      "downloads": 441,
-      "averageRating": 3.86,
-      "ratingCount": 3
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-25T00:00:00Z",
@@ -297,11 +225,7 @@
       "trendingWeekly": 0.078947,
       "trendingMonthly": 0.331577
     },
-    "openVsx": {
-      "downloads": 448,
-      "averageRating": 3.88,
-      "ratingCount": 3
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-25T06:00:00Z",
@@ -313,11 +237,7 @@
       "trendingWeekly": 0.067358,
       "trendingMonthly": 0.282904
     },
-    "openVsx": {
-      "downloads": 449,
-      "averageRating": 3.92,
-      "ratingCount": 3
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-25T12:00:00Z",
@@ -329,11 +249,7 @@
       "trendingWeekly": 0.388548,
       "trendingMonthly": 1.631902
     },
-    "openVsx": {
-      "downloads": 458,
-      "averageRating": 3.96,
-      "ratingCount": 4
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-25T18:00:00Z",
@@ -345,11 +261,7 @@
       "trendingWeekly": 0.355787,
       "trendingMonthly": 1.494305
     },
-    "openVsx": {
-      "downloads": 493,
-      "averageRating": 4,
-      "ratingCount": 4
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-26T00:00:00Z",
@@ -361,11 +273,7 @@
       "trendingWeekly": 0.34101,
       "trendingMonthly": 1.432242
     },
-    "openVsx": {
-      "downloads": 529,
-      "averageRating": 4.05,
-      "ratingCount": 4
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-26T06:00:00Z",
@@ -377,11 +285,7 @@
       "trendingWeekly": 0.306799,
       "trendingMonthly": 1.288556
     },
-    "openVsx": {
-      "downloads": 570,
-      "averageRating": 4.09,
-      "ratingCount": 4
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-26T12:00:00Z",
@@ -393,11 +297,7 @@
       "trendingWeekly": 0.085938,
       "trendingMonthly": 0.36094
     },
-    "openVsx": {
-      "downloads": 598,
-      "averageRating": 4.12,
-      "ratingCount": 4
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-26T18:00:00Z",
@@ -409,11 +309,7 @@
       "trendingWeekly": 0.072965,
       "trendingMonthly": 0.306453
     },
-    "openVsx": {
-      "downloads": 615,
-      "averageRating": 4.14,
-      "ratingCount": 4
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-27T00:00:00Z",
@@ -425,11 +321,7 @@
       "trendingWeekly": 0.0757,
       "trendingMonthly": 0.31794
     },
-    "openVsx": {
-      "downloads": 623,
-      "averageRating": 4.15,
-      "ratingCount": 5
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-27T06:00:00Z",
@@ -441,11 +333,7 @@
       "trendingWeekly": 0.070843,
       "trendingMonthly": 0.297541
     },
-    "openVsx": {
-      "downloads": 628,
-      "averageRating": 4.15,
-      "ratingCount": 5
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-27T12:00:00Z",
@@ -457,11 +345,7 @@
       "trendingWeekly": 0.073529,
       "trendingMonthly": 0.308822
     },
-    "openVsx": {
-      "downloads": 634,
-      "averageRating": 4.13,
-      "ratingCount": 5
-    }
+    "openVsx": null
   },
   {
     "ts": "2026-05-27T18:00:00Z",
@@ -473,10 +357,6 @@
       "trendingWeekly": 0.072464,
       "trendingMonthly": 0.304349
     },
-    "openVsx": {
-      "downloads": 645,
-      "averageRating": 4.1,
-      "ratingCount": 5
-    }
+    "openVsx": null
   }
 ]

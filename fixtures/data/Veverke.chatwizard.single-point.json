@@ -1,0 +1,18 @@
+[
+  {
+    "ts": "2026-05-20T12:00:00Z",
+    "marketplace": {
+      "installs": 500,
+      "updates": 389,
+      "averageRating": 4.1,
+      "ratingCount": 2,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 233,
+      "averageRating": null,
+      "ratingCount": 0
+    }
+  }
+]

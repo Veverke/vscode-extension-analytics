@@ -284,6 +284,41 @@ All metric tests use the 30-point fixture (`fixtures/data/Veverke.chatwizard.jso
 - [ ] All unit tests pass
 - [ ] All E2E tests pass
 
+---
+
+## Deliverables
+
+| Artifact | Location | Description |
+|---|---|---|
+| Velocity metric | `src/metrics/velocity.ts` | `computeVelocity()` and `computeVelocityNormalized()` — absolute and per-hour install growth |
+| Acceleration metric | `src/metrics/acceleration.ts` | `computeAcceleration()` — change in velocity over time |
+| Projection metric | `src/metrics/projections.ts` | `computeProjection()` — linear, exponential, polynomial regression with R² using `regression-js` |
+| Peak detection | `src/metrics/peaks.ts` | `detectPeaks()` with optional minimum threshold; `peakDataPoints()` convenience wrapper |
+| Momentum score | `src/metrics/momentum.ts` | `computeMomentum()` — 0–100 composite score of velocity, acceleration, recency |
+| `VelocityChart` | `src/components/charts/VelocityChart.tsx` | Bar/area chart of velocity over time with zero reference line, color-coded positive/negative |
+| Projection overlay | `InstallsChart.tsx` updated | Dashed projection lines (linear = blue, exponential = orange) with R² label extending from last real data point |
+| Peak markers | `InstallsChart.tsx` updated | Amber vertical reference lines at velocity peak indices with gain label |
+| `MetricsPanel` | `src/components/cards/MetricsPanel.tsx` | Four metric cards: current velocity, acceleration direction, momentum score, 30-day projection |
+| Wired `ExtensionDetail` | `src/routes/ExtensionDetail.tsx` updated | MetricsPanel, VelocityChart, and annotated InstallsChart all wired in |
+
+---
+
+## Manual Testing Checklist
+
+> Cumulative — includes Phase 1–4 checks. Focus on visually verifying the derived signal quality using the real ChatWizard data.
+
+- [ ] **Velocity chart visible:** Open the ChatWizard detail page — a "Growth Velocity" section with a bar or area chart is present below the installs chart
+- [ ] **Velocity chart polarity:** Days with more installs than the previous day show green bars; if any downward movement exists in the data, those bars are red
+- [ ] **Projection lines appear:** On the installs chart, two dashed lines extend past the last real data point — one blue (linear), one orange (exponential)
+- [ ] **R² labels visible:** Each projection line has a label showing its model name and R² score (e.g. "Linear R²=0.91")
+- [ ] **Projections trend upward:** Since ChatWizard is growing, both projection lines should slope upward — confirm visually
+- [ ] **Peak markers present:** At least one amber vertical dashed line appears on the installs chart at a point that visually corresponds to a velocity spike
+- [ ] **Peak label shows gain:** Hovering or inspecting the peak marker label shows the install gain at that point (e.g. "+42 installs")
+- [ ] **Metrics panel cards populated:** All four metric cards show non-default values — velocity shows ±N/hour, acceleration shows direction, momentum shows a 0–100 score, projection card shows a future install count
+- [ ] **Momentum score is colored:** The momentum score is green (>66), yellow (33–66), or red (<33) based on the actual computed value
+- [ ] **Insufficient data graceful:** Temporarily replace `data/Veverke.chatwizard.json` with a 2-point array — projection should show a "not enough data" state rather than crashing; restore the original
+- [ ] **R² reflects fit quality:** If you inspect the fixture data shape (linear vs exponential growth), the model with higher R² should visually match the trend better
+
 ## Master Plan Update
 
 On completion, update `work-plan-mvp.md` Phase 5 row to: ✅ Completed

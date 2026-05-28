@@ -246,6 +246,38 @@ jobs:
 - [ ] All three fixture files exist in `fixtures/data/`
 - [ ] Both GitHub Actions workflow files exist
 
+---
+
+## Deliverables
+
+| Artifact | Location | Description |
+|---|---|---|
+| npm package | `package.json` | All dependencies locked, all scripts defined (`dev`, `build`, `lint`, `test`, `test:e2e`) |
+| TypeScript config | `tsconfig.json`, `tsconfig.node.json` | Strict mode, correct module resolution |
+| Vite app scaffold | `src/main.tsx`, `src/App.tsx`, `index.html` | Blank React app that builds and serves |
+| Test runners configured | `vitest.config.ts`, `playwright.config.ts` | Both test suites runnable with a single command |
+| Smoke tests | `tests/unit/smoke.test.ts`, `tests/e2e/smoke.spec.ts` | Prove toolchain is wired end-to-end |
+| Real-world fixtures | `fixtures/data/marketplace-response.json`, `fixtures/data/openvsx-response.json`, `fixtures/data/Veverke.chatwizard.json` | Ground-truth data for all future test phases |
+| GitHub Actions: collect | `.github/workflows/collect.yml` | Cron workflow ready to run (not yet active — collector code comes in Phase 2) |
+| GitHub Actions: deploy | `.github/workflows/deploy.yml` | Deploys `dist/` to GitHub Pages on every push to `main` |
+| Directory skeleton | All `src/`, `collect/`, `tests/`, `fixtures/` subdirectories | Empty structure committed so later tasks have known paths |
+
+---
+
+## Manual Testing Checklist
+
+> Run these after completing Phase 1 to confirm the scaffold is healthy before writing any application code.
+
+- [ ] **Dev server starts cleanly:** `npm run dev` — browser opens at `localhost:5173`, blank page loads with no console errors
+- [ ] **Build succeeds:** `npm run build` — `dist/` directory created, `index.html` present inside it
+- [ ] **Lint passes:** `npm run lint` exits 0 with no warnings
+- [ ] **Unit tests pass:** `npm run test` — Vitest reports 1 test passing
+- [ ] **E2E test passes:** `npm run test:e2e` — Playwright opens Chromium, smoke test passes
+- [ ] **Fixture JSON is valid:** Open each file in `fixtures/data/` in a JSON validator or `node -e "JSON.parse(require('fs').readFileSync('fixtures/data/Veverke.chatwizard.json','utf8'))"` — no parse errors
+- [ ] **Fixture has 30 data points:** `node -e "console.log(JSON.parse(require('fs').readFileSync('fixtures/data/Veverke.chatwizard.json','utf8')).length)"` — prints `30`
+- [ ] **GH Actions YAML is valid:** Copy `.github/workflows/collect.yml` content into [yamllint.com](https://www.yamllint.com) — no errors
+- [ ] **dist serves correctly:** `npx serve dist` — app loads at `localhost:3000` from the built output
+
 ## Master Plan Update
 
 On completion, update `work-plan-mvp.md` Phase 1 row to: ✅ Completed

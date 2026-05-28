@@ -221,6 +221,43 @@ Update `src/routes/ExtensionDetail.tsx`:
 - [ ] All unit tests pass
 - [ ] All E2E tests pass
 
+---
+
+## Deliverables
+
+| Artifact | Location | Description |
+|---|---|---|
+| Release history collection | `collect/marketplace.ts` updated | `fetchReleaseHistory()` extracts version list from the Marketplace API response |
+| Release file writer | `collect/index.ts` updated | Detects new versions on each run; appends new `ReleaseEntry` with current install count to `data/<id>.releases.json` |
+| Release data files | `data/Veverke.chatwizard.releases.json` | Append-only list of all detected versions with `installsAtRelease` snapshot |
+| Release correlation metric | `src/metrics/releaseCorrelation.ts` | `computeReleaseImpact()` — installs gained, days active, installs/day per version |
+| `useReleaseData` hook | `src/hooks/useReleaseData.ts` | Loads `data/<id>.releases.json`; handles 404 (extension with no releases file) |
+| Events schema & data | `src/types/schema.ts` updated, `data/events.json` | `EventAnnotation` type; empty events file ready for developer entries |
+| `useEvents` hook | `src/hooks/useEvents.ts` | Loads `data/events.json` |
+| Annotation builder | `src/components/annotations/EventAnnotation.tsx` | `buildEventReferenceLines()` — produces Recharts `ReferenceLine` props for events and releases |
+| Annotated `InstallsChart` | `src/components/charts/InstallsChart.tsx` updated | Renders vertical annotation lines color-coded by event type |
+| `ReleaseImpactPanel` | `src/components/cards/ReleaseImpactPanel.tsx` | Sortable table of versions with installs gained, days active, installs/day; best release highlighted |
+| Fixtures | `fixtures/data/Veverke.chatwizard.releases.json`, `fixtures/data/events.json` | Real-world-shaped test data |
+
+---
+
+## Manual Testing Checklist
+
+> Cumulative — includes Phase 1–5 checks. To fully test this phase you need at least one real collector run after a version was published, or you can populate `data/Veverke.chatwizard.releases.json` manually.
+
+- [ ] **Releases file created by collector:** Run `node --loader ts-node/esm collect/index.ts` — `data/Veverke.chatwizard.releases.json` is created (or updated) with at least one version entry
+- [ ] **Version fields correct:** Open `data/Veverke.chatwizard.releases.json` — each entry has `version` (valid semver), `publishedAt` (ISO date), and `installsAtRelease` (positive integer)
+- [ ] **New version detection:** Manually add a fake entry to `releases.json` with a future version string, then run the collector — confirm the new real version is added if it's newer, but the manually added fake entry causes no crash; restore the file
+- [ ] **Release annotation lines on chart:** Open the ChatWizard detail page — vertical dashed green lines appear on the installs chart at each release date
+- [ ] **Annotation labels readable:** The release lines are labeled with version numbers (e.g. "v1.2.0"); labels do not overlap unreadably on the chart
+- [ ] **Custom event annotation:** Add an entry to `data/events.json` (e.g. a blog post dated within the chart's time range) — reload the app and confirm a purple vertical line appears at that date with the event label
+- [ ] **Release impact table visible:** A "Release Impact" section with a table is present on the extension detail page
+- [ ] **Table columns and values correct:** The table shows Version, Released date, Installs at Release, Installs Gained, Days Active, Installs/Day — all populated with plausible numbers
+- [ ] **Table sorted by installs gained:** The version with the most installs gained is in the first row
+- [ ] **Top row highlighted:** The best-performing version row has a distinct background color
+- [ ] **"View diff" link works:** If a `githubRepo` is set in `extensions.json`, each row has a "View diff" link that opens the correct GitHub compare URL in a new tab
+- [ ] **No release file graceful:** Temporarily rename `data/Veverke.chatwizard.releases.json` — confirm the page loads without error and the Release Impact section shows an empty state; rename back
+
 ## Master Plan Update
 
 On completion, update `work-plan-mvp.md` Phase 6 row to: ✅ Completed

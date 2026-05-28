@@ -14,13 +14,13 @@ The MVP is a fully functional, zero-cost analytics tool that:
 
 | Phase | Name | Status |
 |---|---|---|
-| 1 | Repository & Infrastructure Setup | ⬜ Not started |
-| 2 | Data Collector | ⬜ Not started |
+| 1 | Repository & Infrastructure Setup | ✅ Completed |
+| 2 | Auto-Discovery & Data Collector | ⬜ Not started |
 | 3 | Frontend Shell & GitHub Pages Deployment | ⬜ Not started |
 | 4 | Core Charts & Data Display | ⬜ Not started |
 | 5 | Derived Analytics (Velocity, Projections, Peaks) | ⬜ Not started |
 | 6 | Release Correlation & Event Annotations | ⬜ Not started |
-| 7 | Multi-Extension & Auto-Discovery | ⬜ Not started |
+| 7 | Multi-Extension Overview Dashboard | ⬜ Not started |
 
 ---
 
@@ -33,10 +33,10 @@ Establish the monorepo structure, toolchain (React/Vite/TypeScript, Vitest, Play
 
 ---
 
-### Phase 2 — Data Collector
-Build the Node.js scripts that call the VS Marketplace API and Open VSX API, parse the responses, and append time-series records to per-extension JSON files. Includes the GitHub Actions cron workflow and the `data/extensions.json` registry.
+### Phase 2 — Auto-Discovery & Data Collector
+Build the GitHub API auto-discovery pipeline **and** the VS Marketplace / Open VSX collection scripts. Discovery runs first to scan the developer's GitHub account, detect all VS Code extension repos by `engines.vscode` in `package.json`, and populate `data/extensions.json`. The collector then reads that registry on every scheduled run and appends time-series records per extension.
 
-**Deliverable:** Running `node collect/index.ts` (or the GH Actions workflow) appends one correctly-shaped record to `data/Veverke.chatwizard.json`.
+**Deliverable:** `collect/discover.ts` populates `data/extensions.json` from GitHub. `collect/index.ts` appends one correctly-shaped record per discovered extension to its time-series file.
 
 ---
 
@@ -68,10 +68,10 @@ Enrich collection with version history from the Marketplace API. Build the relea
 
 ---
 
-### Phase 7 — Multi-Extension & Auto-Discovery
-Build the GitHub API auto-discovery pipeline that detects VS Code extensions in a user's repos. Add the multi-extension overview dashboard with sparklines, velocity badges, and momentum scores.
+### Phase 7 — Multi-Extension Overview Dashboard
+Build the multi-extension Overview dashboard that aggregates data across all tracked extensions (already populated in `data/extensions.json` by Phase 2's discovery pipeline) into a single view. Implements sparklines, velocity badges, momentum scores, and sortable columns.
 
-**Deliverable:** Overview dashboard lists all auto-discovered extensions. Auto-discovery runs on a weekly schedule in GitHub Actions.
+**Deliverable:** Overview dashboard lists all tracked extensions with sparklines, velocity badges, momentum scores, and sortable columns.
 
 ---
 

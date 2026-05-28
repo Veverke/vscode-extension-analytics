@@ -1,0 +1,157 @@
+name: Release
+
+# Triggered by pushing a version tag: git tag v1.2.3 && git push --tags
+# Or manually via workflow_dispatch (e.g. for pre-releases / dry-runs).
+#
+# This is a web app deployed to GitHub Pages — there is no .vsix package or
+# marketplace publishing step. A release creates a tagged GitHub Release with
+# auto-extracted CHANGELOG notes and uploads the static build as an artifact.
+#
+# The version in package.json MUST match the pushed tag before tagging.
+# Convention: bump version in package.json, commit, tag, push tag.
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"        # stable:     v1.2.3
+      - "v[0-9]+.[0-9]+.[0-9]+-*"      # pre-release: v1.2.3-beta.1
+
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to release (must already exist, e.g. v1.2.3)"
+        required: true
+      dry_run:
+        description: "Dry run — package but do not publish"
+        type: boolean
+        default: false
+
+# Derived values used across jobs
+env:
+  TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+
+jobs:
+  # ─── Job 1: Validate ────────────────────────────────────────────────────────
+  # Full test suite must be green before any artifact is produced.
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: TypeScript type check
+        run: npx tsc --noEmit
+
+      - name: Unit tests with coverage
+        run: npm run test -- --coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: coverage/lcov.info
+          flags: unit,release
+          name: release-${{ env.TAG }}
+          fail_ci_if_error: false
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build
+        run: npm run build
+
+      - name: E2E tests
+        run: npm run test:e2e
+
+      - name: Verify package.json version matches tag
+        run: |
+          PKG_VERSION="v$(node -p "require('./package.json').version")"
+          if [ "$PKG_VERSION" != "${{ env.TAG }}" ]; then
+            echo "::error::package.json version ($PKG_VERSION) does not match tag (${{ env.TAG }})"
+            exit 1
+          fi
+          echo "Version check passed: $PKG_VERSION"
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 30
+
+  # ─── Job 2: GitHub Release ───────────────────────────────────────────────────
+  # Creates a GH Release with CHANGELOG notes. The static build is attached as a
+  # downloadable artifact for reference (GitHub Pages deploy is handled separately
+  # by deploy.yml on push to main).
+  github-release:
+    name: GitHub Release
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+          fetch-depth: 0
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          # Extract the block between this tag's header and the previous one in CHANGELOG.md.
+          # Falls back to git log if CHANGELOG.md is absent or has no matching section.
+          TAG="${{ env.TAG }}"
+          if [ -f CHANGELOG.md ]; then
+            NOTES=$(awk "/^## \[?${TAG#v}\]?/{flag=1; next} flag && /^## /{flag=0} flag{print}" CHANGELOG.md)
+          fi
+          if [ -z "$NOTES" ]; then
+            PREV_TAG=$(git describe --tags --abbrev=0 "${TAG}^" 2>/dev/null || echo "")
+            if [ -n "$PREV_TAG" ]; then
+              NOTES=$(git log --pretty=format:"- %s (%h)" "${PREV_TAG}..${TAG}")
+            else
+              NOTES=$(git log --pretty=format:"- %s (%h)" "${TAG}")
+            fi
+          fi
+          # Write to a file to safely pass multi-line content
+          echo "$NOTES" > release-notes.txt
+          echo "notes_file=release-notes.txt" >> "$GITHUB_OUTPUT"
+
+      - name: Determine pre-release flag
+        id: prerelease
+        run: |
+          if echo "${{ env.TAG }}" | grep -qE '\-'; then
+            echo "is_prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          name: ${{ env.TAG }}
+          body_path: ${{ steps.changelog.outputs.notes_file }}
+          prerelease: ${{ steps.prerelease.outputs.is_prerelease }}

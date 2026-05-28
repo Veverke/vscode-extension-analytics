@@ -153,7 +153,7 @@ describe('github', () => {
     expect(results[0].extensionId).toBe('Veverke.chatwizard');
   });
 
-  it('discoverVSCodeExtensions — falls back to empty strings when publisher and name are absent', async () => {
+  it('discoverVSCodeExtensions — skips repos where publisher or name are absent', async () => {
     const pkgNoPublisher = {
       name: 'package.json',
       content: Buffer.from(
@@ -172,10 +172,7 @@ describe('github', () => {
     );
 
     const results = await discoverVSCodeExtensions('Veverke', 'fake-token', { perPage: 1 });
-    expect(results).toHaveLength(1);
-    expect(results[0].namespace).toBe('');
-    expect(results[0].name).toBe('');
-    expect(results[0].displayName).toBe('');
+    expect(results).toHaveLength(0);
   });
 
   it('discoverVSCodeExtensions — throws when repos response contains an error message', async () => {

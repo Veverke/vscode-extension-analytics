@@ -9,9 +9,15 @@ function mockFetch(...responses: Array<{ status?: number; body: unknown }>) {
   let callIndex = 0;
   global.fetch = vi.fn().mockImplementation(() => {
     const response = responses[callIndex++] ?? { status: 200, body: [] };
+    const status = response.status ?? 200;
     return Promise.resolve({
-      status: response.status ?? 200,
+      status,
+      ok: status >= 200 && status < 300,
       json: () => Promise.resolve(response.body),
+      text: () =>
+        Promise.resolve(
+          typeof response.body === 'string' ? response.body : JSON.stringify(response.body)
+        ),
     });
   }) as unknown as typeof fetch;
 }
@@ -202,6 +208,68 @@ describe('github', () => {
       perPage: 1,
     });
 
+    expect(results).toHaveLength(0);
+  });
+
+  it('discoverVSCodeExtensions — silently skips repo on non-ok package.json response', async () => {
+    mockFetch(
+      { body: [githubReposFixture[0]] },           // repos page 1
+      { status: 500, body: 'Internal Server Error' }, // package.json: 500 error
+      { body: [] },                                 // page 2 empty
+    );
+
+    const results = await discoverVSCodeExtensions('Veverke', 'fake-token', { perPage: 1 });
+    expect(results).toHaveLength(0);
+  });
+
+  it('discoverVSCodeExtensions — silently skips repo when package.json response body is not parseable JSON', async () => {
+    let callIndex = 0;
+    global.fetch = vi.fn().mockImplementation(() => {
+      callIndex++;
+      if (callIndex === 1) {
+        return Promise.resolve({
+          status: 200,
+          ok: true,
+          json: () => Promise.resolve([githubReposFixture[0]]),
+          text: () => Promise.resolve(''),
+        });
+      }
+      if (callIndex === 2) {
+        return Promise.resolve({
+          status: 200,
+          ok: true,
+          // json() throws — simulates a corrupted response body
+          json: () => Promise.reject(new SyntaxError('Unexpected token')),
+          text: () => Promise.resolve(''),
+        });
+      }
+      return Promise.resolve({
+        status: 200,
+        ok: true,
+        json: () => Promise.resolve([]),
+        text: () => Promise.resolve(''),
+      });
+    }) as unknown as typeof fetch;
+
+    const results = await discoverVSCodeExtensions('Veverke', 'fake-token', { perPage: 1 });
+    expect(results).toHaveLength(0);
+  });
+
+  it('discoverVSCodeExtensions — silently skips repo when package.json content is invalid base64/JSON', async () => {
+    // 'bm90IHZhbGlkIGpzb24=' is base64 for 'not valid json' — fails JSON.parse
+    const invalidContentPkg = {
+      name: 'package.json',
+      content: 'bm90IHZhbGlkIGpzb24=',
+      encoding: 'base64',
+    };
+
+    mockFetch(
+      { body: [githubReposFixture[0]] },
+      { body: invalidContentPkg },
+      { body: [] },
+    );
+
+    const results = await discoverVSCodeExtensions('Veverke', 'fake-token', { perPage: 1 });
     expect(results).toHaveLength(0);
   });
 });

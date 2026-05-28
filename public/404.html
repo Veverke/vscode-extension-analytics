@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VS Code Extension Analytics</title>
+    <script>
+      // GitHub Pages SPA workaround: store the full URL in sessionStorage and
+      // redirect to the root so index.html can restore navigation.
+      sessionStorage.setItem('gh-pages-redirect', window.location.href)
+      window.location.replace(
+        window.location.origin +
+          window.location.pathname
+            .split('/')
+            .slice(0, -1)
+            .join('/') +
+          '/'
+      )
+    </script>
+  </head>
+  <body>Redirecting…</body>
+</html>

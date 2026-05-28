@@ -1,0 +1,18 @@
+[
+  {
+    "id": "Veverke.chatwizard",
+    "namespace": "Veverke",
+    "name": "chatwizard",
+    "displayName": "Chat Wizard",
+    "githubRepo": "Veverke/ChatWizard",
+    "trackedSince": "2026-05-28T11:04:43.476Z"
+  },
+  {
+    "id": "Veverke.copilot-reviewer-assistant",
+    "namespace": "Veverke",
+    "name": "copilot-reviewer-assistant",
+    "displayName": "Copilot Reviewer Assistant",
+    "githubRepo": "Veverke/CopilotReviewerAssistant",
+    "trackedSince": "2026-05-28T11:04:43.483Z"
+  }
+]

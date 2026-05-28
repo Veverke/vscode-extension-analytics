@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VS Code Extension Analytics</title>
+    <script>
+      // GitHub Pages SPA workaround: decode path stored by 404.html as a query string
+      ;(function () {
+        var redirect = sessionStorage.getItem('gh-pages-redirect')
+        if (redirect) {
+          sessionStorage.removeItem('gh-pages-redirect')
+          var url = new URL(redirect, window.location.origin)
+          history.replaceState(null, '', url.pathname + url.search + url.hash)
+        }
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

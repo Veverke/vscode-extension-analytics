@@ -54,7 +54,6 @@ export async function discoverVSCodeExtensions(
     }
 
     for (const repo of repos) {
-      try {
         const pkgResponse = await fetch(
           `https://api.github.com/repos/${repo.full_name}/contents/package.json`,
           { headers, signal: AbortSignal.timeout(30_000) }
@@ -65,26 +64,52 @@ export async function discoverVSCodeExtensions(
           continue;
         }
 
-        const pkgData = (await pkgResponse.json()) as GitHubFileContent;
-        const pkgJson = JSON.parse(
-          Buffer.from(pkgData.content, 'base64').toString('utf-8')
-        ) as PackageJson;
+        if (!pkgResponse.ok) {
+          const body = await pkgResponse.text().catch(() => '');
+          throw new Error(
+            `[discover] ${repo.full_name}: GitHub API error ${pkgResponse.status} ${pkgResponse.statusText}${body ? ` - ${body}` : ''}`
+          );
+        }
+
+        let pkgData: GitHubFileContent;
+        try {
+          pkgData = (await pkgResponse.json()) as GitHubFileContent;
+        } catch (err) {
+          console.error(
+            `[discover] ${repo.full_name}: failed to parse package.json response: ${err instanceof Error ? err.message : String(err)}`
+          );
+          continue;
+        }
+
+        let pkgJson: PackageJson;
+        try {
+          pkgJson = JSON.parse(
+            Buffer.from(pkgData.content, 'base64').toString('utf-8')
+          ) as PackageJson;
+        } catch (err) {
+          console.error(
+            `[discover] ${repo.full_name}: failed to decode/parse package.json: ${err instanceof Error ? err.message : String(err)}`
+          );
+          continue;
+        }
 
         if (!pkgJson.engines?.vscode) {
           console.log(`[discover] ${repo.full_name}: skipped (not a VS Code extension)`);
           continue;
         }
 
+        if (!pkgJson.publisher) {
+          console.log(`[discover] ${repo.full_name}: skipped (missing publisher in package.json)`);
+          continue;
+        }
+
         extensions.push({
           githubRepo: repo.full_name,
           extensionId: `${pkgJson.publisher}.${pkgJson.name}`,
-          namespace: pkgJson.publisher ?? '',
+          namespace: pkgJson.publisher,
           name: pkgJson.name ?? '',
           displayName: pkgJson.displayName ?? pkgJson.name ?? '',
         });
-      } catch {
-        // silently skip repos that fail
-      }
     }
 
     if (repos.length < perPage) break;

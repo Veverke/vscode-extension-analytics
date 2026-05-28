@@ -9,9 +9,17 @@ export async function fetchOpenVsxStats(
     { signal: AbortSignal.timeout(30_000) }
   );
 
-  if (response.status === 404) {
-    console.warn(
-      `[openvsx] Extension ${namespace}.${name} not found on Open VSX`
+  if (!response.ok) {
+    if (response.status === 404) {
+      console.warn(
+        `[openvsx] Extension ${namespace}.${name} not found on Open VSX`
+      );
+      return null;
+    }
+
+    const body = await response.text().catch(() => '');
+    console.error(
+      `[openvsx] Failed to fetch ${namespace}.${name}: ${response.status} ${response.statusText}${body ? ` - ${body}` : ''}`
     );
     return null;
   }

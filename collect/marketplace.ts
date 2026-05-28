@@ -29,13 +29,30 @@ export async function fetchMarketplaceStats(
     }
   );
 
+  if (!response.ok) {
+    const body = await response.text().catch(() => '');
+    throw new Error(
+      `[marketplace] Failed to fetch ${extensionId}: ${response.status} ${response.statusText}${body ? ` - ${body}` : ''}`
+    );
+  }
+
   const data = (await response.json()) as {
-    results: Array<{
-      extensions: Array<{
-        statistics: MarketplaceStat[];
+    results?: Array<{
+      extensions?: Array<{
+        statistics?: MarketplaceStat[];
       }>;
     }>;
   };
+
+  if (
+    !data?.results ||
+    data.results.length === 0 ||
+    !data.results[0].extensions ||
+    data.results[0].extensions.length === 0 ||
+    !data.results[0].extensions[0].statistics
+  ) {
+    throw new Error(`[marketplace] No marketplace result for ${extensionId}`);
+  }
 
   const statistics = data.results[0].extensions[0].statistics;
   const averageRating = getStat(statistics, 'averagerating');

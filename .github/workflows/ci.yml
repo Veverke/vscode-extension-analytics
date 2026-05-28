@@ -14,8 +14,6 @@ on:
     paths-ignore:
       - "data/**"
       - "*.md"
-      - ".github/workflows/collect.yml"
-      - ".github/workflows/discover.yml"
       - ".github/workflows/deploy.yml"
       # Note: discover.yml is added here proactively; it will be created in Phase 2.
 

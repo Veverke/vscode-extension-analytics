@@ -134,13 +134,52 @@ describe('github', () => {
     expect(results[0].displayName).toBe('nodisplay-ext');
   });
 
-  it('discoverVSCodeExtensions — stops when repos response is not an array', async () => {
+  it('discoverVSCodeExtensions — works without a token (no Authorization header)', async () => {
     mockFetch(
-      { body: { message: 'API rate limit exceeded' } }, // non-array response
+      { body: [githubReposFixture[0]] },
+      { body: extensionPkgFixture },
+      { body: [] }
     );
 
-    const results = await discoverVSCodeExtensions('Veverke', 'fake-token');
-    expect(results).toHaveLength(0);
+    // Empty token — should still discover extensions using unauthenticated requests
+    const results = await discoverVSCodeExtensions('Veverke', '', { perPage: 1 });
+    expect(results).toHaveLength(1);
+    expect(results[0].extensionId).toBe('Veverke.chatwizard');
+  });
+
+  it('discoverVSCodeExtensions — falls back to empty strings when publisher and name are absent', async () => {
+    const pkgNoPublisher = {
+      name: 'package.json',
+      content: Buffer.from(
+        JSON.stringify({
+          // no publisher, no name, no displayName
+          engines: { vscode: '^1.85.0' },
+        })
+      ).toString('base64'),
+      encoding: 'base64',
+    };
+
+    mockFetch(
+      { body: [{ name: 'mystery', full_name: 'Veverke/mystery', owner: { login: 'Veverke' } }] },
+      { body: pkgNoPublisher },
+      { body: [] }
+    );
+
+    const results = await discoverVSCodeExtensions('Veverke', 'fake-token', { perPage: 1 });
+    expect(results).toHaveLength(1);
+    expect(results[0].namespace).toBe('');
+    expect(results[0].name).toBe('');
+    expect(results[0].displayName).toBe('');
+  });
+
+  it('discoverVSCodeExtensions — throws when repos response contains an error message', async () => {
+    mockFetch(
+      { body: { message: 'API rate limit exceeded' } }, // non-array error response
+    );
+
+    await expect(
+      discoverVSCodeExtensions('Veverke', 'fake-token')
+    ).rejects.toThrow('GitHub API error: API rate limit exceeded');
   });
 
   it('discoverVSCodeExtensions — silently skips repo when package.json fetch throws', async () => {

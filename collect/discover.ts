@@ -1,5 +1,6 @@
 import type { ExtensionRegistry, ExtensionEntry } from '../src/types/schema.js';
 import type { DiscoveredExtension } from './github.js';
+import { fileURLToPath } from 'node:url';
 import {
   readExtensionRegistry,
   writeExtensionRegistry,
@@ -44,15 +45,16 @@ export async function runDiscover(
 }
 
 /* v8 ignore next 8 */
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (fileURLToPath(import.meta.url) === process.argv[1]) {
   const githubUser = process.env.GITHUB_USER;
-  const githubToken = process.env.GITHUB_TOKEN;
-  if (!githubUser || !githubToken) {
-    console.error('GITHUB_USER and GITHUB_TOKEN env vars are required');
-    process.exit(1);
+  const githubToken = process.env.GITHUB_TOKEN ?? '';
+  if (!githubUser) {
+    console.error('GITHUB_USER env var is required');
+    process.exitCode = 1;
+  } else {
+    runDiscover(githubUser, githubToken).catch((err: unknown) => {
+      console.error('[discover] Fatal error:', err);
+      process.exitCode = 1;
+    });
   }
-  runDiscover(githubUser, githubToken).catch((err: unknown) => {
-    console.error('[discover] Fatal error:', err);
-    process.exit(1);
-  });
 }

@@ -45,5 +45,5 @@ describe.skipIf(!isIntegration)('collect integration', () => {
     expect(point.ts).toBeTruthy();
     expect(point.marketplace.installs).toBeGreaterThan(0);
     expect(typeof point.marketplace.installs).toBe('number');
-  });
+  }, 30000);
 });

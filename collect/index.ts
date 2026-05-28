@@ -1,4 +1,5 @@
 import type { DataPoint } from '../src/types/schema.js';
+import { fileURLToPath } from 'node:url';
 import { readExtensionRegistry, appendDataPoint, ensureDataDir } from './storage.js';
 import { fetchMarketplaceStats } from './marketplace.js';
 import { fetchOpenVsxStats } from './openvsx.js';
@@ -46,11 +47,11 @@ export async function runCollector(): Promise<number> {
 }
 
 /* v8 ignore next 7 */
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (fileURLToPath(import.meta.url) === process.argv[1]) {
   runCollector()
-    .then((code) => process.exit(code))
+    .then((code) => { process.exitCode = code; })
     .catch((err: unknown) => {
       console.error('[collector] Fatal error:', err);
-      process.exit(1);
+      process.exitCode = 1;
     });
 }

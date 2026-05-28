@@ -12,5 +12,5 @@ describe.skipIf(!isIntegration)('openvsx integration', () => {
     expect(result!.downloads).toBeGreaterThanOrEqual(0);
     expect(typeof result!.downloads).toBe('number');
     expect(result!.downloads).not.toBeNaN();
-  });
+  }, 30000);
 });

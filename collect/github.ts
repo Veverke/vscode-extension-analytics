@@ -32,40 +32,48 @@ export async function discoverVSCodeExtensions(
   const extensions: DiscoveredExtension[] = [];
   let page = 1;
 
+  const headers: Record<string, string> = {
+    Accept: 'application/vnd.github+json',
+  };
+  if (githubToken) {
+    headers['Authorization'] = `Bearer ${githubToken}`;
+  }
+
   while (true) {
     const reposResponse = await fetch(
       `https://api.github.com/users/${githubUser}/repos?per_page=${perPage}&type=public&page=${page}`,
-      {
-        headers: {
-          Authorization: `Bearer ${githubToken}`,
-          Accept: 'application/vnd.github+json',
-        },
-      }
+      { headers, signal: AbortSignal.timeout(30_000) }
     );
 
     const repos = (await reposResponse.json()) as GitHubRepo[];
-    if (!Array.isArray(repos) || repos.length === 0) break;
+    if (!Array.isArray(repos) || repos.length === 0) {
+      if (!Array.isArray(repos) && (repos as { message?: string }).message) {
+        throw new Error(`GitHub API error: ${(repos as { message: string }).message}`);
+      }
+      break;
+    }
 
     for (const repo of repos) {
       try {
         const pkgResponse = await fetch(
           `https://api.github.com/repos/${repo.full_name}/contents/package.json`,
-          {
-            headers: {
-              Authorization: `Bearer ${githubToken}`,
-              Accept: 'application/vnd.github+json',
-            },
-          }
+          { headers, signal: AbortSignal.timeout(30_000) }
         );
 
-        if (pkgResponse.status === 404) continue;
+        if (pkgResponse.status === 404) {
+          console.log(`[discover] ${repo.full_name}: skipped (no package.json)`);
+          continue;
+        }
 
         const pkgData = (await pkgResponse.json()) as GitHubFileContent;
         const pkgJson = JSON.parse(
           Buffer.from(pkgData.content, 'base64').toString('utf-8')
         ) as PackageJson;
 
-        if (!pkgJson.engines?.vscode) continue;
+        if (!pkgJson.engines?.vscode) {
+          console.log(`[discover] ${repo.full_name}: skipped (not a VS Code extension)`);
+          continue;
+        }
 
         extensions.push({
           githubRepo: repo.full_name,

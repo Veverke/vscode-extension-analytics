@@ -17,5 +17,5 @@ describe.skipIf(!isIntegration)('marketplace integration', () => {
     expect(result.installs).not.toBeNaN();
     expect(result.updates).not.toBeNaN();
     expect(result.ratingCount).not.toBeNaN();
-  });
+  }, 30000);
 });

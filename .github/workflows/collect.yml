@@ -27,7 +27,7 @@ jobs:
 
       # Reads data/extensions.json, fetches stats from both registries in parallel,
       # and appends a new DataPoint to each extension's time-series JSON file
-      - run: node --loader ts-node/esm collect/index.ts
+      - run: npx tsx collect/index.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

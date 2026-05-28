@@ -5,7 +5,8 @@ export async function fetchOpenVsxStats(
   name: string
 ): Promise<OpenVsxSnapshot | null> {
   const response = await fetch(
-    `https://open-vsx.org/api/${namespace}/${name}`
+    `https://open-vsx.org/api/${namespace}/${name}`,
+    { signal: AbortSignal.timeout(30_000) }
   );
 
   if (response.status === 404) {

@@ -11,7 +11,6 @@ export default defineConfig({
       'src/**/*.test.{ts,tsx}',
       'collect/__tests__/**/*.test.ts',
     ],
-    environmentMatchGlobs: [['collect/__tests__/**', 'node']],
     coverage: {
       provider: 'v8',
       include: ['collect/**'],

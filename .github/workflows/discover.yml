@@ -28,7 +28,7 @@ jobs:
 
       # Paginates through all repos for GITHUB_USER, checks each package.json for
       # engines.vscode, and merges any new extensions into data/extensions.json
-      - run: node --loader ts-node/esm collect/discover.ts
+      - run: npx tsx collect/discover.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Set GITHUB_USER in repository Variables (Settings → Variables)

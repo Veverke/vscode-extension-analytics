@@ -17,6 +17,7 @@ export async function fetchMarketplaceStats(
     'https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery',
     {
       method: 'POST',
+      signal: AbortSignal.timeout(30_000),
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json;api-version=7.2-preview.1',

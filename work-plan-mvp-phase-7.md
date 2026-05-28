@@ -259,6 +259,44 @@ Update `src/components/Layout.tsx`:
 - [ ] All unit tests pass
 - [ ] All E2E tests pass
 
+---
+
+## Deliverables
+
+| Artifact | Location | Description |
+|---|---|---|
+| GitHub API discovery client | `collect/github.ts` | `discoverVSCodeExtensions()` — enumerates user repos, identifies VS Code extensions by `engines.vscode` in `package.json` |
+| Discovery entry point | `collect/discover.ts` | Merges discovered extensions into `data/extensions.json` without duplicates or removals |
+| Discovery workflow | `.github/workflows/discover.yml` | Weekly cron that runs `collect/discover.ts` and commits any registry changes |
+| `useAllExtensionsData` hook | `src/hooks/useAllExtensionsData.ts` | Loads data for all registered extensions in parallel; returns `ExtensionSummary[]` with per-row error isolation |
+| `Sparkline` component | `src/components/charts/Sparkline.tsx` | Minimal pure-SVG sparkline for embedding in table cells |
+| `VelocityBadge` component | `src/components/cards/VelocityBadge.tsx` | Color-coded pill showing velocity direction and magnitude |
+| `MomentumBadge` component | `src/components/cards/MomentumBadge.tsx` | 0–100 score with green/yellow/red color coding |
+| Overview dashboard | `src/routes/Overview.tsx` | Full multi-extension table: sparklines, velocity badges, momentum scores, sortable columns, per-row error state, loading skeletons |
+| Updated navigation | `src/components/Layout.tsx` | Header links home; single-extension shortcut to detail page |
+| Multi-extension fixtures | `fixtures/data/extensions-multi.json`, `fixtures/data/github-repos-response.json`, `fixtures/data/package.json-extension.json`, `fixtures/data/package.json-non-extension.json` | Test data for discovery and overview tests |
+
+---
+
+## Manual Testing Checklist
+
+> Cumulative — includes Phase 1–6 checks. This phase is best tested by adding a second real extension to `data/extensions.json` and running the collector, or by triggering the discovery workflow manually.
+
+- [ ] **Discovery workflow runs:** In the GitHub repository, go to Actions → "Discover VS Code Extensions" → "Run workflow" — workflow completes without error
+- [ ] **Discovery adds extensions:** After the discovery run, inspect `data/extensions.json` — all VS Code extension repos from the configured GitHub user are listed (including `Veverke.chatwizard`)
+- [ ] **Discovery does not duplicate:** Run the discovery workflow a second time — `data/extensions.json` still has the same number of entries, not doubled
+- [ ] **Overview shows all extensions:** Open the app — the Overview (home) page lists all extensions in `data/extensions.json` as table rows
+- [ ] **Sparklines visible:** Each row in the overview table shows a small sparkline graphic reflecting the recent install trend
+- [ ] **Velocity badges colored correctly:** An extension that has been gaining installs shows a green "▲ +N" badge; inspect `data/<id>.json` to verify the badge value matches the last velocity computation
+- [ ] **Momentum scores differentiate extensions:** If two extensions are tracked, their momentum scores are different and reflect which is growing faster
+- [ ] **Overview sorted by momentum by default:** The extension with the higher momentum score is in the first row on initial load
+- [ ] **Sort by installs:** Click the "Installs" column header — rows reorder with the most-installed extension first
+- [ ] **Sort by installs (reverse):** Click the "Installs" header again — rows reverse to least-installed first
+- [ ] **Click navigates to detail:** Click an extension name in the overview table — navigates to that extension's detail page
+- [ ] **Per-row error isolation:** Temporarily corrupt one extension's data file with invalid JSON — the overview still loads; the broken extension row shows an error icon while other rows render normally; restore the file
+- [ ] **Single-extension shortcut:** If `data/extensions.json` contains only one extension, confirm the app navigates directly to that extension's detail page instead of showing the overview table
+- [ ] **Loading skeletons:** Throttle network to "Slow 3G" in DevTools; reload the overview — skeleton rows appear while data loads, then resolve to real content
+
 ## Master Plan Update
 
 On completion, update `work-plan-mvp.md` Phase 7 row to: ✅ Completed

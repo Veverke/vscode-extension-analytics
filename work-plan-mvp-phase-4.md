@@ -189,6 +189,38 @@ Handle and render gracefully:
 - [ ] All unit tests pass
 - [ ] All E2E tests pass
 
+---
+
+## Deliverables
+
+| Artifact | Location | Description |
+|---|---|---|
+| `useExtensionData` hook | `src/hooks/useExtensionData.ts` | Fetches and validates per-extension time-series JSON; loading and error states |
+| Data normalization utils | `src/utils/normalize.ts` | `toChartPoints()` converts `DataPoint[]` to Recharts-compatible format; `formatDate()` for axis labels |
+| `InstallsChart` | `src/components/charts/InstallsChart.tsx` | Dual-line chart (Marketplace + Open VSX), responsive, with tooltip and legend |
+| `RatingChart` | `src/components/charts/RatingChart.tsx` | Rating line + rating count bars, dual Y-axis |
+| `StatsCards` | `src/components/cards/StatsCards.tsx` | 4 summary cards (installs, Open VSX downloads, rating, count) with delta from start |
+| Wired `ExtensionDetail` | `src/routes/ExtensionDetail.tsx` | Full detail page with all charts, cards, loading, and error states |
+| Edge-case handling | same | Graceful rendering for empty data, single point, and no Open VSX data |
+| Additional fixtures | `fixtures/data/Veverke.chatwizard.single-point.json`, `fixtures/data/Veverke.chatwizard.no-openvsx.json` | Edge-case test fixtures |
+
+---
+
+## Manual Testing Checklist
+
+> Cumulative — includes Phase 1–3 checks. Run these after Phase 4 with the live `data/Veverke.chatwizard.json` file present.
+
+- [ ] **Installs chart renders:** Open the ChatWizard detail page — an installs chart with a visible trend line is present
+- [ ] **Rating chart renders:** A rating chart is present below (or alongside) the installs chart
+- [ ] **Stats cards show real numbers:** The four stat cards display non-zero values matching the last data point in `data/Veverke.chatwizard.json`
+- [ ] **Delta is correct:** The delta shown on "Total Marketplace Installs" matches `last_entry.marketplace.installs - first_entry.marketplace.installs` computed manually from the JSON file
+- [ ] **Tooltip works:** Hover over a point on the installs chart — a tooltip appears showing the date and install count
+- [ ] **Open VSX line:** If the extension has Open VSX data, a second (dashed) line appears on the installs chart; if not, a "Not published on Open VSX" note is shown
+- [ ] **X-axis dates readable:** The X-axis shows human-readable dates (e.g. "May 15") not raw timestamp numbers
+- [ ] **Empty state test:** Temporarily rename `data/Veverke.chatwizard.json` to something else so the fetch 404s — confirm "No data yet" message appears with no console errors; rename back
+- [ ] **Single-point state test:** Replace `data/Veverke.chatwizard.json` with a one-entry array — confirm charts render without crashing; restore the original file
+- [ ] **Charts responsive:** Resize the browser to mobile width — charts resize to fit without horizontal scroll
+
 ## Master Plan Update
 
 On completion, update `work-plan-mvp.md` Phase 4 row to: ✅ Completed

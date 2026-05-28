@@ -1,0 +1,572 @@
+[
+    {
+        "ts":  "2026-05-20T12:00:00Z",
+        "marketplace":  {
+                            "install":  500,
+                            "updateCount":  389,
+                            "downloadCount":  522,
+                            "averagerating":  4.1,
+                            "ratingcount":  2,
+                            "weightedRating":  3.995,
+                            "trendingdaily":  0,
+                            "trendingweekly":  0,
+                            "trendingmonthly":  0
+                        },
+        "openVsx":  {
+                        "downloadCount":  233,
+                        "reviewCount":  0,
+                        "averageRating":  null
+                    }
+    },
+    {
+        "ts":  "2026-05-20T18:00:00Z",
+        "marketplace":  {
+                            "install":  514,
+                            "updateCount":  398,
+                            "downloadCount":  531,
+                            "averagerating":  4.2,
+                            "ratingcount":  2,
+                            "weightedRating":  4.09,
+                            "trendingdaily":  0,
+                            "trendingweekly":  0,
+                            "trendingmonthly":  0
+                        },
+        "openVsx":  {
+                        "downloadCount":  237,
+                        "reviewCount":  0,
+                        "averageRating":  null
+                    }
+    },
+    {
+        "ts":  "2026-05-21T00:00:00Z",
+        "marketplace":  {
+                            "install":  529,
+                            "updateCount":  413,
+                            "downloadCount":  550,
+                            "averagerating":  4.27,
+                            "ratingcount":  3,
+                            "weightedRating":  4.1565,
+                            "trendingdaily":  0,
+                            "trendingweekly":  0,
+                            "trendingmonthly":  0
+                        },
+        "openVsx":  {
+                        "downloadCount":  244,
+                        "reviewCount":  0,
+                        "averageRating":  null
+                    }
+    },
+    {
+        "ts":  "2026-05-21T06:00:00Z",
+        "marketplace":  {
+                            "install":  542,
+                            "updateCount":  427,
+                            "downloadCount":  561,
+                            "averagerating":  4.3,
+                            "ratingcount":  3,
+                            "weightedRating":  4.185,
+                            "trendingdaily":  0,
+                            "trendingweekly":  0,
+                            "trendingmonthly":  0
+                        },
+        "openVsx":  {
+                        "downloadCount":  255,
+                        "reviewCount":  1,
+                        "averageRating":  4.12
+                    }
+    },
+    {
+        "ts":  "2026-05-21T12:00:00Z",
+        "marketplace":  {
+                            "install":  556,
+                            "updateCount":  430,
+                            "downloadCount":  577,
+                            "averagerating":  4.28,
+                            "ratingcount":  4,
+                            "weightedRating":  4.166,
+                            "trendingdaily":  0.258303,
+                            "trendingweekly":  0.134892,
+                            "trendingmonthly":  0.566546
+                        },
+        "openVsx":  {
+                        "downloadCount":  263,
+                        "reviewCount":  1,
+                        "averageRating":  4.14
+                    }
+    },
+    {
+        "ts":  "2026-05-21T18:00:00Z",
+        "marketplace":  {
+                            "install":  571,
+                            "updateCount":  443,
+                            "downloadCount":  593,
+                            "averagerating":  4.22,
+                            "ratingcount":  4,
+                            "weightedRating":  4.109,
+                            "trendingdaily":  0.269784,
+                            "trendingweekly":  0.105079,
+                            "trendingmonthly":  0.441332
+                        },
+        "openVsx":  {
+                        "downloadCount":  272,
+                        "reviewCount":  1,
+                        "averageRating":  4.15
+                    }
+    },
+    {
+        "ts":  "2026-05-22T00:00:00Z",
+        "marketplace":  {
+                            "install":  583,
+                            "updateCount":  456,
+                            "downloadCount":  606,
+                            "averagerating":  4.13,
+                            "ratingcount":  5,
+                            "weightedRating":  4.0235,
+                            "trendingdaily":  0.210158,
+                            "trendingweekly":  0.120069,
+                            "trendingmonthly":  0.50429
+                        },
+        "openVsx":  {
+                        "downloadCount":  271,
+                        "reviewCount":  1,
+                        "averageRating":  4.15
+                    }
+    },
+    {
+        "ts":  "2026-05-22T06:00:00Z",
+        "marketplace":  {
+                            "install":  597,
+                            "updateCount":  470,
+                            "downloadCount":  624,
+                            "averagerating":  4.03,
+                            "ratingcount":  5,
+                            "weightedRating":  3.9285,
+                            "trendingdaily":  0.240137,
+                            "trendingweekly":  0.108878,
+                            "trendingmonthly":  0.45728799999999997
+                        },
+        "openVsx":  {
+                        "downloadCount":  284,
+                        "reviewCount":  1,
+                        "averageRating":  4.13
+                    }
+    },
+    {
+        "ts":  "2026-05-22T12:00:00Z",
+        "marketplace":  {
+                            "install":  610,
+                            "updateCount":  477,
+                            "downloadCount":  632,
+                            "averagerating":  3.95,
+                            "ratingcount":  5,
+                            "weightedRating":  3.8525,
+                            "trendingdaily":  0.217755,
+                            "trendingweekly":  0.540984,
+                            "trendingmonthly":  2.272133
+                        },
+        "openVsx":  {
+                        "downloadCount":  287,
+                        "reviewCount":  1,
+                        "averageRating":  4.1
+                    }
+    },
+    {
+        "ts":  "2026-05-22T18:00:00Z",
+        "marketplace":  {
+                            "install":  676,
+                            "updateCount":  527,
+                            "downloadCount":  718,
+                            "averagerating":  3.9,
+                            "ratingcount":  6,
+                            "weightedRating":  3.805,
+                            "trendingdaily":  1.081967,
+                            "trendingweekly":  0.473373,
+                            "trendingmonthly":  1.988167
+                        },
+        "openVsx":  {
+                        "downloadCount":  319,
+                        "reviewCount":  2,
+                        "averageRating":  4.06
+                    }
+    },
+    {
+        "ts":  "2026-05-23T00:00:00Z",
+        "marketplace":  {
+                            "install":  740,
+                            "updateCount":  575,
+                            "downloadCount":  781,
+                            "averagerating":  3.91,
+                            "ratingcount":  6,
+                            "weightedRating":  3.8145,
+                            "trendingdaily":  0.946746,
+                            "trendingweekly":  0.439189,
+                            "trendingmonthly":  1.844594
+                        },
+        "openVsx":  {
+                        "downloadCount":  343,
+                        "reviewCount":  2,
+                        "averageRating":  4.02
+                    }
+    },
+    {
+        "ts":  "2026-05-23T06:00:00Z",
+        "marketplace":  {
+                            "install":  805,
+                            "updateCount":  630,
+                            "downloadCount":  835,
+                            "averagerating":  3.96,
+                            "ratingcount":  7,
+                            "weightedRating":  3.862,
+                            "trendingdaily":  0.878378,
+                            "trendingweekly":  0.391304,
+                            "trendingmonthly":  1.643477
+                        },
+        "openVsx":  {
+                        "downloadCount":  378,
+                        "reviewCount":  2,
+                        "averageRating":  3.98
+                    }
+    },
+    {
+        "ts":  "2026-05-23T12:00:00Z",
+        "marketplace":  {
+                            "install":  868,
+                            "updateCount":  676,
+                            "downloadCount":  907,
+                            "averagerating":  4.04,
+                            "ratingcount":  7,
+                            "weightedRating":  3.938,
+                            "trendingdaily":  0.782609,
+                            "trendingweekly":  0.080645,
+                            "trendingmonthly":  0.338709
+                        },
+        "openVsx":  {
+                        "downloadCount":  404,
+                        "reviewCount":  2,
+                        "averageRating":  3.93
+                    }
+    },
+    {
+        "ts":  "2026-05-23T18:00:00Z",
+        "marketplace":  {
+                            "install":  882,
+                            "updateCount":  687,
+                            "downloadCount":  921,
+                            "averagerating":  4.14,
+                            "ratingcount":  8,
+                            "weightedRating":  4.033,
+                            "trendingdaily":  0.16129,
+                            "trendingweekly":  0.085034,
+                            "trendingmonthly":  0.357143
+                        },
+        "openVsx":  {
+                        "downloadCount":  414,
+                        "reviewCount":  2,
+                        "averageRating":  3.9
+                    }
+    },
+    {
+        "ts":  "2026-05-24T00:00:00Z",
+        "marketplace":  {
+                            "install":  897,
+                            "updateCount":  699,
+                            "downloadCount":  937,
+                            "averagerating":  4.23,
+                            "ratingcount":  8,
+                            "weightedRating":  4.1185,
+                            "trendingdaily":  0.170068,
+                            "trendingweekly":  0.06689,
+                            "trendingmonthly":  0.280938
+                        },
+        "openVsx":  {
+                        "downloadCount":  417,
+                        "reviewCount":  3,
+                        "averageRating":  3.87
+                    }
+    },
+    {
+        "ts":  "2026-05-24T06:00:00Z",
+        "marketplace":  {
+                            "install":  909,
+                            "updateCount":  712,
+                            "downloadCount":  944,
+                            "averagerating":  4.29,
+                            "ratingcount":  8,
+                            "weightedRating":  4.1755,
+                            "trendingdaily":  0.133779,
+                            "trendingweekly":  0.077008,
+                            "trendingmonthly":  0.323434
+                        },
+        "openVsx":  {
+                        "downloadCount":  428,
+                        "reviewCount":  3,
+                        "averageRating":  3.85
+                    }
+    },
+    {
+        "ts":  "2026-05-24T12:00:00Z",
+        "marketplace":  {
+                            "install":  923,
+                            "updateCount":  724,
+                            "downloadCount":  962,
+                            "averagerating":  4.3,
+                            "ratingcount":  9,
+                            "weightedRating":  4.185,
+                            "trendingdaily":  0.154015,
+                            "trendingweekly":  0.07584,
+                            "trendingmonthly":  0.318528
+                        },
+        "openVsx":  {
+                        "downloadCount":  436,
+                        "reviewCount":  3,
+                        "averageRating":  3.85
+                    }
+    },
+    {
+        "ts":  "2026-05-24T18:00:00Z",
+        "marketplace":  {
+                            "install":  937,
+                            "updateCount":  731,
+                            "downloadCount":  975,
+                            "averagerating":  4.26,
+                            "ratingcount":  9,
+                            "weightedRating":  4.147,
+                            "trendingdaily":  0.151679,
+                            "trendingweekly":  0.06937,
+                            "trendingmonthly":  0.291354
+                        },
+        "openVsx":  {
+                        "downloadCount":  441,
+                        "reviewCount":  3,
+                        "averageRating":  3.86
+                    }
+    },
+    {
+        "ts":  "2026-05-25T00:00:00Z",
+        "marketplace":  {
+                            "install":  950,
+                            "updateCount":  739,
+                            "downloadCount":  1006,
+                            "averagerating":  4.18,
+                            "ratingcount":  10,
+                            "weightedRating":  4.071,
+                            "trendingdaily":  0.138741,
+                            "trendingweekly":  0.078947,
+                            "trendingmonthly":  0.331577
+                        },
+        "openVsx":  {
+                        "downloadCount":  448,
+                        "reviewCount":  3,
+                        "averageRating":  3.88
+                    }
+    },
+    {
+        "ts":  "2026-05-25T06:00:00Z",
+        "marketplace":  {
+                            "install":  965,
+                            "updateCount":  749,
+                            "downloadCount":  1014,
+                            "averagerating":  4.08,
+                            "ratingcount":  10,
+                            "weightedRating":  3.976,
+                            "trendingdaily":  0.157895,
+                            "trendingweekly":  0.067358,
+                            "trendingmonthly":  0.282904
+                        },
+        "openVsx":  {
+                        "downloadCount":  449,
+                        "reviewCount":  3,
+                        "averageRating":  3.92
+                    }
+    },
+    {
+        "ts":  "2026-05-25T12:00:00Z",
+        "marketplace":  {
+                            "install":  978,
+                            "updateCount":  760,
+                            "downloadCount":  1031,
+                            "averagerating":  3.99,
+                            "ratingcount":  11,
+                            "weightedRating":  3.8905,
+                            "trendingdaily":  0.134715,
+                            "trendingweekly":  0.388548,
+                            "trendingmonthly":  1.631902
+                        },
+        "openVsx":  {
+                        "downloadCount":  458,
+                        "reviewCount":  4,
+                        "averageRating":  3.96
+                    }
+    },
+    {
+        "ts":  "2026-05-25T18:00:00Z",
+        "marketplace":  {
+                            "install":  1054,
+                            "updateCount":  820,
+                            "downloadCount":  1114,
+                            "averagerating":  3.92,
+                            "ratingcount":  11,
+                            "weightedRating":  3.824,
+                            "trendingdaily":  0.777096,
+                            "trendingweekly":  0.355787,
+                            "trendingmonthly":  1.494305
+                        },
+        "openVsx":  {
+                        "downloadCount":  493,
+                        "reviewCount":  4,
+                        "averageRating":  4
+                    }
+    },
+    {
+        "ts":  "2026-05-26T00:00:00Z",
+        "marketplace":  {
+                            "install":  1129,
+                            "updateCount":  883,
+                            "downloadCount":  1194,
+                            "averagerating":  3.9,
+                            "ratingcount":  11,
+                            "weightedRating":  3.805,
+                            "trendingdaily":  0.711575,
+                            "trendingweekly":  0.34101,
+                            "trendingmonthly":  1.432242
+                        },
+        "openVsx":  {
+                        "downloadCount":  529,
+                        "reviewCount":  4,
+                        "averageRating":  4.05
+                    }
+    },
+    {
+        "ts":  "2026-05-26T06:00:00Z",
+        "marketplace":  {
+                            "install":  1206,
+                            "updateCount":  944,
+                            "downloadCount":  1262,
+                            "averagerating":  3.92,
+                            "ratingcount":  12,
+                            "weightedRating":  3.824,
+                            "trendingdaily":  0.682019,
+                            "trendingweekly":  0.306799,
+                            "trendingmonthly":  1.288556
+                        },
+        "openVsx":  {
+                        "downloadCount":  570,
+                        "reviewCount":  4,
+                        "averageRating":  4.09
+                    }
+    },
+    {
+        "ts":  "2026-05-26T12:00:00Z",
+        "marketplace":  {
+                            "install":  1280,
+                            "updateCount":  997,
+                            "downloadCount":  1337,
+                            "averagerating":  3.99,
+                            "ratingcount":  12,
+                            "weightedRating":  3.8905,
+                            "trendingdaily":  0.613599,
+                            "trendingweekly":  0.085938,
+                            "trendingmonthly":  0.36094
+                        },
+        "openVsx":  {
+                        "downloadCount":  598,
+                        "reviewCount":  4,
+                        "averageRating":  4.12
+                    }
+    },
+    {
+        "ts":  "2026-05-26T18:00:00Z",
+        "marketplace":  {
+                            "install":  1302,
+                            "updateCount":  1020,
+                            "downloadCount":  1363,
+                            "averagerating":  4.09,
+                            "ratingcount":  13,
+                            "weightedRating":  3.9855,
+                            "trendingdaily":  0.171875,
+                            "trendingweekly":  0.072965,
+                            "trendingmonthly":  0.306453
+                        },
+        "openVsx":  {
+                        "downloadCount":  615,
+                        "reviewCount":  4,
+                        "averageRating":  4.14
+                    }
+    },
+    {
+        "ts":  "2026-05-27T00:00:00Z",
+        "marketplace":  {
+                            "install":  1321,
+                            "updateCount":  1033,
+                            "downloadCount":  1380,
+                            "averagerating":  4.18,
+                            "ratingcount":  13,
+                            "weightedRating":  4.071,
+                            "trendingdaily":  0.145929,
+                            "trendingweekly":  0.0757,
+                            "trendingmonthly":  0.31794
+                        },
+        "openVsx":  {
+                        "downloadCount":  623,
+                        "reviewCount":  5,
+                        "averageRating":  4.15
+                    }
+    },
+    {
+        "ts":  "2026-05-27T06:00:00Z",
+        "marketplace":  {
+                            "install":  1341,
+                            "updateCount":  1050,
+                            "downloadCount":  1405,
+                            "averagerating":  4.26,
+                            "ratingcount":  14,
+                            "weightedRating":  4.147,
+                            "trendingdaily":  0.1514,
+                            "trendingweekly":  0.070843,
+                            "trendingmonthly":  0.297541
+                        },
+        "openVsx":  {
+                        "downloadCount":  628,
+                        "reviewCount":  5,
+                        "averageRating":  4.15
+                    }
+    },
+    {
+        "ts":  "2026-05-27T12:00:00Z",
+        "marketplace":  {
+                            "install":  1360,
+                            "updateCount":  1061,
+                            "downloadCount":  1430,
+                            "averagerating":  4.3,
+                            "ratingcount":  14,
+                            "weightedRating":  4.185,
+                            "trendingdaily":  0.141685,
+                            "trendingweekly":  0.073529,
+                            "trendingmonthly":  0.308822
+                        },
+        "openVsx":  {
+                        "downloadCount":  634,
+                        "reviewCount":  5,
+                        "averageRating":  4.13
+                    }
+    },
+    {
+        "ts":  "2026-05-27T18:00:00Z",
+        "marketplace":  {
+                            "install":  1380,
+                            "updateCount":  1073,
+                            "downloadCount":  1448,
+                            "averagerating":  4.29,
+                            "ratingcount":  14,
+                            "weightedRating":  4.1755,
+                            "trendingdaily":  0.147059,
+                            "trendingweekly":  0.072464,
+                            "trendingmonthly":  0.304349
+                        },
+        "openVsx":  {
+                        "downloadCount":  645,
+                        "reviewCount":  5,
+                        "averageRating":  4.1
+                    }
+    }
+]

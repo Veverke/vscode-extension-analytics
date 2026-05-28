@@ -160,6 +160,38 @@ These tests are tagged `@integration` and skipped in CI by default (`INTEGRATION
 - [ ] All unit tests pass (`npm run test`)
 - [ ] Integration tests pass when run manually with `INTEGRATION=true npm run test`
 
+---
+
+## Deliverables
+
+| Artifact | Location | Description |
+|---|---|---|
+| TypeScript types | `src/types/schema.ts` | `DataPoint`, `MarketplaceSnapshot`, `OpenVsxSnapshot`, `ExtensionEntry`, `ExtensionRegistry` — shared by collector and frontend |
+| Marketplace API client | `collect/marketplace.ts` | Fetches and parses install counts, ratings, trending stats from the VS Marketplace query endpoint |
+| Open VSX API client | `collect/openvsx.ts` | Fetches and parses download counts and ratings; handles 404 gracefully |
+| Storage helpers | `collect/storage.ts` | Read/append/write JSON time-series files; manage extensions registry |
+| Collector entry point | `collect/index.ts` | Orchestrates parallel collection across all tracked extensions; exits with correct status code |
+| Extensions registry | `data/extensions.json` | Seeded with `Veverke.chatwizard`; consumed by both collector and frontend |
+| First live data file | `data/Veverke.chatwizard.json` | Created/appended on first manual or scheduled collector run |
+| Collector unit tests | `collect/__tests__/` | Parser, storage, and error-handling tests using fixture data |
+| Integration tests | `collect/__tests__/*.integration.test.ts` | Runnable with `INTEGRATION=true`; call real APIs and validate response shapes |
+
+---
+
+## Manual Testing Checklist
+
+> Cumulative — includes Phase 1 checks. Run these after Phase 2 to confirm the collector works end-to-end before building the frontend.
+
+- [ ] **Collector runs without error:** `npx ts-node collect/index.ts` (or `node --loader ts-node/esm collect/index.ts`) — exits 0, no unhandled rejections in output
+- [ ] **Data file created:** After running the collector, `data/Veverke.chatwizard.json` exists and contains at least one data point
+- [ ] **Data point shape is correct:** Open `data/Veverke.chatwizard.json` — it is a JSON array; each object has `ts`, `marketplace.installs`, `marketplace.averageRating`, `openVsx.downloads` (or `openVsx: null`)
+- [ ] **Installs value is realistic:** `marketplace.installs` is a positive integer greater than zero
+- [ ] **Rating value is in range:** `marketplace.averageRating` is between 0 and 5 (or null/undefined if no ratings yet)
+- [ ] **Append works correctly:** Run the collector a second time — `data/Veverke.chatwizard.json` now has 2 entries; the second `ts` is later than the first
+- [ ] **Open VSX handled:** If the extension exists on Open VSX, `openVsx.downloads` is a non-negative number; if not, the field is `null` with no crash
+- [ ] **Integration tests pass live:** `INTEGRATION=true npm run test -- --reporter=verbose` — all three integration tests pass against real APIs
+- [ ] **Registry unchanged after collect:** `data/extensions.json` still contains exactly the seeded entry — collector does not corrupt it
+
 ## Master Plan Update
 
 On completion, update `work-plan-mvp.md` Phase 2 row to: ✅ Completed

@@ -153,6 +153,38 @@ No UI framework (no Material UI, no Tailwind) — vanilla CSS only for MVP to mi
 - [ ] All E2E tests pass
 - [ ] The deploy GitHub Actions workflow successfully deploys to GitHub Pages on push to `main`
 
+---
+
+## Deliverables
+
+| Artifact | Location | Description |
+|---|---|---|
+| React Router setup | `src/main.tsx` | Hash-based router with `/` (Overview) and `/extension/:id` routes |
+| Layout component | `src/components/Layout.tsx` | App shell with header, sidebar, and main content area via `<Outlet>` |
+| `useExtensions` hook | `src/hooks/useExtensions.ts` | Loads and validates `data/extensions.json`; exposes loading and error states |
+| Overview route | `src/routes/Overview.tsx` | Lists tracked extensions with navigation links (placeholder content) |
+| ExtensionDetail route | `src/routes/ExtensionDetail.tsx` | Shows extension display name and placeholder sections |
+| Global CSS | `src/styles/global.css` | Design tokens, reset, responsive sidebar/main layout |
+| GH Pages SPA fix | `public/404.html` + decode script in `index.html` | Prevents 404 on browser refresh of deep links |
+| Frontend unit tests | `tests/unit/useExtensions.test.ts`, `Layout.test.tsx`, `Overview.test.tsx`, `ExtensionDetail.test.tsx` | Hook and component rendering tests |
+| Frontend E2E tests | `tests/e2e/shell.spec.ts` | Navigation, deep linking, error and loading states |
+
+---
+
+## Manual Testing Checklist
+
+> Cumulative — includes Phase 1–2 checks. Run these after Phase 3 to verify the frontend shell before adding charts.
+
+- [ ] **Sidebar shows ChatWizard:** Open `http://localhost:5173` — the sidebar lists "ChatWizard" (loaded from `data/extensions.json`)
+- [ ] **Click navigates to detail:** Click "ChatWizard" in the sidebar — URL changes to `#/extension/Veverke.chatwizard`, heading shows "ChatWizard"
+- [ ] **Direct URL works:** Navigate directly to `http://localhost:5173/#/extension/Veverke.chatwizard` — page loads correctly without a blank screen
+- [ ] **Unknown extension shows error:** Navigate to `http://localhost:5173/#/extension/fake.extension` — a "not found" message appears, no crash
+- [ ] **Loading spinner visible:** Throttle the network in DevTools to "Slow 3G"; reload the page — a spinner or skeleton is visible before content appears
+- [ ] **Responsive layout:** Resize the browser window to below 768px — sidebar collapses or stacks, content remains readable
+- [ ] **GH Pages deploy works:** Push to `main`; check the GitHub Actions "Deploy to GitHub Pages" workflow runs successfully; visit the `github.io` URL and confirm the app loads
+- [ ] **Hash routing on GH Pages:** On the deployed GH Pages site, navigate to an extension detail URL; refresh the browser — page loads correctly (no 404 from GitHub's server)
+- [ ] **Build has no warnings:** `npm run build` output shows 0 TypeScript errors and 0 Vite build warnings
+
 ## Master Plan Update
 
 On completion, update `work-plan-mvp.md` Phase 3 row to: ✅ Completed

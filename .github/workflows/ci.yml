@@ -1,3 +1,9 @@
+# CI — Continuous Integration
+#
+# Purpose: Gate every pull request and push to main with a full quality check.
+# Runs linting, TypeScript type-checking, unit tests with coverage reporting,
+# and Playwright E2E tests. Must pass before any code is merged or deployed.
+# Skips data-only and documentation-only commits to avoid unnecessary runs.
 name: CI
 
 on:
@@ -8,8 +14,6 @@ on:
     paths-ignore:
       - "data/**"
       - "*.md"
-      - ".github/workflows/collect.yml"
-      - ".github/workflows/discover.yml"
       - ".github/workflows/deploy.yml"
       # Note: discover.yml is added here proactively; it will be created in Phase 2.
 
@@ -19,6 +23,8 @@ concurrency:
 
 jobs:
   # ─── Job 1: Lint ────────────────────────────────────────────────────────────
+  # Checks code style via ESLint and verifies both tsconfig targets compile
+  # without errors — catches style issues and type errors before tests run.
   lint:
     name: Lint
     runs-on: ubuntu-latest
@@ -36,13 +42,18 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+      # Checks src/ (React/Vite frontend types)
       - name: TypeScript type check (src)
         run: npx tsc --noEmit
 
+      # Checks vite.config, vitest.config, playwright.config and collect/ scripts
       - name: TypeScript type check (node — vite/vitest/playwright/collect)
         run: npx tsc -p tsconfig.node.json --noEmit
 
   # ─── Job 2: Unit Tests ──────────────────────────────────────────────────────
+  # Runs all Vitest unit tests and enforces the 90 % coverage threshold.
+  # Coverage results are uploaded to Codecov and saved as a build artifact
+  # so they remain accessible after the run (kept for 14 days).
   test-unit:
     name: Unit Tests
     runs-on: ubuntu-latest
@@ -60,6 +71,7 @@ jobs:
       - name: Run unit tests with coverage
         run: npm run test -- --coverage --reporter=verbose
 
+      # Non-blocking — coverage badge/history only; won't fail the job if token is absent
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         if: always()
@@ -70,6 +82,7 @@ jobs:
           name: unit-tests
           fail_ci_if_error: false
 
+      # Persist the HTML coverage report so it can be downloaded from the Actions UI
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         if: always()
@@ -79,6 +92,9 @@ jobs:
           retention-days: 14
 
   # ─── Job 3: E2E Tests ───────────────────────────────────────────────────────
+  # Spins up the production build and runs Playwright smoke tests against it
+  # in a headless Chromium browser. Reports and traces are uploaded on failure
+  # to make debugging flaky or broken tests easier.
   test-e2e:
     name: E2E Tests
     runs-on: ubuntu-latest
@@ -93,9 +109,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Only Chromium is needed for smoke tests; --with-deps installs OS-level libs
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      # E2E tests run against the compiled dist/ bundle, not the dev server
       - name: Build app (required for E2E against production bundle)
         run: npm run build
 

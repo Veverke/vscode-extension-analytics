@@ -1,3 +1,10 @@
+# Deploy to GitHub Pages
+#
+# Purpose: Builds the React/Vite frontend and publishes it to GitHub Pages
+# whenever source code changes are pushed to main. Intentionally skips runs
+# triggered solely by data collection commits (data/** changes) or collector
+# script changes, since those do not affect the built frontend bundle.
+# Can also be triggered manually via workflow_dispatch for out-of-band deploys.
 name: Deploy to GitHub Pages
 
 on:
@@ -26,10 +33,18 @@ jobs:
           node-version: "20"
           cache: "npm"
       - run: npm ci
+
+      # Produces the optimised static bundle in dist/
       - run: npm run build
+
+      # Configures the GitHub Pages environment for this repository
       - uses: actions/configure-pages@v4
+
+      # Packages dist/ as the Pages artifact to be deployed
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
+
+      # Publishes the uploaded artifact; outputs the live page URL
       - id: deployment
         uses: actions/deploy-pages@v4

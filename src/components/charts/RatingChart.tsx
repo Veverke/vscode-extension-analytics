@@ -50,7 +50,7 @@ export default function RatingChart({ data }: Props) {
         <YAxis yAxisId="left" domain={[0, 5]} />
         <YAxis yAxisId="right" orientation="right" />
         <Tooltip
-          labelFormatter={(label: number) => formatDate(label)}
+          labelFormatter={(label: unknown) => formatDate(label as number)}
         />
         <Legend />
         <Line

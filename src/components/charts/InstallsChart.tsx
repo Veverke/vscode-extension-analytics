@@ -50,11 +50,11 @@ export default function InstallsChart({ data }: Props) {
         />
         <YAxis tickFormatter={(v: number) => v.toLocaleString()} />
         <Tooltip
-          labelFormatter={(label: number) => formatDate(label)}
-          formatter={(value: number | null, name: string) => [
-            value !== null ? value.toLocaleString() : 'N/A',
-            name,
-          ]}
+          labelFormatter={(label: unknown) => formatDate(label as number)}
+          formatter={(value: unknown, name: unknown) => {
+            const num = typeof value === 'number' ? value : null
+            return [num !== null ? num.toLocaleString() : 'N/A', name as string]
+          }}
         />
         <Legend />
         <Line

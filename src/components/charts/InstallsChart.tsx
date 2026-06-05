@@ -9,6 +9,7 @@ import {
   ResponsiveContainer,
   Label,
 } from 'recharts'
+import type { ReferenceLineProps } from 'recharts'
 import { DataPoint } from '../../types/schema'
 import { ProjectionResult } from '../../metrics/projections'
 import { computeVelocity } from '../../metrics/velocity'
@@ -31,6 +32,7 @@ interface Props {
   data: DataPoint[]
   projections?: ProjectionResult[]
   peaks?: number[]
+  annotations?: ReferenceLineProps[]
 }
 
 interface InstallsChartPoint {
@@ -76,7 +78,7 @@ function buildChartData(data: DataPoint[], projections?: ProjectionResult[]): In
   return [...realPoints, ...projPoints]
 }
 
-export default function InstallsChart({ data, projections, peaks }: Props) {
+export default function InstallsChart({ data, projections, peaks, annotations }: Props) {
   if (data.length === 0) {
     return <p role="status">{EMPTY_DATA_MESSAGE}</p>
   }
@@ -166,6 +168,9 @@ export default function InstallsChart({ data, projections, peaks }: Props) {
             </ReferenceLine>
           )
         })}
+        {annotations?.map((props, index) => (
+          <ReferenceLine key={`annotation-${index}`} {...props} />
+        ))}
       </ComposedChart>
     </ResponsiveContainer>
   )

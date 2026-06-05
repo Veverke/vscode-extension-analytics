@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Link, Outlet } from 'react-router-dom'
 import { ExtensionEntry } from '../types/schema'
 
 interface LayoutProps {
@@ -9,7 +9,11 @@ export default function Layout({ extensions }: LayoutProps) {
   return (
     <div className="app">
       <header className="app__header">
-        <h1 className="app__title">VS Code Extension Analytics</h1>
+        <h1 className="app__title">
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+            VS Code Extension Analytics
+          </Link>
+        </h1>
       </header>
       <div className="app__body">
         <nav className="app__sidebar" aria-label="Extension navigation">

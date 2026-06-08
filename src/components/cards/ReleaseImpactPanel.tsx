@@ -37,9 +37,9 @@ export default function ReleaseImpactPanel({ impacts, githubRepo }: Props) {
 
   if (impacts.length === 0) {
     return (
-      <section aria-label="Release Impact">
+      <section className="release-section" aria-label="Release Impact">
         <h2>Release Impact</h2>
-        <p>No release data available yet.</p>
+        <p style={{ color: 'var(--color-text-muted)' }}>No release data available yet.</p>
       </section>
     );
   }
@@ -73,9 +73,9 @@ export default function ReleaseImpactPanel({ impacts, githubRepo }: Props) {
   };
 
   return (
-    <section aria-label="Release Impact">
+    <section className="release-section" aria-label="Release Impact">
       <h2>Release Impact</h2>
-      <table>
+      <table className="release-table">
         <thead>
           <tr>
             <th>Version</th>

@@ -1,0 +1,109 @@
+# Process Tracking Requests
+#
+# Purpose: Automatically process issue-based extension tracking requests.
+# Triggered when an issue is opened with the `tracking-request` label.
+# Parses the issue body, validates the extension ID, and updates the
+# extensions registry (data/extensions.json) idempotently.
+name: Process Tracking Requests
+
+on:
+  issues:
+    types: [opened, reopened]
+
+jobs:
+  process:
+    # Only run when the tracking-request label is present
+    if: contains(github.event.issue.labels.*.name, 'tracking-request')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Process tracking request
+        id: process
+        run: |
+          OUTPUT=$(npx tsx collect/process-tracking-request.ts 2>&1)
+          echo "$OUTPUT"
+          echo "output<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$OUTPUT" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          REQUESTED_BY: ${{ github.event.issue.user.login }}
+
+      - name: Add completion comment
+        uses: actions/github-script@v7
+        env:
+          PROCESS_OUTPUT: ${{ steps.process.outputs.output }}
+        with:
+          script: |
+            const output = JSON.parse(process.env.PROCESS_OUTPUT);
+            let commentBody = '';
+
+            if (output.success && output.results.length > 0) {
+              const result = output.results[0];
+              if (result.action === 'added') {
+                commentBody = `✅ ${result.message}\n\nThe extension has been added to the tracking registry and will appear in analytics after the next data collection run.`;
+              } else if (result.action === 'skipped') {
+                commentBody = `ℹ️ ${result.message}`;
+              }
+            } else {
+              commentBody = `❌ Tracking request could not be processed.\n\n**Errors:**\n${output.errors.map((e) => '- ' + e).join('\n')}`;
+            }
+
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: commentBody,
+            });
+
+      - name: Commit and push registry update
+        if: steps.process.outputs.output != ''
+        run: |
+          git config user.name 'analytics-bot'
+          git config user.email 'analytics-bot@users.noreply.github.com'
+          git add data/extensions.json
+          git diff --staged --quiet || git commit -m 'chore: update extension registry from tracking request [skip ci]'
+          git push
+
+      - name: Close issue
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed',
+            });
+
+      - name: Reopen issue on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'open',
+            });
+
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '⚠️ The tracking request could not be processed automatically. Please check the workflow logs for details.',
+            });

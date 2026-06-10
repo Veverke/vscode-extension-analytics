@@ -26,6 +26,8 @@ export interface ExtensionEntry {
   displayName: string;
   githubRepo: string;
   trackedSince: string;
+  /** GitHub username of the person who requested tracking (optional for legacy entries). */
+  requestedBy?: string;
 }
 
 export type ExtensionRegistry = ExtensionEntry[];

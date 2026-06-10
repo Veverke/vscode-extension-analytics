@@ -54,4 +54,11 @@ describe('Layout', () => {
     const activeLink = screen.getByRole('link', { name: firstExt.displayName })
     expect(activeLink).toHaveClass('sidebar__link--active')
   })
+
+  it('header title links to home (/)', () => {
+    renderLayout()
+    const homeLink = screen.getByRole('link', { name: 'VS Code Extension Analytics' })
+    expect(homeLink).toBeInTheDocument()
+    expect(homeLink).toHaveAttribute('href', '/')
+  })
 })

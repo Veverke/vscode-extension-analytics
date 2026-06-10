@@ -1,8 +1,31 @@
 import type { DataPoint } from '../src/types/schema.js';
 import { fileURLToPath } from 'node:url';
-import { readExtensionRegistry, appendDataPoint, ensureDataDir } from './storage.js';
-import { fetchMarketplaceStats } from './marketplace.js';
+import {
+  readExtensionRegistry,
+  appendDataPoint,
+  ensureDataDir,
+  readReleases,
+  writeReleases,
+} from './storage.js';
+import { fetchMarketplaceStats, fetchReleaseHistory } from './marketplace.js';
 import { fetchOpenVsxStats } from './openvsx.js';
+
+/**
+ * Merges newly fetched release entries with the stored ones.
+ * Only adds versions not already present. Sets installsAtRelease on first detection.
+ * Returns the updated list (does not mutate stored array in place).
+ */
+export function mergeReleases(
+  stored: import('../src/types/schema.js').ReleaseEntry[],
+  fetched: import('../src/types/schema.js').ReleaseEntry[],
+  currentInstalls: number
+): import('../src/types/schema.js').ReleaseEntry[] {
+  const storedVersions = new Set(stored.map((r) => r.version));
+  const newEntries = fetched
+    .filter((r) => !storedVersions.has(r.version))
+    .map((r) => ({ ...r, installsAtRelease: currentInstalls }));
+  return [...stored, ...newEntries];
+}
 
 export async function runCollector(): Promise<number> {
   ensureDataDir();
@@ -15,9 +38,10 @@ export async function runCollector(): Promise<number> {
 
   const results = await Promise.allSettled(
     registry.map(async (entry) => {
-      const [marketplace, openVsx] = await Promise.all([
+      const [marketplace, openVsx, fetchedReleases] = await Promise.all([
         fetchMarketplaceStats(entry.id),
         fetchOpenVsxStats(entry.namespace, entry.name),
+        fetchReleaseHistory(entry.id),
       ]);
 
       const point: DataPoint = {
@@ -27,6 +51,21 @@ export async function runCollector(): Promise<number> {
       };
 
       appendDataPoint(entry.id, point);
+
+      // Merge and persist release history
+      const storedReleases = readReleases(entry.id);
+      const mergedReleases = mergeReleases(
+        storedReleases,
+        fetchedReleases,
+        marketplace.installs
+      );
+      if (mergedReleases.length !== storedReleases.length) {
+        writeReleases(entry.id, mergedReleases);
+        console.log(
+          `[collector] Updated releases for ${entry.id}: ${mergedReleases.length} versions`
+        );
+      }
+
       console.log(`[collector] Collected data for ${entry.id}`);
       return entry.id;
     })
@@ -49,7 +88,9 @@ export async function runCollector(): Promise<number> {
 /* v8 ignore next 7 */
 if (fileURLToPath(import.meta.url) === process.argv[1]) {
   runCollector()
-    .then((code) => { process.exitCode = code; })
+    .then((code) => {
+      process.exitCode = code;
+    })
     .catch((err: unknown) => {
       console.error('[collector] Fatal error:', err);
       process.exitCode = 1;

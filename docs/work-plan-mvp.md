@@ -1,4 +1,4 @@
-﻿# MVP Work Plan
+# MVP Work Plan
 
 ## Definition of MVP
 
@@ -17,9 +17,9 @@ The MVP is a fully functional, zero-cost analytics tool that:
 | 1 | Repository & Infrastructure Setup | âœ… Completed |
 | 2 | Auto-Discovery & Data Collector | ✅ Completed |
 | 3 | Frontend Shell & GitHub Pages Deployment | ✅ Completed |
-| 4 | Core Charts & Data Display | â¬œ Not started |
-| 5 | Derived Analytics (Velocity, Projections, Peaks) | â¬œ Not started |
-| 6 | Release Correlation & Event Annotations | â¬œ Not started |
+| 4 | Core Charts & Data Display | ✅ Completed |
+| 5 | Derived Analytics (Velocity, Projections, Peaks) | ✅ Completed |
+| 6 | Release Correlation & Event Annotations | ✅ Completed |
 | 7 | Multi-Extension Overview Dashboard | â¬œ Not started |
 
 ---
@@ -47,7 +47,7 @@ Build the React application skeleton: routing, layout, navigation, and the mecha
 
 ---
 
-### Phase 4 â€” Core Charts & Data Display
+### Phase 4 — Core Charts & Data Display ✅ Completed
 Build the data-loading hooks and the primary visualization components: installs over time, rating over time, and summary stat cards. Uses real fixture data for development and tests.
 
 **Deliverable:** Extension detail page shows installs chart, rating chart, and stat cards populated from the JSON time series.

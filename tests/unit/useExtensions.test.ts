@@ -118,4 +118,15 @@ describe('useExtensions', () => {
     expect(result.current.error).toBeNull()
     expect(result.current.loading).toBe(true)
   })
+
+  it('non-Error thrown — uses fallback message', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue('string error'))
+
+    const { result } = renderHook(() => useExtensions())
+
+    await waitFor(() => expect(result.current.loading).toBe(false))
+
+    expect(result.current.error).toBe('Failed to load extensions')
+    expect(result.current.extensions).toEqual([])
+  })
 })

@@ -8,10 +8,13 @@ vi.mock('../storage.js', () => ({
   readExtensionRegistry: vi.fn(),
   appendDataPoint: vi.fn(),
   ensureDataDir: vi.fn(),
+  readReleases: vi.fn().mockReturnValue([]),
+  writeReleases: vi.fn(),
 }));
 
 vi.mock('../marketplace.js', () => ({
   fetchMarketplaceStats: vi.fn(),
+  fetchReleaseHistory: vi.fn().mockResolvedValue([]),
 }));
 
 vi.mock('../openvsx.js', () => ({
@@ -22,7 +25,7 @@ import { runCollector } from '../index.js';
 import * as storage from '../storage.js';
 import * as marketplace from '../marketplace.js';
 import * as openvsx from '../openvsx.js';
-import type { ExtensionEntry, MarketplaceSnapshot, OpenVsxSnapshot } from '../../src/types/schema.js';
+import type { ExtensionEntry, MarketplaceSnapshot, OpenVsxSnapshot, ReleaseEntry } from '../../src/types/schema.js';
 
 const mockEntry: ExtensionEntry = {
   id: 'Veverke.chatwizard',
@@ -69,7 +72,9 @@ describe('collector index', () => {
   it('returns exit code 0 when at least one extension succeeds', async () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([mockEntry]);
     vi.mocked(marketplace.fetchMarketplaceStats).mockResolvedValue(mockMarketplace);
+    vi.mocked(marketplace.fetchReleaseHistory).mockResolvedValue([]);
     vi.mocked(openvsx.fetchOpenVsxStats).mockResolvedValue(mockOpenVsx);
+    vi.mocked(storage.readReleases).mockReturnValue([]);
 
     const code = await runCollector();
     expect(code).toBe(0);
@@ -89,7 +94,9 @@ describe('collector index', () => {
   it('constructs DataPoint with correct ts format', async () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([mockEntry]);
     vi.mocked(marketplace.fetchMarketplaceStats).mockResolvedValue(mockMarketplace);
+    vi.mocked(marketplace.fetchReleaseHistory).mockResolvedValue([]);
     vi.mocked(openvsx.fetchOpenVsxStats).mockResolvedValue(null);
+    vi.mocked(storage.readReleases).mockReturnValue([]);
 
     await runCollector();
 

@@ -8,7 +8,7 @@ export default function App() {
   if (loading) {
     return (
       <div role="status" aria-label="Loading indicator" className="loading">
-        <span>Loading…</span>
+        Loading extensions…
       </div>
     )
   }

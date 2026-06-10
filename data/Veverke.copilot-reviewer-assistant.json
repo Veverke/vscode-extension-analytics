@@ -510,6 +510,36 @@
     }
   },
   {
+    "ts": "2026-06-05T00:59:13.285Z",
+    "marketplace": {
+      "installs": 2,
+      "updates": 1,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 496,
+      "averageRating": null,
+      "ratingCount": 0
+    }
+  },
+  {
+    "ts": "2026-06-05T01:00:13.423Z",
+    "marketplace": {
+      "installs": 2,
+      "updates": 1,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 496,
+      "averageRating": null,
+      "ratingCount": 0
+    }
+  },
+  {
     "ts": "2026-06-05T07:30:01.503Z",
     "marketplace": {
       "installs": 3,

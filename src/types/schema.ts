@@ -29,3 +29,17 @@ export interface ExtensionEntry {
 }
 
 export type ExtensionRegistry = ExtensionEntry[];
+
+export interface ReleaseEntry {
+  version: string;
+  publishedAt: string; // ISO 8601
+  installsAtRelease: number; // marketplace.installs at time of fetch (approximation)
+  changelog?: string; // not available from API — left empty, filled manually
+}
+
+export interface EventAnnotation {
+  ts: string; // ISO 8601
+  label: string; // e.g. "Blog post on Dev.to"
+  type: 'release' | 'marketing' | 'blog' | 'social' | 'other';
+  url?: string;
+}

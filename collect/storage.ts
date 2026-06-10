@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import type { ExtensionRegistry, DataPoint } from '../src/types/schema.js';
+import type { ExtensionRegistry, DataPoint, ReleaseEntry } from '../src/types/schema.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -54,4 +54,19 @@ export function appendDataPoint(extensionId: string, point: DataPoint): void {
   existing.push(point);
   const filePath = path.join(dataDir, `${extensionId}.json`);
   fs.writeFileSync(filePath, JSON.stringify(existing, null, 2), 'utf-8');
+}
+
+export function readReleases(extensionId: string): ReleaseEntry[] {
+  const filePath = path.join(dataDir, `${extensionId}.releases.json`);
+  if (!fs.existsSync(filePath)) {
+    return [];
+  }
+  const content = fs.readFileSync(filePath, 'utf-8');
+  return JSON.parse(content) as ReleaseEntry[];
+}
+
+export function writeReleases(extensionId: string, releases: ReleaseEntry[]): void {
+  ensureDataDir();
+  const filePath = path.join(dataDir, `${extensionId}.releases.json`);
+  fs.writeFileSync(filePath, JSON.stringify(releases, null, 2), 'utf-8');
 }

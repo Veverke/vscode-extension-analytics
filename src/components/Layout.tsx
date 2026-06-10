@@ -12,7 +12,7 @@ export default function Layout({ extensions }: LayoutProps) {
       <header className="app__header">
         <h1 className="app__title">
           <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            Extension Analytics
+            VS Code Extension Analytics
           </Link>
         </h1>
       </header>

@@ -81,7 +81,7 @@ export default function Overview() {
 
   return (
     <div className="overview-wrapper">
-      <h1 className="overview-header">Extensions Overview</h1>
+      <h1 className="overview-header">Your Extensions</h1>
       <div className="card">
         <table className="overview-table" aria-label="Extensions overview">
         <thead>

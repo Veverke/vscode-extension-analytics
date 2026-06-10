@@ -15,6 +15,11 @@ const chatwizardData = require('../../fixtures/data/Veverke.chatwizard.json') as
 const fastGrowerData = require('../../fixtures/data/Veverke.fast-grower.json') as object[]
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const slowGrowerData = require('../../fixtures/data/Veverke.slow-grower.json') as object[]
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const singleExtension = require('../../fixtures/data/extensions.json') as {
+  id: string
+  displayName: string
+}[]
 
 test.describe('Overview Dashboard', () => {
   test.beforeEach(async ({ page }) => {
@@ -193,12 +198,68 @@ test.describe('Overview Dashboard', () => {
     })
 
     // Wait for loading to complete — 2 rows succeed, 1 shows error
-    await expect(page.getByRole('link', { name: 'Chat Wizard' })).toBeVisible({
+    // Scope to the overview table to avoid matching sidebar links
+    const table = page.getByRole('table', { name: 'Extensions overview' })
+    await expect(table.getByRole('link', { name: 'Chat Wizard' })).toBeVisible({
       timeout: 10000,
     })
-    await expect(page.getByRole('link', { name: 'Fast Grower' })).toBeVisible()
+    await expect(table.getByRole('link', { name: 'Fast Grower' })).toBeVisible()
 
     // Error icon should be visible
     await expect(page.getByRole('img', { name: 'error' })).toBeVisible()
+  })
+
+  test('sort by installs reverse — click twice toggles ascending', async ({ page }) => {
+    await page.goto('/')
+
+    await expect(page.getByRole('heading', { name: 'Your Extensions' })).toBeVisible({
+      timeout: 10000,
+    })
+
+    // First click: descending (highest first)
+    await page.getByRole('columnheader', { name: /Installs/ }).click()
+    let firstRow = page.locator('tbody tr').first()
+    await expect(firstRow).toContainText('Fast Grower') // 11750 installs
+
+    // Second click: ascending (lowest first)
+    await page.getByRole('columnheader', { name: /Installs/ }).click()
+    firstRow = page.locator('tbody tr').first()
+    await expect(firstRow).toContainText('Slow Grower') // 115 installs
+  })
+
+  test('single-extension redirect — navigates directly to detail page', async ({ page }) => {
+    // Override extensions.json to only have one extension
+    await page.route('**/data/extensions.json', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify([singleExtension[0]]),
+      })
+    )
+
+    // Also serve the chatwizard data directly
+    await page.route('**/data/Veverke.chatwizard.json', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(chatwizardData),
+      })
+    )
+
+    // Remove routes for the other extensions — stub them to avoid unmocked fetches
+    await page.route('**/data/Veverke.fast-grower.json', (route) =>
+      route.fulfill({ status: 404, body: 'Not Found' })
+    )
+    await page.route('**/data/Veverke.slow-grower.json', (route) =>
+      route.fulfill({ status: 404, body: 'Not Found' })
+    )
+
+    await page.goto('/')
+
+    // Should have redirected to the detail page (not showing overview table)
+    await expect(page).toHaveURL(/#\/extension\/Veverke\.chatwizard/)
+    await expect(page.getByRole('heading', { name: 'Chat Wizard' })).toBeVisible({
+      timeout: 10000,
+    })
   })
 })

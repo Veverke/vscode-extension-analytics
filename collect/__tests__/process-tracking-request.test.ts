@@ -313,7 +313,7 @@ describe('processTrackingRequest', () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([]);
 
     const body = '### Extension ID\nTracked.bythisuser';
-    const output = processTrackingRequest({ issueBody: body, requestedBy: 'the-requester' });
+    processTrackingRequest({ issueBody: body, requestedBy: 'the-requester' });
 
     const written = vi.mocked(storage.writeExtensionRegistry).mock.calls[0][0];
     expect(written[0].requestedBy).toBe('the-requester');
@@ -323,7 +323,7 @@ describe('processTrackingRequest', () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([]);
 
     const body = '### Extension ID\nWith.repo\n### GitHub Repository (optional)\nOwner/Repo';
-    const output = processTrackingRequest({ issueBody: body, requestedBy: 'user' });
+    processTrackingRequest({ issueBody: body, requestedBy: 'user' });
 
     const written = vi.mocked(storage.writeExtensionRegistry).mock.calls[0][0];
     expect(written[0].githubRepo).toBe('Owner/Repo');

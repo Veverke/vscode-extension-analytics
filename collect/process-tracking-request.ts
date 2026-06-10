@@ -151,7 +151,6 @@ export function processTrackingRequest(
   input: ProcessTrackingRequestInput
 ): ProcessTrackingRequestOutput {
   const { issueBody, requestedBy } = input;
-  const errors: string[] = [];
   const results: ProcessResult[] = [];
 
   const parsed = parseIssueBody(issueBody);

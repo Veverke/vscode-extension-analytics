@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { renderHook, waitFor, act } from '@testing-library/react'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { renderHook, waitFor } from '@testing-library/react'
 import { useAllExtensionsData } from '../../src/hooks/useAllExtensionsData'
 import type { ExtensionEntry } from '../../src/types/schema'
 import extensionsMulti from '../../fixtures/data/extensions-multi.json'

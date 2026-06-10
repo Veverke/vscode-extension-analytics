@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  test: {
+    test: {
     environment: 'jsdom',
     globals: true,
     setupFiles: ['tests/setup.ts'],
@@ -12,6 +12,7 @@ export default defineConfig({
       'src/**/*.test.{ts,tsx}',
       'collect/__tests__/**/*.test.ts',
     ],
+    testTimeout: 30000,
     coverage: {
       provider: 'v8',
       include: ['collect/**', 'src/**/*.{ts,tsx}'],

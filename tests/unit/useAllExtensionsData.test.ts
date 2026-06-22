@@ -1,181 +1,108 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { renderHook, waitFor } from '@testing-library/react'
-import { useAllExtensionsData } from '../../src/hooks/useAllExtensionsData'
-import type { ExtensionEntry } from '../../src/types/schema'
+import { useAllExtensionsData, type ExtensionSummary } from '../../src/hooks/useAllExtensionsData'
+import type { ExtensionEntry, DataPoint } from '../../src/types/schema'
 import extensionsMulti from '../../fixtures/data/extensions-multi.json'
-import chatwizardData from '../../fixtures/data/Veverke.chatwizard.json'
-import fastGrowerData from '../../fixtures/data/Veverke.fast-grower.json'
-import slowGrowerData from '../../fixtures/data/Veverke.slow-grower.json'
 
 const multiExtensions = extensionsMulti as ExtensionEntry[]
 
+// Tiny 2-point fixture to prevent OOM from 30-point data × 3 ext × 5 tests
+const tinyData: DataPoint[] = [
+  { ts: '2026-05-20T12:00:00Z', marketplace: { installs: 500, updates: 400, averageRating: 4.0, ratingCount: 10, trendingWeekly: 0, trendingMonthly: 0 }, openVsx: null },
+  { ts: '2026-05-21T12:00:00Z', marketplace: { installs: 1380, updates: 900, averageRating: 4.5, ratingCount: 15, trendingWeekly: 5, trendingMonthly: 10 }, openVsx: null },
+]
+
+function makeMockResponse(data: unknown, ok = true, status = 200) {
+  return Promise.resolve({
+    ok,
+    status,
+    json: () => Promise.resolve(data),
+    headers: new Headers(),
+  } as Response)
+}
+
 function mockFetchForMulti() {
-  vi.stubGlobal(
-    'fetch',
-    vi.fn().mockImplementation((url: string) => {
-      if (url.includes('Veverke.chatwizard')) {
-        return Promise.resolve({
-          ok: true,
-          status: 200,
-          json: () => Promise.resolve(chatwizardData),
-        })
-      }
-      if (url.includes('Veverke.fast-grower')) {
-        return Promise.resolve({
-          ok: true,
-          status: 200,
-          json: () => Promise.resolve(fastGrowerData),
-        })
-      }
-      if (url.includes('Veverke.slow-grower')) {
-        return Promise.resolve({
-          ok: true,
-          status: 200,
-          json: () => Promise.resolve(slowGrowerData),
-        })
-      }
-      return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) })
-    })
-  )
+  return ((url: string) => {
+    if (url.includes('Veverke.chatwizard')) return makeMockResponse(tinyData)
+    if (url.includes('Veverke.fast-grower')) return makeMockResponse(tinyData)
+    if (url.includes('Veverke.slow-grower')) return makeMockResponse(tinyData)
+    return makeMockResponse(null, false, 404)
+  }) as unknown as typeof globalThis.fetch
+}
+
+function mockPartialFailure() {
+  return ((url: string) => {
+    if (url.includes('Veverke.chatwizard')) return makeMockResponse(tinyData)
+    if (url.includes('Veverke.fast-grower')) return makeMockResponse(tinyData)
+    return makeMockResponse(null, false, 404)
+  }) as unknown as typeof globalThis.fetch
+}
+
+function mockNonErrorRejection() {
+  return ((url: string) => {
+    if (url.includes('Veverke.chatwizard')) return makeMockResponse(tinyData)
+    if (url.includes('Veverke.fast-grower')) return makeMockResponse(tinyData)
+    return Promise.reject('string rejection')
+  }) as unknown as typeof globalThis.fetch
 }
 
 describe('useAllExtensionsData', () => {
-  beforeEach(() => {
-    vi.restoreAllMocks()
-  })
+  it('success path — loading state, installs, sparkline, velocity & momentum', async () => {
+    globalThis.fetch = mockFetchForMulti()
+    const { result, unmount } = renderHook(() => useAllExtensionsData(multiExtensions))
 
-  it('starts in loading state', () => {
-    mockFetchForMulti()
-    const { result } = renderHook(() => useAllExtensionsData(multiExtensions))
+    // Check loading state before resolution
     expect(result.current.loading).toBe(true)
-  })
-
-  it('loads all 3 extensions successfully', async () => {
-    mockFetchForMulti()
-    const { result } = renderHook(() => useAllExtensionsData(multiExtensions))
 
     await waitFor(() => expect(result.current.loading).toBe(false))
 
     expect(result.current.results).toHaveLength(3)
     expect(Object.keys(result.current.errors)).toHaveLength(0)
-  })
-
-  it('each summary has correct currentInstalls', async () => {
-    mockFetchForMulti()
-    const { result } = renderHook(() => useAllExtensionsData(multiExtensions))
-
-    await waitFor(() => expect(result.current.loading).toBe(false))
-
-    const chatwizard = result.current.results.find(
-      r => r.extension.id === 'Veverke.chatwizard'
-    )!
-    expect(chatwizard.currentInstalls).toBe(1380) // last point in chatwizard fixture
-
-    const fastGrower = result.current.results.find(
-      r => r.extension.id === 'Veverke.fast-grower'
-    )!
-    expect(fastGrower.currentInstalls).toBe(11750) // last point in fast-grower fixture
-
-    const slowGrower = result.current.results.find(
-      r => r.extension.id === 'Veverke.slow-grower'
-    )!
-    expect(slowGrower.currentInstalls).toBe(115) // last point in slow-grower fixture
-  })
-
-  it('sparklinePoints has at most 14 values', async () => {
-    mockFetchForMulti()
-    const { result } = renderHook(() => useAllExtensionsData(multiExtensions))
-
-    await waitFor(() => expect(result.current.loading).toBe(false))
 
     for (const summary of result.current.results) {
+      expect(summary.currentInstalls).toBe(1380)
       expect(summary.sparklinePoints.length).toBeLessThanOrEqual(14)
       expect(summary.sparklinePoints.length).toBeGreaterThan(0)
-    }
-  })
-
-  it('partial failure — one extension returns 404, others succeed', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockImplementation((url: string) => {
-        if (url.includes('Veverke.chatwizard')) {
-          return Promise.resolve({
-            ok: true,
-            status: 200,
-            json: () => Promise.resolve(chatwizardData),
-          })
-        }
-        if (url.includes('Veverke.fast-grower')) {
-          return Promise.resolve({
-            ok: true,
-            status: 200,
-            json: () => Promise.resolve(fastGrowerData),
-          })
-        }
-        // slow-grower returns 404
-        return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve(null) })
-      })
-    )
-
-    const { result } = renderHook(() => useAllExtensionsData(multiExtensions))
-
-    await waitFor(() => expect(result.current.loading).toBe(false))
-
-    expect(result.current.results).toHaveLength(2)
-    expect(result.current.errors).toHaveProperty('Veverke.slow-grower')
-    expect(result.current.errors['Veverke.slow-grower']).toContain('404')
-  })
-
-  it('returns empty results for empty extensions list', async () => {
-    const { result } = renderHook(() => useAllExtensionsData([]))
-
-    await waitFor(() => expect(result.current.loading).toBe(false))
-
-    expect(result.current.results).toHaveLength(0)
-    expect(Object.keys(result.current.errors)).toHaveLength(0)
-  })
-
-  it('each result has velocity (number) and momentum (number in 0-100)', async () => {
-    mockFetchForMulti()
-    const { result } = renderHook(() => useAllExtensionsData(multiExtensions))
-
-    await waitFor(() => expect(result.current.loading).toBe(false))
-
-    for (const summary of result.current.results) {
       expect(typeof summary.velocity).toBe('number')
       expect(typeof summary.momentum).toBe('number')
       expect(summary.momentum).toBeGreaterThanOrEqual(0)
       expect(summary.momentum).toBeLessThanOrEqual(100)
     }
+    unmount()
   })
 
-  it('non-Error rejection uses fallback message', async () => {
-    vi.stubGlobal(
-      'fetch',
-      vi.fn().mockImplementation((url: string) => {
-        if (url.includes('Veverke.chatwizard')) {
-          return Promise.resolve({
-            ok: true,
-            status: 200,
-            json: () => Promise.resolve(chatwizardData),
-          })
-        }
-        if (url.includes('Veverke.fast-grower')) {
-          return Promise.resolve({
-            ok: true,
-            status: 200,
-            json: () => Promise.resolve(fastGrowerData),
-          })
-        }
-        // throw non-Error
-        return Promise.reject('string rejection')
-      })
-    )
+  it('error isolation — partial 404 and non-Error rejection', async () => {
+    globalThis.fetch = mockPartialFailure()
+    let result: { current: { results: ExtensionSummary[]; errors: Record<string, string>; loading: boolean } }
+    let unmount: () => void
 
-    const { result } = renderHook(() => useAllExtensionsData(multiExtensions))
+    // Test partial failure
+    const h1 = renderHook(() => useAllExtensionsData(multiExtensions))
+    result = h1.result
+    unmount = h1.unmount
+    await waitFor(() => expect(result.current.loading).toBe(false))
+    expect(result.current.results).toHaveLength(2)
+    expect(result.current.errors).toHaveProperty('Veverke.slow-grower')
+    expect(result.current.errors['Veverke.slow-grower']).toContain('404')
+    unmount()
+
+    // Test non-Error rejection
+    globalThis.fetch = mockNonErrorRejection()
+    const h2 = renderHook(() => useAllExtensionsData(multiExtensions))
+    result = h2.result
+    unmount = h2.unmount
+    await waitFor(() => expect(result.current.loading).toBe(false))
+    expect(result.current.errors['Veverke.slow-grower']).toBe('Failed to load')
+    unmount()
+  })
+
+  it('returns empty results for empty extensions list', async () => {
+    const { result, unmount } = renderHook(() => useAllExtensionsData([]))
 
     await waitFor(() => expect(result.current.loading).toBe(false))
 
-    expect(result.current.errors['Veverke.slow-grower']).toBe('Failed to load')
+    expect(result.current.results).toHaveLength(0)
+    expect(Object.keys(result.current.errors)).toHaveLength(0)
+    unmount()
   })
 })

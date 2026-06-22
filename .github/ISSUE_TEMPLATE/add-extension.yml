@@ -1,0 +1,37 @@
+name: Request Extension Tracking
+description: Request that an extension be tracked in the analytics registry
+title: "[Tracking Request] "
+labels: ["tracking-request"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting an extension to be tracked! Please fill out the fields below.
+
+  - type: input
+    id: extension-id
+    attributes:
+      label: Extension ID
+      description: The unique identifier of the extension (format: `publisher.name`).
+      placeholder: e.g., Veverke.chatwizard
+    validations:
+      required: true
+
+  - type: input
+    id: github-repo
+    attributes:
+      label: GitHub Repository (optional)
+      description: The GitHub repository URL for the extension source code.
+      placeholder: e.g., Veverke/ChatWizard
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)
+      description: Any additional context or information about the extension.
+      placeholder: e.g., This extension is popular in the Python community...
+    validations:
+      required: false

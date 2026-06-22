@@ -55,15 +55,15 @@ export default function Overview() {
   const [sortField, setSortField] = useState<OverviewSortField>('momentum')
   const [sortAsc, setSortAsc] = useState(false)
 
-  // Single-extension shortcut: navigate directly to detail page
-  if (extensions.length === 1) {
-    return <Navigate to={`/extension/${extensions[0].id}`} replace />
-  }
-
   const sorted = useMemo(
     () => sortSummaries(results, sortField, sortAsc),
     [results, sortField, sortAsc]
   )
+
+  // Single-extension shortcut: navigate directly to detail page
+  if (extensions.length === 1) {
+    return <Navigate to={`/extension/${extensions[0].id}`} replace />
+  }
 
   const handleSort = (field: OverviewSortField) => {
     if (field === sortField) {

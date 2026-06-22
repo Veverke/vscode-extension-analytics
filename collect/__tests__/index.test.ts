@@ -25,7 +25,7 @@ import { runCollector } from '../index.js';
 import * as storage from '../storage.js';
 import * as marketplace from '../marketplace.js';
 import * as openvsx from '../openvsx.js';
-import type { ExtensionEntry, MarketplaceSnapshot, OpenVsxSnapshot, ReleaseEntry } from '../../src/types/schema.js';
+import type { ExtensionEntry, MarketplaceSnapshot, OpenVsxSnapshot } from '../../src/types/schema.js';
 
 const mockEntry: ExtensionEntry = {
   id: 'Veverke.chatwizard',

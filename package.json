@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "lint": "eslint src collect tests --no-error-on-unmatched-pattern",
+    "build:webview": "vite build --config vite.webview.config.ts",
+    "build:extension": "npm run build:webview && cd extension && npm run compile",
+    "lint": "eslint src collect extension tests --no-error-on-unmatched-pattern",
     "format": "prettier --write .",
     "test": "vitest run",
     "test:e2e": "playwright test",

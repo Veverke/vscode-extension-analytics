@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Extension (All)",
+      "type": "shell",
+      "command": "npm run build:extension",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$tsc"
+      ],
+      "dependsOn": [
+        "Build Webview"
+      ]
+    },
+    {
+      "label": "Build Webview",
+      "type": "shell",
+      "command": "npx vite build --config vite.webview.config.ts",
+      "group": "build",
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "Compile Extension TS",
+      "type": "shell",
+      "command": "cd extension && npx tsc -p ./tsconfig.json",
+      "group": "build",
+      "problemMatcher": [
+        "$tsc"
+      ]
+    },
+    {
+      "label": "Build Extension (Watch)",
+      "type": "shell",
+      "command": "cd extension && npx tsc -watch -p ./tsconfig.json",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [
+        "$tsc-watch"
+      ]
+    }
+  ]
+}

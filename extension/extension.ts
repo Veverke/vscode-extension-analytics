@@ -106,13 +106,13 @@ export function activate(context: vscode.ExtensionContext) {
     )
   );
 
-  // Register the "Open Dashboard" command — reveals the view in the explorer
+  // Register the "Open Dashboard" command — reveals the view in the activity bar
   context.subscriptions.push(
     vscode.commands.registerCommand(
       'vscodeExtensionAnalytics.openDashboard',
       () => {
         vscode.commands.executeCommand(
-          'workbench.view.extension.vscodeExtensionAnalytics.mainView'
+          'workbench.view.vscodeExtensionAnalytics'
         );
       }
     )

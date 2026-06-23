@@ -25,17 +25,24 @@
     "marketplace",
     "tracking"
   ],
-  "icon": "assets/icon.svg",
-  "activationEvents": [
-    "onView:vscodeExtensionAnalytics.mainView"
-  ],
+  "icon": "assets/icon.png",
+  "activationEvents": [],
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "vscodeExtensionAnalytics",
+          "title": "Extension Analytics",
+          "icon": "assets/icon.png"
+        }
+      ]
+    },
     "views": {
-      "explorer": [
+      "vscodeExtensionAnalytics": [
         {
           "type": "webview",
           "id": "vscodeExtensionAnalytics.mainView",
-          "name": "Extension Analytics"
+          "name": "Dashboard"
         }
       ]
     },

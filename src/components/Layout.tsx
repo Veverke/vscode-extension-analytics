@@ -1,12 +1,12 @@
 import { NavLink, Link, Outlet } from 'react-router-dom'
-import { ExtensionEntry } from '../types/schema'
+import { useExtensionsContext } from '../contexts/ExtensionsContext'
+import { useUser } from '../contexts/UserContext'
 import { getExtensionIconUrl } from '../utils/icons'
 
-interface LayoutProps {
-  extensions: ExtensionEntry[]
-}
+export default function Layout() {
+  const extensions = useExtensionsContext()
+  const { username, clearUsername } = useUser()
 
-export default function Layout({ extensions }: LayoutProps) {
   return (
     <div className="app">
       <header className="app__header">
@@ -15,6 +15,17 @@ export default function Layout({ extensions }: LayoutProps) {
             VS Code Extension Analytics
           </Link>
         </h1>
+        {username && (
+          <div className="app__user-bar">
+            <span className="app__user-name">{username}</span>
+            <Link to="/" className="app__user-switch" onClick={clearUsername}>
+              Switch user
+            </Link>
+            <Link to={`/discover/${encodeURIComponent(username)}`} className="app__user-discover">
+              Discover
+            </Link>
+          </div>
+        )}
       </header>
       <div className="app__body">
         <nav className="app__sidebar" aria-label="Extension navigation">
@@ -45,6 +56,13 @@ export default function Layout({ extensions }: LayoutProps) {
               </li>
             ))}
           </ul>
+          {extensions.length > 0 && (
+            <div className="sidebar__overview-link">
+              <NavLink to="/overview" className="sidebar__link">
+                📊 Overview
+              </NavLink>
+            </div>
+          )}
         </nav>
         <main className="app__main">
           <Outlet />

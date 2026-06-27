@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
-    "build:webview": "vite build --config vite.webview.config.ts",
+    "build": "tsc --noEmit && vite build && node scripts/copy-data.mjs",
+    "build:webview": "vite build --config vite.webview.config.ts && node scripts/copy-data.mjs",
     "build:extension": "npm run build:webview && cd extension && npm run compile",
     "lint": "eslint src collect extension tests --no-error-on-unmatched-pattern",
     "format": "prettier --write .",

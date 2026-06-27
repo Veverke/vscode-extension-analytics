@@ -50,7 +50,7 @@ describe('App', () => {
     expect(screen.getByRole('alert')).toHaveTextContent('Network error')
   })
 
-  it('renders sidebar with extensions on success', () => {
+  it('provides context and renders child routes on success', () => {
     vi.spyOn(useExtensionsModule, 'useExtensions').mockReturnValue({
       extensions: fixtureExtensions,
       loading: false,
@@ -59,7 +59,7 @@ describe('App', () => {
 
     renderApp()
 
-    expect(screen.getByText('Chat Wizard')).toBeInTheDocument()
-    expect(screen.getByText('Copilot Reviewer Assistant')).toBeInTheDocument()
+    // App should render the child outlet content
+    expect(screen.getByText('child route')).toBeInTheDocument()
   })
 })

@@ -2,13 +2,16 @@ import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter, createMemoryRouter, RouterProvider } from 'react-router-dom'
 import Layout from '../../src/components/Layout'
+import { ExtensionsContext } from '../../src/contexts/ExtensionsContext'
 import fixtureExtensions from '../../fixtures/data/extensions.json'
 
 function renderLayout() {
   return render(
-    <MemoryRouter>
-      <Layout extensions={fixtureExtensions} />
-    </MemoryRouter>,
+    <ExtensionsContext.Provider value={fixtureExtensions}>
+      <MemoryRouter>
+        <Layout />
+      </MemoryRouter>
+    </ExtensionsContext.Provider>,
   )
 }
 
@@ -45,7 +48,11 @@ describe('Layout', () => {
       [
         {
           path: '/extension/:extensionId',
-          element: <Layout extensions={fixtureExtensions} />,
+          element: (
+            <ExtensionsContext.Provider value={fixtureExtensions}>
+              <Layout />
+            </ExtensionsContext.Provider>
+          ),
         },
       ],
       { initialEntries: [`/extension/${firstExt.id}`] },

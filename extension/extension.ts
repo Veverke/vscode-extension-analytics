@@ -16,7 +16,10 @@ class AnalyticsWebviewProvider implements vscode.WebviewViewProvider {
   ): void {
     webviewView.webview.options = {
       enableScripts: true,
-      localResourceRoots: [this._extensionUri],
+      localResourceRoots: [
+        this._extensionUri,
+        vscode.Uri.joinPath(this._extensionUri, 'out', 'webview', 'dist'),
+      ],
     };
 
     webviewView.webview.html = this._getHtmlContent(webviewView.webview);
@@ -71,6 +74,16 @@ class AnalyticsWebviewProvider implements vscode.WebviewViewProvider {
       ].join('; ');
 
       html = html.replace('</head>', `<meta http-equiv="Content-Security-Policy" content="${csp}"></head>`);
+
+      // Inject the webview URI for the bundled data directory so the
+      // frontend can fetch data from the local copies inside the VSIX.
+      const dataDirUri = webview.asWebviewUri(
+        vscode.Uri.joinPath(distPath, 'data')
+      );
+      html = html.replace(
+        '</head>',
+        `<script>window.__VSCODE_DATA_BASE__="${dataDirUri.toString()}";</script></head>`
+      );
 
       return html;
     } catch {

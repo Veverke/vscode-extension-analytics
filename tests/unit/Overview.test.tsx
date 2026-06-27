@@ -3,8 +3,10 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import Overview from '../../src/routes/Overview'
 import { ExtensionsContext } from '../../src/contexts/ExtensionsContext'
+import { UserContext } from '../../src/contexts/UserContext'
 import type { ExtensionEntry } from '../../src/types/schema'
 import extensionsMulti from '../../fixtures/data/extensions-multi.json'
+import extensionsFixture from '../../fixtures/data/extensions.json'
 import chatwizardData from '../../fixtures/data/Veverke.chatwizard.json'
 import fastGrowerData from '../../fixtures/data/Veverke.fast-grower.json'
 import slowGrowerData from '../../fixtures/data/Veverke.slow-grower.json'
@@ -16,6 +18,14 @@ function mockFetchForMulti() {
   vi.stubGlobal(
     'fetch',
     vi.fn().mockImplementation((url: string) => {
+      // Extensions registry fetch (needed by useExtensions hook)
+      if (url.includes('extensions.json') || url === './data/extensions.json') {
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          json: () => Promise.resolve(extensionsMulti),
+        })
+      }
       if (url.includes('Veverke.chatwizard')) {
         return Promise.resolve({
           ok: true,
@@ -45,9 +55,11 @@ function mockFetchForMulti() {
 function renderOverview(extensions: ExtensionEntry[] = multiExtensions) {
   return render(
     <MemoryRouter initialEntries={['/']}>
-      <ExtensionsContext.Provider value={extensions}>
-        <Overview />
-      </ExtensionsContext.Provider>
+      <UserContext.Provider value={{ username: 'Veverke', setUsername: () => {}, clearUsername: () => {} }}>
+        <ExtensionsContext.Provider value={extensions}>
+          <Overview />
+        </ExtensionsContext.Provider>
+      </UserContext.Provider>
     </MemoryRouter>
   )
 }
@@ -218,16 +230,73 @@ describe('Overview', () => {
     expect(momentumBadges.length).toBe(3)
   })
 
-  it('single extension: redirects to that extension detail page', () => {
+  it('single extension: redirects to that extension detail page', async () => {
     const singleExt = [singleExtension[0]] as ExtensionEntry[]
+    // Mock fetch to return correct data per URL:
+    // - extensions.json → the single extension entry
+    // - time-series data → valid chatwizardData so useAllExtensionsData succeeds
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockImplementation((url: string) => {
+        if (url.includes('extensions.json')) {
+          return Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve(singleExt),
+          })
+        }
+        if (url.includes('Veverke.chatwizard')) {
+          return Promise.resolve({
+            ok: true,
+            json: () => Promise.resolve(chatwizardData),
+          })
+        }
+        return Promise.resolve({ ok: true, json: () => Promise.resolve([]) })
+      })
+    )
     render(
       <MemoryRouter initialEntries={['/']}>
-        <ExtensionsContext.Provider value={singleExt}>
-          <Overview />
-        </ExtensionsContext.Provider>
+        <UserContext.Provider value={{ username: 'Veverke', setUsername: () => {}, clearUsername: () => {} }}>
+          <ExtensionsContext.Provider value={singleExt}>
+            <Overview />
+          </ExtensionsContext.Provider>
+        </UserContext.Provider>
       </MemoryRouter>
     )
-    // Navigate renders nothing itself, but should not show the table
-    expect(screen.queryByRole('table')).toBeNull()
+
+    // Wait for async useExtensions + useAllExtensionsData to resolve and Navigate to render
+    await waitFor(() => {
+      expect(screen.queryByRole('table')).toBeNull()
+    })
+  })
+
+  it('shows "Show all tracked extensions" toggle when user has extensions', async () => {
+    mockFetchForMulti()
+    renderOverview()
+
+    await waitFor(() =>
+      expect(screen.queryAllByRole('link').length).toBeGreaterThanOrEqual(3)
+    )
+
+    expect(screen.getByText(/Show all tracked extensions/)).toBeInTheDocument()
+  })
+
+  it('toggling "Show all tracked extensions" maintains data display', async () => {
+    mockFetchForMulti()
+    renderOverview()
+
+    await waitFor(() =>
+      expect(screen.queryAllByRole('link').length).toBeGreaterThanOrEqual(3)
+    )
+
+    const checkbox = screen.getByRole('checkbox')
+    expect(checkbox).toBeInTheDocument()
+    expect(checkbox).not.toBeChecked()
+
+    // Toggle it on
+    fireEvent.click(checkbox)
+    expect(checkbox).toBeChecked()
+
+    // All extensions should still be visible
+    expect(screen.getByRole('link', { name: 'Chat Wizard' })).toBeInTheDocument()
   })
 })

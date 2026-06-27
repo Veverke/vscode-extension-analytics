@@ -1,5 +1,9 @@
 import { useState, useCallback, useRef } from 'react'
 import type { ExtensionEntry } from '../types/schema'
+import {
+  parseRateLimitFromHeaders,
+  formatRateLimitMessage,
+} from '../utils/githubApi'
 
 export interface DiscoveredExtension {
   extensionId: string
@@ -32,17 +36,6 @@ interface PackageJson {
   publisher?: string
   displayName?: string
   engines?: { vscode?: string }
-}
-
-interface GitHubRateLimit {
-  remaining: number
-  reset: number
-}
-
-function parseRateLimit(headers: Headers): GitHubRateLimit {
-  const remaining = parseInt(headers.get('x-ratelimit-remaining') ?? '0', 10)
-  const reset = parseInt(headers.get('x-ratelimit-reset') ?? '0', 10)
-  return { remaining, reset }
 }
 
 /**
@@ -125,14 +118,11 @@ export function useAutoDiscover(): UseAutoDiscoverResult {
         { headers, signal: controller.signal }
       )
 
-      const rateLimit = parseRateLimit(reposResponse.headers)
+      const rateLimit = parseRateLimitFromHeaders(reposResponse.headers)
       setRateLimitRemaining(rateLimit.remaining)
 
       if (reposResponse.status === 403 && rateLimit.remaining === 0) {
-        const resetDate = new Date(rateLimit.reset * 1000)
-        throw new Error(
-          `GitHub API rate limit reached. Resets at ${resetDate.toLocaleTimeString()}. Try again later.`
-        )
+        throw new Error(formatRateLimitMessage(rateLimit))
       }
 
       if (reposResponse.status === 404) {

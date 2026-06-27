@@ -4,6 +4,8 @@ import { useAutoDiscover, isExtensionTracked } from '../hooks/useAutoDiscover'
 import { useCreateTrackingIssue } from '../hooks/useCreateTrackingIssue'
 import { useExtensionsContext } from '../contexts/ExtensionsContext'
 import { useUser } from '../contexts/UserContext'
+import UntrackedCard from '../components/cards/UntrackedCard'
+import SkeletonCard from '../components/cards/SkeletonCard'
 
 /**
  * Discover Results screen.
@@ -49,11 +51,15 @@ export default function DiscoverResults() {
         )}
       </div>
 
-      {/* Loading state */}
+      {/* Loading state with skeleton cards */}
       {loading && (
         <div className="discover__loading" role="status" aria-label="Discovering extensions">
-          <div className="discover__spinner" />
-          <p>Scanning repositories for VS Code extensions…</p>
+          <p className="discover__loading-text">Scanning repositories for VS Code extensions…</p>
+          <ul className="discover__list" aria-label="Loading skeleton">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <SkeletonCard key={`skeleton-${i}`} />
+            ))}
+          </ul>
           {rateLimitRemaining !== null && rateLimitRemaining <= 10 && (
             <p className="discover__rate-warning">
               ⚠️ GitHub API rate limit: {rateLimitRemaining} requests remaining.
@@ -108,8 +114,8 @@ export default function DiscoverResults() {
             {results.map((ext) => {
               const tracked = isExtensionTracked(ext.extensionId, trackedExtensions)
 
-              return (
-                <li key={ext.extensionId} className="discover__item">
+              return tracked ? (
+                <li key={ext.extensionId} className="discover__item discover__item--tracked">
                   <div className="discover__item-info">
                     <span className="discover__item-name">
                       {ext.displayName || ext.name}
@@ -125,26 +131,17 @@ export default function DiscoverResults() {
                     </a>
                   </div>
                   <div className="discover__item-status">
-                    {tracked ? (
-                      <span className="discover__status-tracked">
-                        ✅ Tracked
-                      </span>
-                    ) : (
-                      <>
-                        <span className="discover__status-untracked">
-                          ⬜ Not Tracked
-                        </span>
-                        <button
-                          className="discover__track-btn"
-                          onClick={() => openIssue(ext.extensionId)}
-                          title={`Request tracking for ${ext.extensionId}`}
-                        >
-                          Track
-                        </button>
-                      </>
-                    )}
+                    <span className="discover__status-tracked">
+                      ✅ Tracked
+                    </span>
                   </div>
                 </li>
+              ) : (
+                <UntrackedCard
+                  key={ext.extensionId}
+                  extension={ext}
+                  onTrack={openIssue}
+                />
               )
             })}
           </ul>

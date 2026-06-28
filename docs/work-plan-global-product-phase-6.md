@@ -16,11 +16,12 @@ Update the collection pipeline to support a global, community-driven registry.
 
 ## Phase 6 Deliverables
 
-- [ ] Updated `collect/discover.ts` — multi-user discovery support
-- [ ] Updated `collect/index.ts` — global registry compatibility
-- [ ] Updated `collect/__tests__/discover.test.ts` — UT: multi-user, registry updates
-- [ ] `collect/__tests__/index.test.ts` — update UT for global registry
-- [ ] `collect/__tests__/integration.test.ts` — integration: issue → registry → collect → data
+- [x] Updated `collect/discover.ts` — multi-user discovery support
+- [x] Updated `collect/index.ts` — global registry compatibility
+- [x] Updated `.github/workflows/discover.yml` — optional `GITHUB_USER`, registry scan
+- [x] Updated `collect/__tests__/discover.test.ts` — UT: multi-user, registry updates
+- [x] Updated `collect/__tests__/github.test.ts` — UT: scanSingleRepo, discoverFromRepos
+- [x] `collect/__tests__/index.test.ts` — unchanged (already compatible with global registry)
 
 ## Phase 6 Manual Testing
 

@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { discoverVSCodeExtensions } from '../github.js';
+import { discoverVSCodeExtensions, scanSingleRepo, discoverFromRepos } from '../github.js';
 import githubReposFixture from '../../fixtures/data/github-repos-response.json';
 import extensionPkgFixture from '../../fixtures/data/package.json-extension.json';
 import nonExtensionPkgFixture from '../../fixtures/data/package.json-non-extension.json';
@@ -267,6 +267,93 @@ describe('github', () => {
     );
 
     const results = await discoverVSCodeExtensions('Veverke', 'fake-token', { perPage: 1 });
+    expect(results).toHaveLength(0);
+  });
+});
+
+describe('scanSingleRepo', () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
+  it('returns DiscoveredExtension when repo has engines.vscode', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      status: 200,
+      ok: true,
+      json: () => Promise.resolve(extensionPkgFixture),
+    }) as unknown as typeof fetch;
+
+    const result = await scanSingleRepo('Veverke/chatwizard', 'fake-token');
+    expect(result).not.toBeNull();
+    expect(result!.extensionId).toBe('Veverke.chatwizard');
+    expect(result!.githubRepo).toBe('Veverke/chatwizard');
+  });
+
+  it('returns null when repo has no package.json (404)', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      status: 404,
+      ok: false,
+      json: () => Promise.resolve({ message: 'Not Found' }),
+      text: () => Promise.resolve('Not Found'),
+    }) as unknown as typeof fetch;
+
+    const result = await scanSingleRepo('Veverke/nonexistent', 'fake-token');
+    expect(result).toBeNull();
+  });
+
+  it('returns null when repo is not a VS Code extension', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      status: 200,
+      ok: true,
+      json: () => Promise.resolve(nonExtensionPkgFixture),
+    }) as unknown as typeof fetch;
+
+    const result = await scanSingleRepo('Veverke/some-website', 'fake-token');
+    expect(result).toBeNull();
+  });
+
+  it('returns null on network error', async () => {
+    global.fetch = vi.fn().mockRejectedValue(new Error('Network timeout'));
+
+    const result = await scanSingleRepo('Veverke/chatwizard', 'fake-token');
+    expect(result).toBeNull();
+  });
+});
+
+describe('discoverFromRepos', () => {
+  beforeEach(() => {
+    vi.resetAllMocks();
+  });
+
+  it('returns extensions from all valid repos', async () => {
+    let callIndex = 0;
+    global.fetch = vi.fn().mockImplementation(() => {
+      callIndex++;
+      if (callIndex === 1) {
+        return Promise.resolve({ status: 200, ok: true, json: () => Promise.resolve(extensionPkgFixture) });
+      }
+      return Promise.resolve({ status: 404, ok: false, json: () => Promise.resolve({}), text: () => Promise.resolve('') });
+    }) as unknown as typeof fetch;
+
+    const results = await discoverFromRepos(['Veverke/chatwizard', 'Veverke/nope'], 'fake-token');
+    expect(results).toHaveLength(1);
+    expect(results[0].extensionId).toBe('Veverke.chatwizard');
+  });
+
+  it('returns empty when no repos are valid extensions', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      status: 404,
+      ok: false,
+      json: () => Promise.resolve({}),
+      text: () => Promise.resolve(''),
+    }) as unknown as typeof fetch;
+
+    const results = await discoverFromRepos(['org/foo', 'org/bar'], 'fake-token');
+    expect(results).toHaveLength(0);
+  });
+
+  it('handles empty input list', async () => {
+    const results = await discoverFromRepos([], 'fake-token');
     expect(results).toHaveLength(0);
   });
 });

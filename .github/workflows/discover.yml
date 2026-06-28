@@ -1,11 +1,12 @@
 # Discover VS Code Extensions
 #
-# Purpose: Weekly auto-discovery pipeline that scans the configured GitHub
-# user's repositories for VS Code extensions (identified by engines.vscode in
-# package.json) and updates data/extensions.json with any newly found ones.
-# This keeps the tracked-extension registry in sync with the developer's GitHub
-# account without manual intervention. Runs every Sunday at midnight UTC and
-# can also be triggered manually via workflow_dispatch.
+# Purpose: Weekly discovery pipeline that scans both the configured GitHub
+# user's repositories AND the githubRepo fields in the existing registry
+# for VS Code extensions. Identifies new extensions by engines.vscode in
+# package.json and updates data/extensions.json with any newly found ones.
+# This keeps the tracked-extension registry in sync without requiring a
+# single GITHUB_USER. Runs every Sunday at midnight UTC and can also be
+# triggered manually via workflow_dispatch.
 name: Discover VS Code Extensions
 
 on:
@@ -26,12 +27,13 @@ jobs:
           cache: "npm"
       - run: npm ci
 
-      # Paginates through all repos for GITHUB_USER, checks each package.json for
-      # engines.vscode, and merges any new extensions into data/extensions.json
+      # Scans both the GITHUB_USER's repos (if set) and all githubRepo fields
+      # in the existing registry. The script handles missing GITHUB_USER gracefully.
       - run: npx tsx collect/discover.ts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Set GITHUB_USER in repository Variables (Settings → Variables)
+          # Optional: set GITHUB_USER in repository Variables to also scan
+          # a specific GitHub user's repositories for new extensions.
           GITHUB_USER: ${{ vars.GITHUB_USER }}
 
       # Only commits when the registry actually changed; [skip ci] prevents a CI loop

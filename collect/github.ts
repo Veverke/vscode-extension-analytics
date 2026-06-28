@@ -23,6 +23,114 @@ interface PackageJson {
   engines?: { vscode?: string };
 }
 
+function buildHeaders(githubToken: string): Record<string, string> {
+  const headers: Record<string, string> = {
+    Accept: 'application/vnd.github+json',
+  };
+  if (githubToken) {
+    headers['Authorization'] = `Bearer ${githubToken}`;
+  }
+  return headers;
+}
+
+/**
+ * Fetches and parses a single GitHub repo's package.json to check if it's
+ * a VS Code extension. Returns null if the repo is not an extension or if
+ * any error occurs.
+ */
+export async function scanSingleRepo(
+  repoFullName: string,
+  githubToken: string
+): Promise<DiscoveredExtension | null> {
+  const headers = buildHeaders(githubToken);
+
+  try {
+    const pkgResponse = await fetch(
+      `https://api.github.com/repos/${repoFullName}/contents/package.json`,
+      { headers, signal: AbortSignal.timeout(30_000) }
+    );
+
+    if (pkgResponse.status === 404) {
+      console.log(`[discover] ${repoFullName}: skipped (no package.json)`);
+      return null;
+    }
+
+    if (!pkgResponse.ok) {
+      const body = await pkgResponse.text().catch(() => '');
+      throw new Error(
+        `GitHub API error ${pkgResponse.status} ${pkgResponse.statusText}${body ? ` - ${body}` : ''}`
+      );
+    }
+
+    let pkgData: GitHubFileContent;
+    try {
+      pkgData = (await pkgResponse.json()) as GitHubFileContent;
+    } catch (err) {
+      console.error(
+        `[discover] ${repoFullName}: failed to parse package.json response: ${err instanceof Error ? err.message : String(err)}`
+      );
+      return null;
+    }
+
+    let pkgJson: PackageJson;
+    try {
+      pkgJson = JSON.parse(
+        Buffer.from(pkgData.content, 'base64').toString('utf-8')
+      ) as PackageJson;
+    } catch (err) {
+      console.error(
+        `[discover] ${repoFullName}: failed to decode/parse package.json: ${err instanceof Error ? err.message : String(err)}`
+      );
+      return null;
+    }
+
+    if (!pkgJson.engines?.vscode) {
+      console.log(`[discover] ${repoFullName}: skipped (not a VS Code extension)`);
+      return null;
+    }
+
+    if (!pkgJson.publisher || !pkgJson.name) {
+      console.log(`[discover] ${repoFullName}: skipped (missing publisher or name)`);
+      return null;
+    }
+
+    return {
+      githubRepo: repoFullName,
+      extensionId: `${pkgJson.publisher}.${pkgJson.name}`,
+      namespace: pkgJson.publisher,
+      name: pkgJson.name,
+      displayName: pkgJson.displayName ?? pkgJson.name,
+    };
+  } catch (err) {
+    console.error(
+      `[discover] ${repoFullName}: skipped due to error: ${err instanceof Error ? err.message : String(err)}`
+    );
+    return null;
+  }
+}
+
+/**
+ * Scans a list of GitHub repository full names for VS Code extensions.
+ * Each repo is checked for engines.vscode in its package.json.
+ * Returns only repos that are valid VS Code extensions.
+ */
+export async function discoverFromRepos(
+  repoFullNames: string[],
+  githubToken: string
+): Promise<DiscoveredExtension[]> {
+  const results = await Promise.allSettled(
+    repoFullNames.map((repo) => scanSingleRepo(repo, githubToken))
+  );
+
+  const discovered: DiscoveredExtension[] = [];
+  for (const result of results) {
+    if (result.status === 'fulfilled' && result.value !== null) {
+      discovered.push(result.value);
+    }
+  }
+  return discovered;
+}
+
 export async function discoverVSCodeExtensions(
   githubUser: string,
   githubToken: string,
@@ -32,12 +140,7 @@ export async function discoverVSCodeExtensions(
   const extensions: DiscoveredExtension[] = [];
   let page = 1;
 
-  const headers: Record<string, string> = {
-    Accept: 'application/vnd.github+json',
-  };
-  if (githubToken) {
-    headers['Authorization'] = `Bearer ${githubToken}`;
-  }
+  const headers = buildHeaders(githubToken);
 
   while (true) {
     const reposResponse = await fetch(
@@ -53,68 +156,13 @@ export async function discoverVSCodeExtensions(
       break;
     }
 
-    for (const repo of repos) {
-      try {
-        const pkgResponse = await fetch(
-          `https://api.github.com/repos/${repo.full_name}/contents/package.json`,
-          { headers, signal: AbortSignal.timeout(30_000) }
-        );
+    const results = await Promise.allSettled(
+      repos.map((repo) => scanSingleRepo(repo.full_name, githubToken))
+    );
 
-        if (pkgResponse.status === 404) {
-          console.log(`[discover] ${repo.full_name}: skipped (no package.json)`);
-          continue;
-        }
-
-        if (!pkgResponse.ok) {
-          const body = await pkgResponse.text().catch(() => '');
-          throw new Error(
-            `[discover] ${repo.full_name}: GitHub API error ${pkgResponse.status} ${pkgResponse.statusText}${body ? ` - ${body}` : ''}`
-          );
-        }
-
-        let pkgData: GitHubFileContent;
-        try {
-          pkgData = (await pkgResponse.json()) as GitHubFileContent;
-        } catch (err) {
-          console.error(
-            `[discover] ${repo.full_name}: failed to parse package.json response: ${err instanceof Error ? err.message : String(err)}`
-          );
-          continue;
-        }
-
-        let pkgJson: PackageJson;
-        try {
-          pkgJson = JSON.parse(
-            Buffer.from(pkgData.content, 'base64').toString('utf-8')
-          ) as PackageJson;
-        } catch (err) {
-          console.error(
-            `[discover] ${repo.full_name}: failed to decode/parse package.json: ${err instanceof Error ? err.message : String(err)}`
-          );
-          continue;
-        }
-
-        if (!pkgJson.engines?.vscode) {
-          console.log(`[discover] ${repo.full_name}: skipped (not a VS Code extension)`);
-          continue;
-        }
-
-        if (!pkgJson.publisher || !pkgJson.name) {
-          console.log(`[discover] ${repo.full_name}: skipped (missing publisher or name)`);
-          continue;
-        }
-
-        extensions.push({
-          githubRepo: repo.full_name,
-          extensionId: `${pkgJson.publisher}.${pkgJson.name}`,
-          namespace: pkgJson.publisher,
-          name: pkgJson.name,
-          displayName: pkgJson.displayName ?? pkgJson.name,
-        });
-      } catch (err) {
-        console.error(
-          `[discover] ${repo.full_name}: skipped due to error: ${err instanceof Error ? err.message : String(err)}`
-        );
+    for (const result of results) {
+      if (result.status === 'fulfilled' && result.value !== null) {
+        extensions.push(result.value);
       }
     }
 

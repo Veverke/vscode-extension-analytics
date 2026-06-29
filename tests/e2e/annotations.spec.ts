@@ -4,14 +4,12 @@ import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 
 // Load fixture data via require (avoids ESM import assertion requirements)
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const releasesFixture = require('../../fixtures/data/Veverke.chatwizard.releases.json') as {
   version: string
   publishedAt: string
   installsAtRelease: number
 }[]
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const eventsFixture = require('../../fixtures/data/events.json') as {
   ts: string
   label: string

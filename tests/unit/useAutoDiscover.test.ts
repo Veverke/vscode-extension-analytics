@@ -320,10 +320,7 @@ describe('useAutoDiscover', () => {
   })
 
   it('aborts previous discovery when called again', async () => {
-    let resolveFirstFetch!: (value: unknown) => void
-    const firstFetchPromise = new Promise<unknown>((resolve) => {
-      resolveFirstFetch = resolve
-    })
+    const firstFetchPromise = new Promise<unknown>(() => {})
 
     const fetchMock = vi
       .fn<typeof fetch>()

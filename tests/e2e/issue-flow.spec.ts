@@ -3,13 +3,9 @@ import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const extensionsFixture = require('../../fixtures/data/extensions-multi.json') as object[]
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const chatwizardData = require('../../fixtures/data/Veverke.chatwizard.json') as object[]
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const fastGrowerData = require('../../fixtures/data/Veverke.fast-grower.json') as object[]
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const slowGrowerData = require('../../fixtures/data/Veverke.slow-grower.json') as object[]
 
 /**
@@ -178,7 +174,6 @@ test.describe('Issue Flow — Track on GitHub', () => {
     )
 
     // Intercept window.open to capture the URL instead of opening a new tab
-    let capturedUrl: string | null = null
     page.on('popup', (popup) => popup.close())
     await page.addInitScript(() => {
       window.open = (url: string | URL) => {

@@ -3,19 +3,14 @@ import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const extensionsMulti = require('../../fixtures/data/extensions-multi.json') as {
   id: string
   displayName: string
 }[]
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const chatwizardData = require('../../fixtures/data/Veverke.chatwizard.json') as object[]
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const fastGrowerData = require('../../fixtures/data/Veverke.fast-grower.json') as object[]
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const slowGrowerData = require('../../fixtures/data/Veverke.slow-grower.json') as object[]
-// eslint-disable-next-line @typescript-eslint/no-require-imports
 const singleExtension = require('../../fixtures/data/extensions.json') as {
   id: string
   displayName: string

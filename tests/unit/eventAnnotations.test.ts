@@ -116,4 +116,16 @@ describe('buildEventReferenceLines', () => {
     const result = buildEventReferenceLines([], []);
     expect(result).toHaveLength(0);
   });
+
+  it('unknown event type falls back to "other" color', () => {
+    const customEvents: EventAnnotation[] = [
+      {
+        ts: '2026-06-01T00:00:00.000Z',
+        label: 'Custom unknown event',
+        type: 'unknown-type' as EventAnnotation['type'],
+      },
+    ];
+    const result = buildEventReferenceLines(customEvents, []);
+    expect(result[0].stroke).toBe(EVENT_TYPE_COLORS.other);
+  });
 });

@@ -63,4 +63,30 @@ describe('openvsx', () => {
     const result = await fetchOpenVsxStats('Veverke', 'chatwizard');
     expect(result).toBeNull();
   });
+
+  it('fetchOpenVsxStats — non-404 with non-empty body logs details', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      status: 429,
+      ok: false,
+      statusText: 'Too Many Requests',
+      json: () => Promise.resolve({}),
+      text: () => Promise.resolve('Rate limited'),
+    } as unknown as typeof fetch);
+
+    const result = await fetchOpenVsxStats('Veverke', 'chatwizard');
+    expect(result).toBeNull();
+  });
+
+  it('fetchOpenVsxStats — text() rejection in error handler does not crash', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      status: 502,
+      ok: false,
+      statusText: 'Bad Gateway',
+      json: () => Promise.resolve({}),
+      text: () => Promise.reject(new Error('stream error')),
+    } as unknown as typeof fetch);
+
+    const result = await fetchOpenVsxStats('Veverke', 'chatwizard');
+    expect(result).toBeNull();
+  });
 });

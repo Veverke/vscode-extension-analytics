@@ -356,4 +356,10 @@ describe('discoverFromRepos', () => {
     const results = await discoverFromRepos([], 'fake-token');
     expect(results).toHaveLength(0);
   });
+
+  it('handles rejected promise from scanSingleRepo (unexpected error)', async () => {
+    global.fetch = vi.fn().mockRejectedValue(new Error('Unexpected crash'));
+    const results = await discoverFromRepos(['org/crasher'], 'fake-token');
+    expect(results).toHaveLength(0);
+  });
 });

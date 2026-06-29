@@ -64,4 +64,13 @@ describe('computeMomentum', () => {
     expect(score).toBeGreaterThanOrEqual(0)
     expect(score).toBeLessThanOrEqual(100)
   })
+
+  it('handles constant installs (zero velocity) without division by zero', () => {
+    // All installs identical → velocity is all zeros → minMaxNormalize hits max === min
+    const data = makeDataset([50, 50, 50, 50, 50, 50, 50])
+    const score = computeMomentum(data)
+    expect(typeof score).toBe('number')
+    expect(score).toBeGreaterThanOrEqual(0)
+    expect(score).toBeLessThanOrEqual(100)
+  })
 })

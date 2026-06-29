@@ -1,8 +1,9 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter, createMemoryRouter, RouterProvider } from 'react-router-dom'
 import Layout from '../../src/components/Layout'
 import { ExtensionsContext } from '../../src/contexts/ExtensionsContext'
+import { UserContext } from '../../src/contexts/UserContext'
 import fixtureExtensions from '../../fixtures/data/extensions.json'
 
 function renderLayout() {
@@ -67,5 +68,48 @@ describe('Layout', () => {
     const homeLink = screen.getByRole('link', { name: 'VS Code Extension Analytics' })
     expect(homeLink).toBeInTheDocument()
     expect(homeLink).toHaveAttribute('href', '/')
+  })
+})
+
+describe('Layout — with username', () => {
+  function renderLayoutWithUser(username: string) {
+    return render(
+      <UserContext.Provider value={{ username, setUsername: vi.fn(), clearUsername: vi.fn() }}>
+        <ExtensionsContext.Provider value={fixtureExtensions}>
+          <MemoryRouter>
+            <Layout />
+          </MemoryRouter>
+        </ExtensionsContext.Provider>
+      </UserContext.Provider>,
+    )
+  }
+
+  it('renders user bar with username when username is set', () => {
+    renderLayoutWithUser('testuser')
+
+    expect(screen.getByText('testuser')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Switch user' })).toHaveAttribute('href', '/')
+    expect(screen.getByRole('link', { name: 'Discover' })).toHaveAttribute(
+      'href',
+      '/discover/testuser',
+    )
+  })
+
+  it('calls clearUsername when Switch user is clicked', () => {
+    const clearUsername = vi.fn()
+    render(
+      <UserContext.Provider
+        value={{ username: 'testuser', setUsername: vi.fn(), clearUsername }}
+      >
+        <ExtensionsContext.Provider value={fixtureExtensions}>
+          <MemoryRouter>
+            <Layout />
+          </MemoryRouter>
+        </ExtensionsContext.Provider>
+      </UserContext.Provider>,
+    )
+
+    screen.getByRole('link', { name: 'Switch user' }).click()
+    expect(clearUsername).toHaveBeenCalledOnce()
   })
 })

@@ -112,4 +112,12 @@ describe('computeProjection', () => {
       expect(p.value).toBeGreaterThanOrEqual(0)
     })
   })
+
+  it('returns a projection with daysAhead=0 (msPerPoint fallback)', () => {
+    // daysAhead=0 hits the false branch of `daysAhead > 0`, using default 24h msPerPoint
+    const result = computeProjection(fixture, 'linear', 0)
+    expect(result).not.toBeNull()
+    expect(result!.points.length).toBeGreaterThanOrEqual(1)
+    expect(typeof result!.r2).toBe('number')
+  })
 })

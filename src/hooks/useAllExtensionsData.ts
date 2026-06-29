@@ -30,6 +30,12 @@ export function useAllExtensionsData(
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  // Derive a stable dependency key from extension IDs so that a new
+  // array reference (e.g. inline []) does not trigger an infinite loop.
+  const extensionsKey = extensions.length === 0
+    ? ''
+    : extensions.map((e) => e.id).join(',');
+
   useEffect(() => {
     if (extensions.length === 0) {
       setResults([]);
@@ -91,7 +97,7 @@ export function useAllExtensionsData(
     return () => {
       cancelled = true;
     };
-  }, [extensions]);
+  }, [extensionsKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return { results, loading, errors };
 }

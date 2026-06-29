@@ -69,7 +69,7 @@ test.describe('Overview Dashboard', () => {
   })
 
   test('overview loads with all 3 extensions as table rows', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/#/overview')
 
     await expect(page.getByRole('heading', { name: 'Your Extensions' })).toBeVisible({
       timeout: 10000,
@@ -80,7 +80,7 @@ test.describe('Overview Dashboard', () => {
   })
 
   test('sparklines rendered in each row', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/#/overview')
 
     await expect(page.getByRole('heading', { name: 'Your Extensions' })).toBeVisible({
       timeout: 10000,
@@ -93,7 +93,7 @@ test.describe('Overview Dashboard', () => {
   })
 
   test('velocity badges visible in rows', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/#/overview')
 
     await expect(page.getByRole('heading', { name: 'Your Extensions' })).toBeVisible({
       timeout: 10000,
@@ -105,7 +105,7 @@ test.describe('Overview Dashboard', () => {
   })
 
   test('clicking extension name navigates to detail page', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/#/overview')
 
     await expect(page.getByRole('heading', { name: 'Your Extensions' })).toBeVisible({
       timeout: 10000,
@@ -122,7 +122,7 @@ test.describe('Overview Dashboard', () => {
   })
 
   test('overview sorted by momentum by default — highest momentum score in first row', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/#/overview')
 
     await expect(page.getByRole('heading', { name: 'Your Extensions' })).toBeVisible({
       timeout: 10000,
@@ -144,7 +144,7 @@ test.describe('Overview Dashboard', () => {
   })
 
   test('sort by installs — highest install count row appears first', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/#/overview')
 
     await expect(page.getByRole('heading', { name: 'Your Extensions' })).toBeVisible({
       timeout: 10000,
@@ -174,7 +174,7 @@ test.describe('Overview Dashboard', () => {
       })
     })
 
-    await page.goto('/')
+    await page.goto('/#/overview')
 
     // Skeleton rows should appear during loading
     const skeletonRows = page.locator('.overview__skeleton-row')
@@ -191,7 +191,7 @@ test.describe('Overview Dashboard', () => {
       route.fulfill({ status: 500, body: 'Internal Server Error' })
     )
 
-    await page.goto('/')
+    await page.goto('/#/overview')
 
     await expect(page.getByRole('heading', { name: 'Your Extensions' })).toBeVisible({
       timeout: 10000,
@@ -210,7 +210,7 @@ test.describe('Overview Dashboard', () => {
   })
 
   test('sort by installs reverse — click twice toggles ascending', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/#/overview')
 
     await expect(page.getByRole('heading', { name: 'Your Extensions' })).toBeVisible({
       timeout: 10000,
@@ -254,7 +254,7 @@ test.describe('Overview Dashboard', () => {
       route.fulfill({ status: 404, body: 'Not Found' })
     )
 
-    await page.goto('/')
+    await page.goto('/#/overview')
 
     // Should have redirected to the detail page (not showing overview table)
     await expect(page).toHaveURL(/#\/extension\/Veverke\.chatwizard/)

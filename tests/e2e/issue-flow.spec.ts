@@ -176,9 +176,9 @@ test.describe('Issue Flow — Track on GitHub', () => {
     // Intercept window.open to capture the URL instead of opening a new tab
     page.on('popup', (popup) => popup.close())
     await page.addInitScript(() => {
-      window.open = (url: string | URL) => {
-        window.__capturedTrackingUrl__ =
-          typeof url === 'string' ? url : url.href
+      window.open = (url?: string | URL | undefined) => {
+        ;(window as unknown as Record<string, string | undefined>).__capturedTrackingUrl__ =
+          typeof url === 'string' ? url : (url as URL).href
         return null
       }
     })

@@ -8,7 +8,7 @@ describe('dataLoader', () => {
     vi.restoreAllMocks();
     // Ensure we start in browser context (no vscode API)
     if ('vscode' in window) {
-      delete (window as Record<string, unknown>).vscode;
+      delete (window as unknown as Record<string, unknown>).vscode;
     }
   });
 
@@ -96,7 +96,7 @@ describe('dataLoader', () => {
   describe('webview context', () => {
     beforeEach(() => {
       // Simulate VS Code webview context
-      (window as Record<string, unknown>).vscode = {};
+      (window as unknown as Record<string, unknown>).vscode = {};
     });
 
     it('rewrites ./data/ paths to GitHub raw URLs', async () => {

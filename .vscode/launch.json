@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/extension"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/extension/out/**/*.js"
+      ],
+      "preLaunchTask": "Build Extension (All)",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "Run Extension (Webview Only)",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/extension"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/extension/out/**/*.js"
+      ],
+      "preLaunchTask": "Build Extension (Watch)"
+    }
+  ]
+}

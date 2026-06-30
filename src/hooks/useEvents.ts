@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { EventAnnotation } from '../types/schema';
+import { loadData } from '../utils/dataLoader';
 
 export interface UseEventsResult {
   events: EventAnnotation[];
@@ -15,16 +16,10 @@ export function useEvents(): UseEventsResult {
   useEffect(() => {
     let cancelled = false;
 
-    fetch('./data/events.json')
-      .then((res) => {
-        // 404 means no events file yet — treat as empty, not an error
-        if (res.status === 404) {
-          return [];
-        }
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json() as Promise<EventAnnotation[]>;
-      })
-      .then((data: EventAnnotation[]) => {
+    loadData<EventAnnotation[]>('./data/events.json', {
+      tolerate404: true,
+    })
+      .then((data) => {
         if (cancelled) return;
         setEvents(Array.isArray(data) ? data : []);
         setLoading(false);

@@ -135,4 +135,28 @@ describe('useEvents', () => {
     expect(result.current.loading).toBe(true);
     expect(result.current.events).toEqual([]);
   });
+
+  it('does not set error after unmount when fetch rejects (cancelled in catch)', async () => {
+    let rejectFetch!: (err: Error) => void;
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockReturnValue(
+        new Promise((_resolve, reject) => {
+          rejectFetch = reject;
+        })
+      )
+    );
+
+    const { result, unmount } = renderHook(() => useEvents());
+    unmount();
+
+    await act(async () => {
+      rejectFetch(new Error('Late error after unmount'));
+      await new Promise<void>((r) => setTimeout(r, 0));
+    });
+
+    // State should not have changed after unmount
+    expect(result.current.loading).toBe(true);
+    expect(result.current.error).toBeNull();
+  });
 });

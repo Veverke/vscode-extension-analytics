@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('App shell', () => {
   test('app loads with sidebar containing at least one extension link', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/#/overview')
     const nav = page.getByRole('navigation', { name: 'Extension navigation' })
     await expect(nav).toBeVisible()
     const links = nav.getByRole('link')
@@ -10,7 +10,7 @@ test.describe('App shell', () => {
   })
 
   test('clicking an extension link navigates to its detail page', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/#/overview')
     const nav = page.getByRole('navigation', { name: 'Extension navigation' })
     const firstLink = nav.getByRole('link').first()
     const linkText = await firstLink.textContent()
@@ -38,7 +38,7 @@ test.describe('App shell', () => {
       await route.continue()
     })
 
-    await page.goto('/')
+    await page.goto('/#/overview')
 
     // The loading indicator should be visible immediately
     await expect(page.getByRole('status')).toBeVisible()

@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useExtensionsContext } from '../contexts/ExtensionsContext'
 import { useAllExtensionsData, type ExtensionSummary } from '../hooks/useAllExtensionsData'
+import { useUser } from '../contexts/UserContext'
+import { useExtensions } from '../hooks/useExtensions'
 import Sparkline from '../components/charts/Sparkline'
 import VelocityBadge from '../components/cards/VelocityBadge'
 import MomentumBadge from '../components/cards/MomentumBadge'
@@ -49,8 +51,21 @@ function sortSummaries(
 }
 
 export default function Overview() {
-  const extensions = useExtensionsContext()
-  const { results, loading, errors } = useAllExtensionsData(extensions)
+  const userExtensions = useExtensionsContext()
+  const { username } = useUser()
+  const { extensions: allExtensions } = useExtensions()
+  const [showAll, setShowAll] = useState(false)
+
+  // Determine which extensions to display
+  const displayExtensions = showAll || userExtensions.length === 0
+    ? allExtensions
+    : userExtensions
+
+  // If user has no extensions and there are tracked ones, default to showing all
+  const hasTrackedExtensions = allExtensions.length > 0
+  const hasUserExtensions = userExtensions.length > 0
+
+  const { results, loading, errors } = useAllExtensionsData(displayExtensions)
 
   const [sortField, setSortField] = useState<OverviewSortField>('momentum')
   const [sortAsc, setSortAsc] = useState(false)
@@ -61,8 +76,8 @@ export default function Overview() {
   )
 
   // Single-extension shortcut: navigate directly to detail page
-  if (extensions.length === 1) {
-    return <Navigate to={`/extension/${extensions[0].id}`} replace />
+  if (!loading && displayExtensions.length === 1 && results.length === 1) {
+    return <Navigate to={`/extension/${displayExtensions[0].id}`} replace />
   }
 
   const handleSort = (field: OverviewSortField) => {
@@ -81,7 +96,45 @@ export default function Overview() {
 
   return (
     <div className="overview-wrapper">
-      <h1 className="overview-header">Your Extensions</h1>
+      <div className="overview-header-row">
+        <h1 className="overview-header">Your Extensions</h1>
+        {hasTrackedExtensions && (
+          <label className="overview__toggle">
+            <input
+              type="checkbox"
+              checked={showAll}
+              onChange={(e) => setShowAll(e.target.checked)}
+            />
+            <span className="overview__toggle-label">
+              Show all tracked extensions ({allExtensions.length})
+            </span>
+          </label>
+        )}
+      </div>
+
+      {!hasUserExtensions && !loading && (
+        <div className="overview__empty">
+          <p className="overview__empty-text">
+            No extensions found for your GitHub username.
+          </p>
+          {hasTrackedExtensions && (
+            <p className="overview__empty-hint">
+              <button
+                className="overview__empty-toggle"
+                onClick={() => setShowAll(true)}
+              >
+                View all tracked extensions
+              </button>
+              {' '}or{' '}
+              <Link to={username ? `/discover/${encodeURIComponent(username)}` : '/'}>
+                discover extensions
+              </Link>
+              {' '}for your account.
+            </p>
+          )}
+        </div>
+      )}
+
       <div className="card">
         <table className="overview-table" aria-label="Extensions overview">
         <thead>
@@ -140,7 +193,7 @@ export default function Overview() {
           {/* Per-row error state for extensions that failed to load */}
           {!loading &&
             Object.entries(errors).map(([extId, message]) => {
-              const ext = extensions.find(e => e.id === extId)
+              const ext = displayExtensions.find(e => e.id === extId)
               return (
                 <tr key={`error-${extId}`} className="overview__error-row">
                   <td>
@@ -169,6 +222,17 @@ export default function Overview() {
         </tbody>
         </table>
       </div>
+
+      {!hasUserExtensions && showAll && hasTrackedExtensions && (
+        <div className="overview__discover-cta">
+          <Link
+            to={username ? `/discover/${encodeURIComponent(username)}` : '/'}
+            className="overview__cta-link"
+          >
+            ← Discover extensions for your GitHub account
+          </Link>
+        </div>
+      )}
     </div>
   )
 }

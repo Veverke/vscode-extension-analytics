@@ -8,11 +8,13 @@ import {
   writeExtensionRegistry,
   readTimeSeries,
   appendDataPoint,
+  readReleases,
+  writeReleases,
   setDataDir,
   getDataDir,
   ensureDataDir,
 } from '../storage.js';
-import type { DataPoint, ExtensionRegistry } from '../../src/types/schema.js';
+import type { DataPoint, ExtensionRegistry, ReleaseEntry } from '../../src/types/schema.js';
 
 const chatwizardFixture = JSON.parse(
   fs.readFileSync(
@@ -118,5 +120,30 @@ describe('storage', () => {
     appendDataPoint('test.ext', point);
     const result = readTimeSeries('test.ext');
     expect(result).toHaveLength(2);
+  });
+
+  it('readReleases — missing file returns []', () => {
+    const result = readReleases('nonexistent.ext');
+    expect(result).toEqual([]);
+  });
+
+  it('writeReleases — round-trip write then read', () => {
+    const releases: ReleaseEntry[] = [
+      { version: '1.0.0', publishedAt: '2026-01-15T00:00:00Z', installsAtRelease: 100 },
+      { version: '1.1.0', publishedAt: '2026-03-01T00:00:00Z', installsAtRelease: 250 },
+    ];
+    writeReleases('Veverke.chatwizard', releases);
+    const result = readReleases('Veverke.chatwizard');
+    expect(result).toEqual(releases);
+  });
+
+  it('readReleases — returns parsed content from existing file', () => {
+    const releases: ReleaseEntry[] = [
+      { version: '2.0.0', publishedAt: '2026-06-01T00:00:00Z', installsAtRelease: 500 },
+    ];
+    writeReleases('test.ext', releases);
+    const result = readReleases('test.ext');
+    expect(result).toHaveLength(1);
+    expect(result[0].version).toBe('2.0.0');
   });
 });

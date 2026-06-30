@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ExtensionEntry, ExtensionRegistry } from '../types/schema'
+import { loadData } from '../utils/dataLoader'
 
 export interface UseExtensionsResult {
   extensions: ExtensionEntry[]
@@ -7,7 +8,14 @@ export interface UseExtensionsResult {
   error: string | null
 }
 
-export function useExtensions(): UseExtensionsResult {
+/**
+ * Loads the extension registry.
+ *
+ * When a username is provided, filters the registry to only include
+ * extensions requested by that user (or legacy entries without a requestedBy).
+ * When no username is given, returns all extensions.
+ */
+export function useExtensions(username?: string): UseExtensionsResult {
   const [extensions, setExtensions] = useState<ExtensionEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -15,24 +23,26 @@ export function useExtensions(): UseExtensionsResult {
   useEffect(() => {
     let cancelled = false
 
-    fetch('./data/extensions.json')
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        return res.json()
-      })
-      .then((data: unknown) => {
+    loadData<ExtensionRegistry>('./data/extensions.json')
+      .then((data) => {
         if (cancelled) return
-        if (!Array.isArray(data)) {
+        if (!data || !Array.isArray(data)) {
           setError('Invalid extensions data: expected an array')
           setExtensions([])
         } else {
-          setExtensions(data as ExtensionRegistry)
+          const filtered = username
+            ? data.filter(
+                (e) => !e.requestedBy || e.requestedBy === username,
+              )
+            : data
+          setExtensions(filtered)
         }
         setLoading(false)
       })
       .catch((err: unknown) => {
         if (cancelled) return
-        const message = err instanceof Error ? err.message : 'Failed to load extensions'
+        const message =
+          err instanceof Error ? err.message : 'Failed to load extensions'
         setError(message)
         setExtensions([])
         setLoading(false)
@@ -41,7 +51,7 @@ export function useExtensions(): UseExtensionsResult {
     return () => {
       cancelled = true
     }
-  }, [])
+  }, [username])
 
   return { extensions, loading, error }
 }

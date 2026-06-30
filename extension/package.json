@@ -1,0 +1,82 @@
+{
+  "name": "vscode-extension-analytics",
+  "displayName": "VS Code Extension Analytics",
+  "description": "View analytics and trends for tracked VS Code extensions directly inside VS Code",
+  "version": "1.0.0",
+  "publisher": "Veverke",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Veverke/vscode-extension-analytics.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Veverke/vscode-extension-analytics/issues"
+  },
+  "engines": {
+    "vscode": "^1.125.0"
+  },
+  "categories": [
+    "Visualization",
+    "Data"
+  ],
+  "keywords": [
+    "analytics",
+    "extensions",
+    "marketplace",
+    "tracking"
+  ],
+  "icon": "assets/icon.png",
+  "activationEvents": [],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "vscodeExtensionAnalytics",
+          "title": "Extension Analytics",
+          "icon": "assets/icon.png"
+        }
+      ]
+    },
+    "views": {
+      "vscodeExtensionAnalytics": [
+        {
+          "type": "webview",
+          "id": "vscodeExtensionAnalytics.mainView",
+          "name": "Dashboard"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "vscodeExtensionAnalytics.openDashboard",
+        "title": "Open Extension Analytics Dashboard",
+        "category": "Extension Analytics"
+      },
+      {
+        "command": "vscodeExtensionAnalytics.refreshData",
+        "title": "Refresh Analytics Data",
+        "category": "Extension Analytics",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "vscodeExtensionAnalytics.openDashboard"
+        },
+        {
+          "command": "vscodeExtensionAnalytics.refreshData"
+        }
+      ]
+    }
+  },
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./tsconfig.json",
+    "watch": "tsc -watch -p ./tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.125.0"
+  }
+}

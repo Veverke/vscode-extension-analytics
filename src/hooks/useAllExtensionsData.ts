@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { ExtensionEntry, DataPoint } from '../types/schema';
+import { loadData } from '../utils/dataLoader';
 import { computeVelocity } from '../metrics/velocity';
 import { computeMomentum } from '../metrics/momentum';
 
@@ -29,6 +30,12 @@ export function useAllExtensionsData(
   const [loading, setLoading] = useState(true);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  // Derive a stable dependency key from extension IDs so that a new
+  // array reference (e.g. inline []) does not trigger an infinite loop.
+  const extensionsKey = extensions.length === 0
+    ? ''
+    : extensions.map((e) => e.id).join(',');
+
   useEffect(() => {
     if (extensions.length === 0) {
       setResults([]);
@@ -41,9 +48,7 @@ export function useAllExtensionsData(
 
     Promise.allSettled(
       extensions.map(async (ext): Promise<ExtensionSummary> => {
-        const res = await fetch(`./data/${ext.id}.json`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const raw = (await res.json()) as unknown;
+        const raw = await loadData<unknown>(`./data/${ext.id}.json`);
         const data = Array.isArray(raw) ? (raw as DataPoint[]) : [];
 
         const velocity = computeVelocity(data);
@@ -92,7 +97,7 @@ export function useAllExtensionsData(
     return () => {
       cancelled = true;
     };
-  }, [extensions]);
+  }, [extensionsKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return { results, loading, errors };
 }

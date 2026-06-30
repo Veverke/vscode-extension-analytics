@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { DataPoint } from '../types/schema'
+import { loadData } from '../utils/dataLoader'
 
 export interface UseExtensionDataResult {
   data: DataPoint[]
@@ -15,24 +16,21 @@ export function useExtensionData(extensionId: string): UseExtensionDataResult {
   useEffect(() => {
     let cancelled = false
 
-    fetch(`./data/${extensionId}.json`)
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        return res.json()
-      })
-      .then((raw: unknown) => {
+    loadData<DataPoint[]>(`./data/${extensionId}.json`)
+      .then((raw) => {
         if (cancelled) return
-        if (!Array.isArray(raw)) {
+        if (!raw || !Array.isArray(raw)) {
           setError('Invalid data: expected an array')
           setData([])
         } else {
-          setData(raw as DataPoint[])
+          setData(raw)
         }
         setLoading(false)
       })
       .catch((err: unknown) => {
         if (cancelled) return
-        const message = err instanceof Error ? err.message : 'Failed to load data'
+        const message =
+          err instanceof Error ? err.message : 'Failed to load data'
         setError(message)
         setData([])
         setLoading(false)

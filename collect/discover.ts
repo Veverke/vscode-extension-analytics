@@ -1,11 +1,10 @@
 import type { ExtensionRegistry, ExtensionEntry } from '../src/types/schema.js';
-import type { DiscoveredExtension } from './github.js';
 import { fileURLToPath } from 'node:url';
 import {
   readExtensionRegistry,
   writeExtensionRegistry,
 } from './storage.js';
-import { discoverVSCodeExtensions } from './github.js';
+import { discoverVSCodeExtensions, discoverFromRepos } from './github.js';
 
 export function mergeRegistry(
   existing: ExtensionRegistry,
@@ -26,13 +25,50 @@ export function mergeRegistry(
   return [...existing, ...newEntries];
 }
 
-export async function runDiscover(
-  githubUser: string,
+// Re-export for discoverFromRepos caller
+import type { DiscoveredExtension } from './github.js';
+
+/**
+ * Scans the githubRepo fields of the existing registry to discover/verify
+ * extension metadata (namespace, name, displayName) from each repo's package.json.
+ * Only returns entries that are valid VS Code extensions.
+ */
+export async function scanRegistryRepos(
   githubToken: string
+): Promise<DiscoveredExtension[]> {
+  const registry = readExtensionRegistry();
+  const repoFullNames = registry
+    .map((e) => e.githubRepo)
+    .filter((repo): repo is string => !!repo);
+
+  if (repoFullNames.length === 0) {
+    console.log('[discover] No githubRepo fields in registry to scan.');
+    return [];
+  }
+
+  console.log(`[discover] Scanning ${repoFullNames.length} registry repo(s) for updates...`);
+  return discoverFromRepos(repoFullNames, githubToken);
+}
+
+export async function runDiscover(
+  githubToken: string,
+  githubUser?: string
 ): Promise<void> {
-  console.log(`[discover] Scanning repos for GitHub user: ${githubUser}`);
-  const discovered = await discoverVSCodeExtensions(githubUser, githubToken);
-  console.log(`[discover] Scanned ${discovered.length} VS Code extensions`);
+  const discovered: DiscoveredExtension[] = [];
+
+  // Phase 1: optionally scan a GitHub user's repos
+  if (githubUser) {
+    console.log(`[discover] Scanning repos for GitHub user: ${githubUser}`);
+    const userDiscovered = await discoverVSCodeExtensions(githubUser, githubToken);
+    discovered.push(...userDiscovered);
+    console.log(`[discover] Scanned ${userDiscovered.length} VS Code extensions from user repos`);
+  } else {
+    console.log('[discover] No GITHUB_USER provided, skipping user repo scan');
+  }
+
+  // Phase 2: scan registry's githubRepo fields for new/updated metadata
+  const registryDiscovered = await scanRegistryRepos(githubToken);
+  discovered.push(...registryDiscovered);
 
   const existing = readExtensionRegistry();
   const updated = mergeRegistry(existing, discovered);
@@ -44,17 +80,12 @@ export async function runDiscover(
   );
 }
 
-/* v8 ignore next 8 */
+/* v8 ignore next 12 */
 if (fileURLToPath(import.meta.url) === process.argv[1]) {
   const githubUser = process.env.GITHUB_USER;
   const githubToken = process.env.GITHUB_TOKEN ?? '';
-  if (!githubUser) {
-    console.error('GITHUB_USER env var is required');
+  runDiscover(githubToken, githubUser).catch((err: unknown) => {
+    console.error('[discover] Fatal error:', err);
     process.exitCode = 1;
-  } else {
-    runDiscover(githubUser, githubToken).catch((err: unknown) => {
-      console.error('[discover] Fatal error:', err);
-      process.exitCode = 1;
-    });
-  }
+  });
 }

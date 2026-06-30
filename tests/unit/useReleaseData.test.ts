@@ -134,4 +134,29 @@ describe('useReleaseData', () => {
     expect(result.current.loading).toBe(true);
     expect(result.current.releases).toEqual([]);
   });
+
+  it('does not set error after unmount when fetch rejects (cancelled in catch)', async () => {
+    let rejectFetch!: (err: Error) => void;
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockReturnValue(
+        new Promise((_resolve, reject) => {
+          rejectFetch = reject;
+        })
+      )
+    );
+
+    const { result, unmount } = renderHook(() =>
+      useReleaseData('Veverke.chatwizard')
+    );
+    unmount();
+
+    await act(async () => {
+      rejectFetch(new Error('Late error after unmount'));
+      await new Promise<void>((r) => setTimeout(r, 0));
+    });
+
+    expect(result.current.loading).toBe(true);
+    expect(result.current.error).toBeNull();
+  });
 });

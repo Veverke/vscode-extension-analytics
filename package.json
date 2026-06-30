@@ -4,8 +4,10 @@
   "description": "",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
-    "lint": "eslint src collect tests --no-error-on-unmatched-pattern",
+    "build": "tsc --noEmit && vite build && node scripts/copy-data.mjs",
+    "build:webview": "vite build --config vite.webview.config.ts && node scripts/copy-data.mjs",
+    "build:extension": "npm run build:webview && cd extension && npm run compile",
+    "lint": "eslint src collect extension tests --no-error-on-unmatched-pattern",
     "format": "prettier --write .",
     "test": "vitest run",
     "test:e2e": "playwright test",

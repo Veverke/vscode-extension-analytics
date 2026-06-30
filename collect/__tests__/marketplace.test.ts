@@ -77,6 +77,30 @@ describe('marketplace', () => {
     await expect(fetchMarketplaceStats('Veverke.chatwizard')).rejects.toThrow('503');
   });
 
+  it('fetchMarketplaceStats — non-ok with non-empty body includes body in error', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      ok: false,
+      status: 400,
+      statusText: 'Bad Request',
+      json: () => Promise.resolve({}),
+      text: () => Promise.resolve('Rate limit exceeded'),
+    } as unknown as typeof fetch);
+
+    await expect(fetchMarketplaceStats('Veverke.chatwizard')).rejects.toThrow('Rate limit exceeded');
+  });
+
+  it('fetchMarketplaceStats — text() rejection in error handler does not crash', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+      statusText: 'Internal Server Error',
+      json: () => Promise.resolve({}),
+      text: () => Promise.reject(new Error('stream error')),
+    } as unknown as typeof fetch);
+
+    await expect(fetchMarketplaceStats('Veverke.chatwizard')).rejects.toThrow('500');
+  });
+
   it('fetchMarketplaceStats — throws when extension not found in response', async () => {
     global.fetch = vi.fn().mockResolvedValueOnce({
       ok: true,
@@ -138,6 +162,28 @@ describe('fetchReleaseHistory', () => {
     } as unknown as typeof fetch);
 
     await expect(fetchReleaseHistory('Veverke.chatwizard')).rejects.toThrow('503');
+  });
+
+  it('non-ok with non-empty body includes body in error', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      ok: false,
+      status: 429,
+      statusText: 'Too Many Requests',
+      text: () => Promise.resolve('Rate limit hit'),
+    } as unknown as typeof fetch);
+
+    await expect(fetchReleaseHistory('Veverke.chatwizard')).rejects.toThrow('Rate limit hit');
+  });
+
+  it('text() rejection in error handler does not crash (fetchReleaseHistory)', async () => {
+    global.fetch = vi.fn().mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+      statusText: 'Internal Server Error',
+      text: () => Promise.reject(new Error('stream error')),
+    } as unknown as typeof fetch);
+
+    await expect(fetchReleaseHistory('Veverke.chatwizard')).rejects.toThrow('500');
   });
 
   it('throws when no results returned', async () => {

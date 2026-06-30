@@ -208,8 +208,10 @@ test.describe('Issue Flow — Track on GitHub', () => {
   test('already-tracked extensions show "Tracked" badge instead of CTA', async ({ page }) => {
     await page.goto('/#/discover/Veverke')
 
-    // Wait for items to render
-    await expect(page.locator('.discover__list')).toBeVisible({ timeout: 15000 })
+    // Wait for results list specifically — not the loading skeleton
+    await expect(
+      page.locator('.discover__list[aria-label="Discovered extensions"]'),
+    ).toBeVisible({ timeout: 15000 })
 
     // Since the fixture extensions-multi.json already has Veverke.chatwizard tracked,
     // and our mock returns only this one as a valid extension, it should show as tracked

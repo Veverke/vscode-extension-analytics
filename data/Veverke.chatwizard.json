@@ -2222,5 +2222,21 @@
       "averageRating": null,
       "ratingCount": 0
     }
+  },
+  {
+    "ts": "2026-07-01T00:43:29.289Z",
+    "marketplace": {
+      "installs": 132,
+      "updates": 82,
+      "averageRating": 5,
+      "ratingCount": 1,
+      "trendingWeekly": 3.8461538461538463,
+      "trendingMonthly": 25.384615384615383
+    },
+    "openVsx": {
+      "downloads": 1976,
+      "averageRating": null,
+      "ratingCount": 0
+    }
   }
 ]

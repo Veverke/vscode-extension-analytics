@@ -6,9 +6,11 @@ import {
   ensureDataDir,
   readReleases,
   writeReleases,
+  readTimeSeries,
 } from './storage.js';
 import { fetchMarketplaceStats, fetchReleaseHistory } from './marketplace.js';
 import { fetchOpenVsxStats } from './openvsx.js';
+import { computeMonthlyRollup, writeMonthlyRollup } from './monthly.js';
 
 /**
  * Merges newly fetched release entries with the stored ones.
@@ -65,6 +67,11 @@ export async function runCollector(): Promise<number> {
           `[collector] Updated releases for ${entry.id}: ${mergedReleases.length} versions`
         );
       }
+
+      // Re-compute and persist monthly rollups
+      const allData = readTimeSeries(entry.id);
+      const rollups = computeMonthlyRollup(allData);
+      writeMonthlyRollup(entry.id, rollups);
 
       console.log(`[collector] Collected data for ${entry.id}`);
       return entry.id;

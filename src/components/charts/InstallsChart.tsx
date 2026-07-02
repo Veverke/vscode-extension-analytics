@@ -49,6 +49,21 @@ function buildChartData(data: DataPoint[], projections?: ProjectionResult[]): In
     openVsxDownloads: point.openVsx?.downloads ?? null,
   }))
 
+  // Extend the chart to today by adding a flat continuation from the last data point
+  if (realPoints.length > 0) {
+    const lastReal = realPoints[realPoints.length - 1]
+    const now = new Date()
+    const todayMs = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 12, 0, 0)
+    const lastTs = lastReal.ts
+    if (todayMs > lastTs) {
+      realPoints.push({
+        ts: todayMs,
+        installs: lastReal.installs,
+        openVsxDownloads: lastReal.openVsxDownloads,
+      })
+    }
+  }
+
   if (!projections || projections.length === 0) return realPoints
 
   // Collect all unique projection timestamps

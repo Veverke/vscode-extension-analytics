@@ -3,9 +3,11 @@ import { computeVelocityNormalized } from '../../metrics/velocity'
 import { computeAcceleration } from '../../metrics/acceleration'
 import { computeProjection } from '../../metrics/projections'
 import { computeMomentum } from '../../metrics/momentum'
+import FormulaTooltip from '../annotations/FormulaTooltip'
 
 interface Props {
   data: DataPoint[]
+  projectionMonths?: number
 }
 
 function getMomentumColor(score: number): string {
@@ -20,7 +22,7 @@ function getAccelerationLabel(lastAcceleration: number): string {
   return '→ stable'
 }
 
-export default function MetricsPanel({ data }: Props) {
+export default function MetricsPanel({ data, projectionMonths = 1 }: Props) {
   if (data.length === 0) return null
 
   const normalizedVelocity = computeVelocityNormalized(data)
@@ -38,24 +40,48 @@ export default function MetricsPanel({ data }: Props) {
   const momentumScore = computeMomentum(data)
   const momentumColor = getMomentumColor(momentumScore)
 
-  const linearProjection = computeProjection(data, 'linear', 30)
+  const daysAhead = projectionMonths * 30
+  const linearProjection = computeProjection(data, 'linear', daysAhead)
   const projectedValue =
     linearProjection && linearProjection.points.length > 0
       ? Math.round(linearProjection.points[linearProjection.points.length - 1].value)
       : null
 
+  const lastInstalls = data[data.length - 1].marketplace.installs
+  const newDownloads = projectedValue !== null ? projectedValue - lastInstalls : null
+
+  const projectionLabel = `${projectionMonths === 1 ? '30-day' : `${projectionMonths}-month`} Projection`
+
   return (
     <div className="metrics-panel" role="region" aria-label="Metrics">
       <div className="metric-card">
-        <p className="metric-label">Current Velocity</p>
+        <FormulaTooltip
+          label="Velocity"
+          formula="Velocity = (installsₜ − installsₜ₋₁) / Δhours"
+          description="How fast installs are growing per hour, averaged over the most recent collection interval."
+        >
+          <p className="metric-label">Current Velocity</p>
+        </FormulaTooltip>
         <p className="metric-value" data-testid="metric-velocity">{velocityLabel}</p>
       </div>
       <div className="metric-card">
-        <p className="metric-label">Acceleration</p>
+        <FormulaTooltip
+          label="Acceleration"
+          formula="Acceleration = velocityₜ − velocityₜ₋₁"
+          description="Whether growth is speeding up (positive) or slowing down (negative)."
+        >
+          <p className="metric-label">Acceleration</p>
+        </FormulaTooltip>
         <p className="metric-value" data-testid="metric-acceleration">{accelerationLabel}</p>
       </div>
       <div className="metric-card">
-        <p className="metric-label">Momentum Score</p>
+        <FormulaTooltip
+          label="Momentum Score"
+          formula="Score = 0.5 × norm(velocity) + 0.3 × norm(acceleration) + 0.2 × recency"
+          description="A 0–100 composite that ranks growth intensity. Higher is faster-growing."
+        >
+          <p className="metric-label">Momentum Score</p>
+        </FormulaTooltip>
         <p
           className="metric-value"
           data-testid="metric-momentum"
@@ -65,15 +91,21 @@ export default function MetricsPanel({ data }: Props) {
         </p>
       </div>
       <div className="metric-card">
-        <p className="metric-label">30-day Projection</p>
+        <FormulaTooltip
+          label="Projection"
+          formula="Linear regression: y = mx + b"
+          description={`Predicted installs in ${projectionMonths * 30} days if current linear trend continues. R² shows confidence (1.0 = perfect fit).`}
+        >
+          <p className="metric-label">{projectionLabel}</p>
+        </FormulaTooltip>
         {projectedValue !== null ? (
           <>
             <p className="metric-value" data-testid="metric-projection">
-              {projectedValue.toLocaleString()}
+              {projectedValue.toLocaleString()} total
             </p>
-            {linearProjection && (
-              <p className="metric-r2">R²={linearProjection.r2.toFixed(2)}</p>
-            )}
+            <p className="metric-r2">
+              +{newDownloads!.toLocaleString()} new · R²={linearProjection!.r2.toFixed(2)}
+            </p>
           </>
         ) : (
           <p className="metric-value" data-testid="metric-projection">

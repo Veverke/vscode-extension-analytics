@@ -1,0 +1,20 @@
+[
+  {
+    "yearMonth": "2026-05",
+    "installsEndOfMonth": 109,
+    "installsGained": 0,
+    "avgRating": 5,
+    "ratingCountEndOfMonth": 1,
+    "openVsxDownloadsEndOfMonth": 1592,
+    "dataPointsInMonth": 30
+  },
+  {
+    "yearMonth": "2026-06",
+    "installsEndOfMonth": 136,
+    "installsGained": 27,
+    "avgRating": 5,
+    "ratingCountEndOfMonth": 1,
+    "openVsxDownloadsEndOfMonth": 1998,
+    "dataPointsInMonth": 30
+  }
+]

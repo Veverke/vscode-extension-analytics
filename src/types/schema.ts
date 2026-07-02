@@ -45,3 +45,20 @@ export interface EventAnnotation {
   type: 'release' | 'marketing' | 'blog' | 'social' | 'other';
   url?: string;
 }
+
+export interface MonthlyRollup {
+  yearMonth: string; // "2026-05"
+  installsEndOfMonth: number;
+  installsGained: number;
+  avgRating: number;
+  ratingCountEndOfMonth: number;
+  openVsxDownloadsEndOfMonth: number;
+  dataPointsInMonth: number;
+}
+
+export interface CompetitorEntry {
+  id: string;          // "ms-python.python"
+  displayName: string; // fetched from API
+  data: DataPoint[];   // single data point with current stats
+  releases: ReleaseEntry[];
+}

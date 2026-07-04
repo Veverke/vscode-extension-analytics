@@ -6,7 +6,7 @@ interface Props {
   rollups: MonthlyRollup[]
 }
 
-type SortKey = 'yearMonth' | 'installsEndOfMonth' | 'installsGained' | 'avgRating' | 'dataPointsInMonth'
+type SortKey = 'yearMonth' | 'installsEndOfMonth' | 'installsGained' | 'avgRating' | 'dataPointsInMonth' | 'starsEndOfMonth' | 'forksEndOfMonth' | 'contributionsEndOfMonth'
 type SortDir = 'asc' | 'desc'
 
 function formatMonth(yearMonth: string): string {
@@ -41,6 +41,15 @@ export default function MonthlyTableCard({ rollups }: Props) {
           break
         case 'dataPointsInMonth':
           cmp = a.dataPointsInMonth - b.dataPointsInMonth
+          break
+        case 'starsEndOfMonth':
+          cmp = a.starsEndOfMonth - b.starsEndOfMonth
+          break
+        case 'forksEndOfMonth':
+          cmp = a.forksEndOfMonth - b.forksEndOfMonth
+          break
+        case 'contributionsEndOfMonth':
+          cmp = a.contributionsEndOfMonth - b.contributionsEndOfMonth
           break
       }
       return sortDir === 'desc' ? -cmp : cmp
@@ -86,6 +95,15 @@ export default function MonthlyTableCard({ rollups }: Props) {
             <th onClick={() => toggleSort('dataPointsInMonth')} style={{ cursor: 'pointer' }}>
               Data Points <SortIcon column="dataPointsInMonth" />
             </th>
+            <th onClick={() => toggleSort('starsEndOfMonth')} style={{ cursor: 'pointer' }}>
+              Stars <SortIcon column="starsEndOfMonth" />
+            </th>
+            <th onClick={() => toggleSort('forksEndOfMonth')} style={{ cursor: 'pointer' }}>
+              Forks <SortIcon column="forksEndOfMonth" />
+            </th>
+            <th onClick={() => toggleSort('contributionsEndOfMonth')} style={{ cursor: 'pointer' }}>
+              Contributions <SortIcon column="contributionsEndOfMonth" />
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -120,6 +138,9 @@ export default function MonthlyTableCard({ rollups }: Props) {
                 )}
               </td>
               <td>{row.dataPointsInMonth}</td>
+              <td>{formatNum(row.starsEndOfMonth)}</td>
+              <td>{formatNum(row.forksEndOfMonth)}</td>
+              <td>{formatNum(row.contributionsEndOfMonth)}</td>
             </tr>
           ))}
         </tbody>

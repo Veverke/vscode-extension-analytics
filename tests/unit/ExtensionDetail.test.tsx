@@ -17,6 +17,9 @@ vi.mock('../../src/components/charts/RatingChart', () => ({
 vi.mock('../../src/components/cards/StatsCards', () => ({
   default: () => <div data-testid="stats-cards" />,
 }))
+vi.mock('../../src/components/charts/GitHubChart', () => ({
+  default: () => <div data-testid="github-chart" />,
+}))
 
 const fixture = fixtureData as DataPoint[]
 

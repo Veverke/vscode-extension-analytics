@@ -10,6 +10,7 @@ import ReleaseImpactPanel from '../components/cards/ReleaseImpactPanel'
 import InstallsChart from '../components/charts/InstallsChart'
 import VelocityChart from '../components/charts/VelocityChart'
 import RatingChart from '../components/charts/RatingChart'
+import GitHubChart from '../components/charts/GitHubChart'
 import MonthlyInstallsChart from '../components/charts/MonthlyInstallsChart'
 import MonthlyTableCard from '../components/cards/MonthlyTableCard'
 import { buildEventReferenceLines } from '../components/annotations/EventAnnotation'
@@ -173,6 +174,13 @@ export default function ExtensionDetail() {
         <section className="chart-section" aria-label="Rating">
           <h2>Rating</h2>
           <RatingChart data={data} />
+        </section>
+      </div>
+
+      <div className="card" style={{ marginBottom: 'var(--space-lg)' }}>
+        <section className="chart-section" aria-label="GitHub">
+          <h2>GitHub</h2>
+          <GitHubChart data={data} />
         </section>
       </div>
 

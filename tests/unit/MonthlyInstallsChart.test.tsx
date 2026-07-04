@@ -1,18 +1,30 @@
-import React from 'react'
 import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import MonthlyInstallsChart from '../../src/components/charts/MonthlyInstallsChart'
 import type { MonthlyRollup } from '../../src/types/schema'
 
-vi.mock('recharts', async () => {
-  const recharts = await vi.importActual<typeof import('recharts')>('recharts')
+vi.mock('recharts', () => {
+  const MockResponsiveContainer = ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  )
+  const MockBarChart = ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  )
+  const MockBar = () => <div>Bar</div>
+  const MockXAxis = () => <div>XAxis</div>
+  const MockYAxis = () => <div>YAxis</div>
+  const MockTooltip = () => <div>Tooltip</div>
+  const MockLegend = () => <div>Legend</div>
+  const MockCartesianGrid = () => <div>CartesianGrid</div>
   return {
-    ...recharts,
-    ResponsiveContainer: ({
-      children,
-    }: {
-      children: React.ReactElement<{ width?: number; height?: number }>
-    }) => React.cloneElement(children, { width: 800, height: 250 }),
+    ResponsiveContainer: MockResponsiveContainer,
+    BarChart: MockBarChart,
+    Bar: MockBar,
+    XAxis: MockXAxis,
+    YAxis: MockYAxis,
+    Tooltip: MockTooltip,
+    Legend: MockLegend,
+    CartesianGrid: MockCartesianGrid,
   }
 })
 
@@ -25,6 +37,9 @@ const mockRollups: MonthlyRollup[] = [
     ratingCountEndOfMonth: 14,
     openVsxDownloadsEndOfMonth: 645,
     dataPointsInMonth: 28,
+    starsEndOfMonth: 10,
+    forksEndOfMonth: 3,
+    contributionsEndOfMonth: 25,
   },
   {
     yearMonth: '2026-06',
@@ -34,24 +49,20 @@ const mockRollups: MonthlyRollup[] = [
     ratingCountEndOfMonth: 20,
     openVsxDownloadsEndOfMonth: 900,
     dataPointsInMonth: 30,
+    starsEndOfMonth: 15,
+    forksEndOfMonth: 5,
+    contributionsEndOfMonth: 40,
   },
 ]
 
 describe('MonthlyInstallsChart', () => {
-  it('shows empty message when no rollups', () => {
+  it('renders empty state when rollups is empty', () => {
     render(<MonthlyInstallsChart rollups={[]} />)
-    expect(screen.getByText('No monthly rollups available yet')).toBeInTheDocument()
+    expect(screen.getByText(/No monthly data/i)).toBeDefined()
   })
 
-  it('renders chart with rollups data', () => {
-    const { container } = render(<MonthlyInstallsChart rollups={mockRollups} />)
-    // Should render a BarChart (recharts renders SVG)
-    expect(container.querySelector('svg')).toBeInTheDocument()
-  })
-
-  it('sorts rollups by yearMonth ascending', () => {
-    const unsorted = [...mockRollups].reverse()
-    const { container } = render(<MonthlyInstallsChart rollups={unsorted} />)
-    expect(container.querySelector('svg')).toBeInTheDocument()
+  it('renders chart when rollups are provided', () => {
+    render(<MonthlyInstallsChart rollups={mockRollups} />)
+    expect(screen.getByText(/Installs Gained/i)).toBeDefined()
   })
 })

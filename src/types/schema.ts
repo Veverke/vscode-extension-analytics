@@ -13,10 +13,18 @@ export interface OpenVsxSnapshot {
   ratingCount: number;
 }
 
+export interface GitHubSnapshot {
+  stars: number;
+  forks: number;
+  /** Total contributions by non-owner contributors (PRs + commits + issues + reviews) */
+  contributions: number;
+}
+
 export interface DataPoint {
   ts: string;
   marketplace: MarketplaceSnapshot;
   openVsx: OpenVsxSnapshot | null;
+  github: GitHubSnapshot | null;
 }
 
 export interface ExtensionEntry {
@@ -54,6 +62,12 @@ export interface MonthlyRollup {
   ratingCountEndOfMonth: number;
   openVsxDownloadsEndOfMonth: number;
   dataPointsInMonth: number;
+  /** GitHub stars at end of month */
+  starsEndOfMonth: number;
+  /** GitHub forks at end of month */
+  forksEndOfMonth: number;
+  /** GitHub contributions at end of month */
+  contributionsEndOfMonth: number;
 }
 
 export interface CompetitorEntry {

@@ -248,6 +248,7 @@ export async function fetchCompetitorData(extensionId: string): Promise<Competit
       trendingMonthly: stats.trendingMonthly,
     },
     openVsx: null,
+    github: null,
   }
 
   const result: CompetitorData = {

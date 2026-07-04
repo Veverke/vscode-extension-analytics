@@ -3,12 +3,14 @@ import { computeMonthlyRollup } from '../monthly.js'
 import type { DataPoint } from '../../src/types/schema.js'
 
 function makePoint(ts: string, installs: number, rating?: number, ratingCount?: number, openVsxDownloads?: number): DataPoint {
+  // Use a sentinel to distinguish "not passed" from "passed as undefined"
+  const hasRating = rating !== undefined;
   return {
     ts,
     marketplace: {
       installs,
       updates: 0,
-      averageRating: rating ?? 4.0,
+      averageRating: hasRating ? rating : undefined,
       ratingCount: ratingCount ?? 1,
       trendingWeekly: 0,
       trendingMonthly: 0,
@@ -16,6 +18,7 @@ function makePoint(ts: string, installs: number, rating?: number, ratingCount?: 
     openVsx: openVsxDownloads !== undefined
       ? { downloads: openVsxDownloads, averageRating: null, ratingCount: 0 }
       : null,
+    github: null,
   }
 }
 
@@ -117,8 +120,8 @@ describe('computeMonthlyRollup', () => {
 
   it('handles real fixture data', () => {
     const fixture: DataPoint[] = [
-      { ts: '2026-05-20T12:00:00Z', marketplace: { installs: 500, updates: 389, averageRating: 4.1, ratingCount: 2, trendingWeekly: 0, trendingMonthly: 0 }, openVsx: { downloads: 233, averageRating: null, ratingCount: 0 } },
-      { ts: '2026-05-27T18:00:00Z', marketplace: { installs: 1380, updates: 1073, averageRating: 4.29, ratingCount: 14, trendingWeekly: 0.072464, trendingMonthly: 0.304349 }, openVsx: { downloads: 645, averageRating: 4.1, ratingCount: 5 } },
+      { ts: '2026-05-20T12:00:00Z', marketplace: { installs: 500, updates: 389, averageRating: 4.1, ratingCount: 2, trendingWeekly: 0, trendingMonthly: 0 }, openVsx: { downloads: 233, averageRating: null, ratingCount: 0 }, github: null },
+      { ts: '2026-05-27T18:00:00Z', marketplace: { installs: 1380, updates: 1073, averageRating: 4.29, ratingCount: 14, trendingWeekly: 0.072464, trendingMonthly: 0.304349 }, openVsx: { downloads: 645, averageRating: 4.1, ratingCount: 5 }, github: null },
     ]
     const result = computeMonthlyRollup(fixture)
     expect(result).toHaveLength(1)

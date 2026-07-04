@@ -70,6 +70,16 @@ export default function StatsCards({ data, trackedSince }: Props) {
   const firstRating = first.marketplace.averageRating
   const firstRatingCount = first.marketplace.ratingCount
 
+  // GitHub stats (backwards-compatible: null-safe)
+  const latestGithub = last.github
+  const firstGithub = first.github
+  const latestStars = latestGithub?.stars ?? null
+  const latestForks = latestGithub?.forks ?? null
+  const latestContributions = latestGithub?.contributions ?? null
+  const firstStars = firstGithub?.stars ?? null
+  const firstForks = firstGithub?.forks ?? null
+  const firstContributions = firstGithub?.contributions ?? null
+
   const totalDownloads = latestOpenVsx !== null ? latestInstalls + latestOpenVsx : latestInstalls
   const firstTotal = firstOpenVsx !== null ? firstInstalls + firstOpenVsx : firstInstalls
 
@@ -115,6 +125,33 @@ export default function StatsCards({ data, trackedSince }: Props) {
         label="Rating Count"
         value={formatNum(latestRatingCount)}
         delta={computeDelta(latestRatingCount, firstRatingCount)}
+      />
+      <StatCard
+        label="GitHub Stars"
+        value={latestStars !== null ? formatNum(latestStars) : 'N/A'}
+        delta={
+          latestStars !== null && firstStars !== null
+            ? computeDelta(latestStars, firstStars)
+            : 'N/A'
+        }
+      />
+      <StatCard
+        label="GitHub Forks"
+        value={latestForks !== null ? formatNum(latestForks) : 'N/A'}
+        delta={
+          latestForks !== null && firstForks !== null
+            ? computeDelta(latestForks, firstForks)
+            : 'N/A'
+        }
+      />
+      <StatCard
+        label="GitHub Contributions (non-owner)"
+        value={latestContributions !== null ? formatNum(latestContributions) : 'N/A'}
+        delta={
+          latestContributions !== null && firstContributions !== null
+            ? computeDelta(latestContributions, firstContributions)
+            : 'N/A'
+        }
       />
     </div>
   )

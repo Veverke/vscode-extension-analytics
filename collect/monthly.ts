@@ -52,6 +52,8 @@ export function computeMonthlyRollup(data: DataPoint[]): MonthlyRollup[] {
         ? ratings.reduce((sum, r) => sum + r, 0) / ratings.length
         : 0;
 
+    // GitHub stats from last point in month (backwards-compatible: null-safe)
+    const lastGithub = lastPoint.github;
     rollups.push({
       yearMonth,
       installsEndOfMonth: lastPoint.marketplace.installs,
@@ -60,6 +62,9 @@ export function computeMonthlyRollup(data: DataPoint[]): MonthlyRollup[] {
       ratingCountEndOfMonth: lastPoint.marketplace.ratingCount,
       openVsxDownloadsEndOfMonth: lastPoint.openVsx?.downloads ?? 0,
       dataPointsInMonth: points.length,
+      starsEndOfMonth: lastGithub?.stars ?? 0,
+      forksEndOfMonth: lastGithub?.forks ?? 0,
+      contributionsEndOfMonth: lastGithub?.contributions ?? 0,
     });
   }
 

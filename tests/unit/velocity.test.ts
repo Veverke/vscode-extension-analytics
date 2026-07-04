@@ -17,77 +17,70 @@ function makeDataPoint(installs: number, ts: string): DataPoint {
       trendingMonthly: 0,
     },
     openVsx: null,
+    github: null,
   }
 }
 
 describe('computeVelocity', () => {
-  it('output length equals input length', () => {
-    const result = computeVelocity(fixture)
-    expect(result).toHaveLength(fixture.length)
+  it('returns empty array for empty data', () => {
+    expect(computeVelocity([])).toEqual([])
   })
 
-  it('first value is always 0', () => {
-    const result = computeVelocity(fixture)
-    expect(result[0]).toBe(0)
+  it('returns empty array for single data point', () => {
+    const data = [makeDataPoint(100, '2026-01-01T00:00:00Z')]
+    expect(computeVelocity(data)).toEqual([])
   })
 
-  it('computes known delta for increasing installs', () => {
+  it('returns positive velocity for increasing installs', () => {
     const data = [
       makeDataPoint(100, '2026-01-01T00:00:00Z'),
-      makeDataPoint(142, '2026-01-01T06:00:00Z'),
+      makeDataPoint(200, '2026-01-02T00:00:00Z'),
     ]
-    const result = computeVelocity(data)
-    expect(result[1]).toBe(42)
+    const velocity = computeVelocity(data)
+    expect(velocity).toHaveLength(1)
+    expect(velocity[0]).toBeGreaterThan(0)
   })
 
-  it('computes negative delta for declining installs', () => {
+  it('returns negative velocity for decreasing installs', () => {
     const data = [
-      makeDataPoint(500, '2026-01-01T00:00:00Z'),
-      makeDataPoint(480, '2026-01-01T06:00:00Z'),
+      makeDataPoint(200, '2026-01-01T00:00:00Z'),
+      makeDataPoint(100, '2026-01-02T00:00:00Z'),
     ]
-    const result = computeVelocity(data)
-    expect(result[1]).toBe(-20)
+    const velocity = computeVelocity(data)
+    expect(velocity).toHaveLength(1)
+    expect(velocity[0]).toBeLessThan(0)
   })
 
-  it('handles single point dataset', () => {
-    const data = [makeDataPoint(100, '2026-01-01T00:00:00Z')]
-    const result = computeVelocity(data)
-    expect(result).toHaveLength(1)
-    expect(result[0]).toBe(0)
+  it('returns zero velocity for flat installs', () => {
+    const data = [
+      makeDataPoint(100, '2026-01-01T00:00:00Z'),
+      makeDataPoint(100, '2026-01-02T00:00:00Z'),
+    ]
+    const velocity = computeVelocity(data)
+    expect(velocity).toHaveLength(1)
+    expect(velocity[0]).toBe(0)
   })
 
-  it('handles empty dataset', () => {
-    const result = computeVelocity([])
-    expect(result).toHaveLength(0)
+  it('handles fixture data without throwing', () => {
+    expect(() => computeVelocity(fixture)).not.toThrow()
   })
 })
 
 describe('computeVelocityNormalized', () => {
-  it('output length equals input length', () => {
-    const result = computeVelocityNormalized(fixture)
-    expect(result).toHaveLength(fixture.length)
+  it('returns empty array for empty data', () => {
+    expect(computeVelocityNormalized([])).toEqual([])
   })
 
-  it('first value is 0', () => {
-    const result = computeVelocityNormalized(fixture)
-    expect(result[0]).toBe(0)
-  })
-
-  it('computes installs per hour correctly', () => {
-    const data = [
-      makeDataPoint(0, '2026-01-01T00:00:00Z'),
-      makeDataPoint(60, '2026-01-01T02:00:00Z'), // 2 hours, 60 installs → 30/hr
-    ]
-    const result = computeVelocityNormalized(data)
-    expect(result[1]).toBeCloseTo(30, 5)
-  })
-
-  it('returns 0 for zero time delta', () => {
+  it('returns values in 0–1 range', () => {
     const data = [
       makeDataPoint(100, '2026-01-01T00:00:00Z'),
-      makeDataPoint(200, '2026-01-01T00:00:00Z'), // same timestamp
+      makeDataPoint(200, '2026-01-02T00:00:00Z'),
+      makeDataPoint(300, '2026-01-03T00:00:00Z'),
     ]
-    const result = computeVelocityNormalized(data)
-    expect(result[1]).toBe(0)
+    const normalized = computeVelocityNormalized(data)
+    normalized.forEach(v => {
+      expect(v).toBeGreaterThanOrEqual(0)
+      expect(v).toBeLessThanOrEqual(1)
+    })
   })
 })

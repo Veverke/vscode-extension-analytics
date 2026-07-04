@@ -10,6 +10,8 @@ vi.mock('../storage.js', () => ({
   ensureDataDir: vi.fn(),
   readReleases: vi.fn().mockReturnValue([]),
   writeReleases: vi.fn(),
+  readTimeSeries: vi.fn().mockReturnValue([]),
+  getDataDir: vi.fn().mockReturnValue('/tmp'),
 }));
 
 vi.mock('../marketplace.js', () => ({
@@ -19,6 +21,10 @@ vi.mock('../marketplace.js', () => ({
 
 vi.mock('../openvsx.js', () => ({
   fetchOpenVsxStats: vi.fn(),
+}));
+
+vi.mock('../github-stats.js', () => ({
+  fetchGitHubStats: vi.fn().mockResolvedValue({ stars: 10, forks: 3, contributions: 25 }),
 }));
 
 import { runCollector } from '../index.js';

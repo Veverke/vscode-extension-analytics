@@ -152,6 +152,10 @@ export default function ExtensionDetail() {
               computeProjection(data, 'linear', projectionMonths * 30),
               computeProjection(data, 'exponential', projectionMonths * 30),
             ].filter((p): p is NonNullable<typeof p> => p !== null)}
+            openVsxProjections={[
+              computeProjection(data, 'linear', projectionMonths * 30, (p) => p.openVsx?.downloads ?? 0),
+              computeProjection(data, 'exponential', projectionMonths * 30, (p) => p.openVsx?.downloads ?? 0),
+            ].filter((p): p is NonNullable<typeof p> => p !== null)}
             peaks={detectPeaks(computeVelocity(data))}
             annotations={annotations}
           />

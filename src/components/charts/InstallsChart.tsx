@@ -28,9 +28,16 @@ const PROJECTION_COLORS: Record<string, string> = {
   polynomial: '#a855f7',
 }
 
+const OPENVSX_PROJECTION_COLORS: Record<string, string> = {
+  linear: '#1b8a5d',
+  exponential: '#d97706',
+  polynomial: '#7c3aed',
+}
+
 interface Props {
   data: DataPoint[]
   projections?: ProjectionResult[]
+  openVsxProjections?: ProjectionResult[]
   peaks?: number[]
   annotations?: ReferenceLineProps[]
 }
@@ -42,7 +49,11 @@ interface InstallsChartPoint {
   [key: string]: number | null
 }
 
-function buildChartData(data: DataPoint[], projections?: ProjectionResult[]): InstallsChartPoint[] {
+function buildChartData(
+  data: DataPoint[],
+  projections?: ProjectionResult[],
+  openVsxProjections?: ProjectionResult[],
+): InstallsChartPoint[] {
   const realPoints: InstallsChartPoint[] = data.map(point => ({
     ts: new Date(point.ts).getTime(),
     installs: point.marketplace.installs,
@@ -89,17 +100,39 @@ function buildChartData(data: DataPoint[], projections?: ProjectionResult[]): In
     lastReal[`proj_${proj.model}`] = lastReal.installs
   })
 
+  // Handle Open VSX projections
+  if (openVsxProjections && openVsxProjections.length > 0) {
+    openVsxProjections.forEach(proj => {
+      proj.points.forEach(({ ts, value }) => {
+        if (!projectionTsMap.has(ts)) {
+          projectionTsMap.set(ts, {
+            ts,
+            installs: null,
+            openVsxDownloads: null,
+          })
+        }
+        const entry = projectionTsMap.get(ts)!
+        entry[`proj_openVsx_${proj.model}`] = value
+      })
+    })
+
+    // Attach Open VSX projection keys to last real data point
+    openVsxProjections.forEach(proj => {
+      lastReal[`proj_openVsx_${proj.model}`] = lastReal.openVsxDownloads
+    })
+  }
+
   const projPoints = Array.from(projectionTsMap.values()).sort((a, b) => a.ts - b.ts)
   return [...realPoints, ...projPoints]
 }
 
-export default function InstallsChart({ data, projections, peaks, annotations }: Props) {
+export default function InstallsChart({ data, projections, openVsxProjections, peaks, annotations }: Props) {
   if (data.length === 0) {
     return <p role="status">{EMPTY_DATA_MESSAGE}</p>
   }
 
   const hasOpenVsx = data.some(p => p.openVsx !== null)
-  const chartData = buildChartData(data, projections)
+  const chartData = buildChartData(data, projections, openVsxProjections)
   const velocity = peaks && peaks.length > 0 ? computeVelocity(data) : []
 
   const allValues = chartData.flatMap(p => {
@@ -108,6 +141,10 @@ export default function InstallsChart({ data, projections, peaks, annotations }:
     if (p.openVsxDownloads !== null) vals.push(p.openVsxDownloads)
     projections?.forEach(proj => {
       const v = p[`proj_${proj.model}`]
+      if (v !== null && v !== undefined) vals.push(v as number)
+    })
+    openVsxProjections?.forEach(proj => {
+      const v = p[`proj_openVsx_${proj.model}`]
       if (v !== null && v !== undefined) vals.push(v as number)
     })
     return vals
@@ -159,6 +196,18 @@ export default function InstallsChart({ data, projections, peaks, annotations }:
             dataKey={`proj_${proj.model}`}
             name={`${proj.model.charAt(0).toUpperCase() + proj.model.slice(1)} R²=${proj.r2.toFixed(2)}`}
             stroke={PROJECTION_COLORS[proj.model] ?? '#888'}
+            strokeDasharray="6 3"
+            dot={false}
+            connectNulls={true}
+          />
+        ))}
+        {openVsxProjections?.map(proj => (
+          <Line
+            key={`proj_openVsx_${proj.model}`}
+            type="monotone"
+            dataKey={`proj_openVsx_${proj.model}`}
+            name={`Open VSX ${proj.model.charAt(0).toUpperCase() + proj.model.slice(1)} R²=${proj.r2.toFixed(2)}`}
+            stroke={OPENVSX_PROJECTION_COLORS[proj.model] ?? '#888'}
             strokeDasharray="6 3"
             dot={false}
             connectNulls={true}

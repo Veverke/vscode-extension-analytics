@@ -61,7 +61,8 @@ describe('MetricsPanel', () => {
       makePoint(300, '2026-01-03T00:00:00Z'),
     ]
     render(<MetricsPanel data={data} projectionMonths={1} />)
-    expect(screen.getByText(/Projection/i)).toBeDefined()
+    expect(screen.getByTestId('metric-projection')).toBeDefined()
+    expect(screen.getByTestId('metric-openvsx-projection')).toBeDefined()
   })
 
   it('renders nothing when data is empty', () => {

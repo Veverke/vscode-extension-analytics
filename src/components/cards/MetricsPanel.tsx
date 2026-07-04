@@ -52,6 +52,16 @@ export default function MetricsPanel({ data, projectionMonths = 1 }: Props) {
 
   const projectionLabel = `${projectionMonths === 1 ? '30-day' : `${projectionMonths}-month`} Projection`
 
+  // Open VSX projection
+  const openVsxData = data.filter(p => p.openVsx != null)
+  const openVsxProjection = computeProjection(openVsxData, 'linear', daysAhead, (p) => (p.openVsx as NonNullable<DataPoint['openVsx']>).downloads)
+  const openVsxProjected =
+    openVsxProjection && openVsxProjection.points.length > 0
+      ? Math.round(openVsxProjection.points[openVsxProjection.points.length - 1].value)
+      : null
+  const lastOpenVsxDownloads = openVsxData.length > 0 ? (openVsxData[openVsxData.length - 1].openVsx as NonNullable<DataPoint['openVsx']>).downloads : 0
+  const newOpenVsxDownloads = openVsxProjected !== null ? openVsxProjected - lastOpenVsxDownloads : null
+
   return (
     <div className="metrics-panel" role="region" aria-label="Metrics">
       <div className="metric-card">
@@ -109,6 +119,29 @@ export default function MetricsPanel({ data, projectionMonths = 1 }: Props) {
           </>
         ) : (
           <p className="metric-value" data-testid="metric-projection">
+            Not enough data
+          </p>
+        )}
+      </div>
+      <div className="metric-card">
+        <FormulaTooltip
+          label="Open VSX Projection"
+          formula="Linear regression: y = mx + b"
+          description={`Predicted Open VSX downloads in ${projectionMonths * 30} days if current linear trend continues.`}
+        >
+          <p className="metric-label">Open VSX {projectionLabel.toLowerCase()}</p>
+        </FormulaTooltip>
+        {openVsxProjected !== null ? (
+          <>
+            <p className="metric-value" data-testid="metric-openvsx-projection">
+              {openVsxProjected.toLocaleString()} total
+            </p>
+            <p className="metric-r2">
+              +{newOpenVsxDownloads!.toLocaleString()} new · R²={openVsxProjection!.r2.toFixed(2)}
+            </p>
+          </>
+        ) : (
+          <p className="metric-value" data-testid="metric-openvsx-projection">
             Not enough data
           </p>
         )}

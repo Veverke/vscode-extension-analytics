@@ -13,19 +13,21 @@ export interface ProjectionResult {
 const MIN_DATA_POINTS = 3
 
 /**
- * Fits a regression model to install counts over time.
+ * Fits a regression model to a time series extracted from DataPoint[].
  * Returns projected values for the next `daysAhead` days, or null if insufficient data.
+ * @param getValue - Function to extract the numeric value from each DataPoint (default: marketplace.installs)
  */
 export function computeProjection(
   data: DataPoint[],
   model: RegressionModel,
   daysAhead: number,
+  getValue: (point: DataPoint) => number = (p) => p.marketplace.installs,
 ): ProjectionResult | null {
   if (data.length < MIN_DATA_POINTS) return null
 
   const regressionInput: [number, number][] = data.map((point, i) => [
     i,
-    point.marketplace.installs,
+    getValue(point),
   ])
 
   const options = { precision: 6 }

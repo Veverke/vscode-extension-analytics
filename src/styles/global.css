@@ -2140,10 +2140,25 @@ ol {
 }
 
 .competitor-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
   color: var(--color-text-muted);
   font-size: var(--font-size-sm);
   padding: var(--space-md);
   text-align: center;
+}
+
+.competitor-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  flex-shrink: 0;
 }
 
 .competitor-error {

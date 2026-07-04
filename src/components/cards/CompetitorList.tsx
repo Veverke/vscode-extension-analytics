@@ -137,7 +137,10 @@ function CompetitorItem({
   if (loading) {
     return (
       <div className="competitor-card">
-        <div className="competitor-loading">Loading {id}...</div>
+        <div className="competitor-loading">
+          <span className="competitor-spinner" aria-hidden="true" />
+          <span>Loading {id}...</span>
+        </div>
       </div>
     )
   }

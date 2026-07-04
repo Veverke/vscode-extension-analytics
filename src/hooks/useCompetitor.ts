@@ -34,8 +34,6 @@ export function useCompetitor(extensionId: string | null): UseCompetitorResult {
       return
     }
 
-    // Don't re-fetch if same ID
-    if (extensionId === previousId.current) return
     previousId.current = extensionId
 
     let cancelled = false
@@ -67,6 +65,7 @@ export function useCompetitor(extensionId: string | null): UseCompetitorResult {
 
     return () => {
       cancelled = true
+      previousId.current = null
     }
   }, [extensionId])
 

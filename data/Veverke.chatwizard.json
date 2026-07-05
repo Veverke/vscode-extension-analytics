@@ -2510,5 +2510,21 @@
       "averageRating": null,
       "ratingCount": 0
     }
+  },
+  {
+    "ts": "2026-07-05T12:29:02.302Z",
+    "marketplace": {
+      "installs": 141,
+      "updates": 82,
+      "averageRating": 5,
+      "ratingCount": 1,
+      "trendingWeekly": 9.219858156028367,
+      "trendingMonthly": 22.69503546099291
+    },
+    "openVsx": {
+      "downloads": 2000,
+      "averageRating": null,
+      "ratingCount": 0
+    }
   }
 ]

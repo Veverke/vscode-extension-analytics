@@ -83,4 +83,28 @@ describe('computeVelocityNormalized', () => {
       expect(v).toBeLessThanOrEqual(1)
     })
   })
+
+  it('returns values in -1 to 1 range for negative data', () => {
+    const data = [
+      makeDataPoint(300, '2026-01-01T00:00:00Z'),
+      makeDataPoint(200, '2026-01-02T00:00:00Z'),
+      makeDataPoint(100, '2026-01-03T00:00:00Z'),
+    ]
+    const normalized = computeVelocityNormalized(data)
+    expect(normalized).toHaveLength(2)
+    normalized.forEach(v => {
+      expect(v).toBeGreaterThanOrEqual(-1)
+      expect(v).toBeLessThanOrEqual(0)
+    })
+  })
+
+  it('handles zero time difference by returning 0', () => {
+    const data = [
+      makeDataPoint(100, '2026-01-01T00:00:00Z'),
+      makeDataPoint(200, '2026-01-01T00:00:00Z'), // same timestamp
+    ]
+    const normalized = computeVelocityNormalized(data)
+    expect(normalized).toHaveLength(1)
+    expect(normalized[0]).toBe(0)
+  })
 })

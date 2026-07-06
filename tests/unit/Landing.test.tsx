@@ -24,8 +24,8 @@ function renderLanding() {
         ),
       },
       {
-        path: '/discover/:username',
-        element: <div>discover page</div>,
+        path: '/overview',
+        element: <div>overview page</div>,
       },
     ],
     { initialEntries: ['/'] },

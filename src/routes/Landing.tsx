@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '../contexts/UserContext'
 
@@ -8,13 +8,23 @@ const GITHUB_USERNAME_PATTERN = /^[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,
  * Landing / username input screen.
  *
  * Validates the GitHub username format and, on submit, stores the username
- * in context and navigates to the discovery results page.
+ * in context and navigates to the overview page.
+ *
+ * If a username is already stored (returning user), automatically redirects
+ * to the overview page.
  */
 export default function Landing() {
   const navigate = useNavigate()
-  const { setUsername } = useUser()
+  const { username, setUsername } = useUser()
   const [inputValue, setInputValue] = useState('')
   const [validationError, setValidationError] = useState<string | null>(null)
+
+  // Redirect returning users straight to overview
+  useEffect(() => {
+    if (username) {
+      navigate('/overview', { replace: true })
+    }
+  }, [username, navigate])
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -34,7 +44,7 @@ export default function Landing() {
 
     setValidationError(null)
     setUsername(trimmed)
-    navigate(`/discover/${encodeURIComponent(trimmed)}`)
+    navigate('/overview')
   }
 
   return (

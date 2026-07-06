@@ -115,10 +115,12 @@ export async function loadData<T>(
 
     return res.json() as Promise<T>;
   } catch (err: unknown) {
-    // When tolerate404 is set, network errors are expected (e.g. file not bundled yet)
-    // Return null silently instead of throwing/logging
+    // When tolerate404 is set, only actual 404 errors should be silently handled
     if (options?.tolerate404) {
-      return null;
+      if (err instanceof Error && err.message === 'HTTP 404') {
+        return null;
+      }
+      throw err;
     }
 
     // In webview context, if the bundled copy failed, fall back to GitHub raw

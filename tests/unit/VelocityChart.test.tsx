@@ -12,7 +12,7 @@ vi.mock('recharts', () => {
     <div>{children}</div>
   )
   const MockLine = () => <div>Line</div>
-  const MockBar = () => <div>Bar</div>
+  const MockBar = ({ name }: { name?: string }) => <div>{name || 'Bar'}</div>
   const MockXAxis = () => <div>XAxis</div>
   const MockYAxis = () => <div>YAxis</div>
   const MockTooltip = () => <div>Tooltip</div>
@@ -54,7 +54,7 @@ function makePoint(installs: number, ts: string): DataPoint {
 describe('VelocityChart', () => {
   it('renders empty state when data is empty', () => {
     render(<VelocityChart data={[]} />)
-    expect(screen.getByText(/No data/i)).toBeDefined()
+    expect(screen.getByText(/No velocity data available/i)).toBeDefined()
   })
 
   it('renders chart when data has enough points', () => {

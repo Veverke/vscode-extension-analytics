@@ -10,7 +10,7 @@ vi.mock('recharts', () => {
   const MockBarChart = ({ children }: { children: React.ReactNode }) => (
     <div>{children}</div>
   )
-  const MockBar = () => <div>Bar</div>
+  const MockBar = ({ name }: { name?: string }) => <div>{name || 'Bar'}</div>
   const MockXAxis = () => <div>XAxis</div>
   const MockYAxis = () => <div>YAxis</div>
   const MockTooltip = () => <div>Tooltip</div>
@@ -58,7 +58,7 @@ const mockRollups: MonthlyRollup[] = [
 describe('MonthlyInstallsChart', () => {
   it('renders empty state when rollups is empty', () => {
     render(<MonthlyInstallsChart rollups={[]} />)
-    expect(screen.getByText(/No monthly data/i)).toBeDefined()
+    expect(screen.getByText(/No monthly rollups available yet/i)).toBeDefined()
   })
 
   it('renders chart when rollups are provided', () => {

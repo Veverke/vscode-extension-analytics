@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import FormulaTooltip from '../../src/components/annotations/FormulaTooltip'
 
@@ -63,6 +63,47 @@ describe('FormulaTooltip', () => {
     fireEvent.focus(icon)
     expect(screen.getByRole('tooltip')).toBeInTheDocument()
     fireEvent.blur(icon)
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+  })
+
+  it('toggles popover on Enter key press', () => {
+    render(
+      <FormulaTooltip label="Velocity" formula="Δx/Δt" description="How fast">
+        <span>42</span>
+      </FormulaTooltip>
+    )
+    const icon = screen.getByRole('button', { name: /Info about Velocity/i })
+    fireEvent.keyDown(icon, { key: 'Enter' })
+    expect(screen.getByRole('tooltip')).toBeInTheDocument()
+    fireEvent.keyDown(icon, { key: 'Enter' })
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+  })
+
+  it('toggles popover on Space key press', () => {
+    render(
+      <FormulaTooltip label="Velocity" formula="Δx/Δt" description="How fast">
+        <span>42</span>
+      </FormulaTooltip>
+    )
+    const icon = screen.getByRole('button', { name: /Info about Velocity/i })
+    fireEvent.keyDown(icon, { key: ' ' })
+    expect(screen.getByRole('tooltip')).toBeInTheDocument()
+    fireEvent.keyDown(icon, { key: ' ' })
+    expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
+  })
+
+  it('closes popover when clicking outside', () => {
+    render(
+      <FormulaTooltip label="Velocity" formula="Δx/Δt" description="How fast">
+        <span>42</span>
+      </FormulaTooltip>
+    )
+    const icon = screen.getByRole('button', { name: /Info about Velocity/i })
+    fireEvent.mouseEnter(icon)
+    expect(screen.getByRole('tooltip')).toBeInTheDocument()
+
+    // Click outside
+    fireEvent.mouseDown(document.body)
     expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
   })
 })

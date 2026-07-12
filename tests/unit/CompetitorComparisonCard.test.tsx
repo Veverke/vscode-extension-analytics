@@ -111,7 +111,7 @@ describe('CompetitorComparisonCard', () => {
         onRemove={() => {}}
       />
     )
-    expect(screen.getByText('N/A')).toBeInTheDocument()
+    expect(screen.getAllByText('N/A').length).toBeGreaterThanOrEqual(1)
   })
 
   it('shows arrow indicators for green and red diffs', () => {

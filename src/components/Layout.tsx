@@ -28,42 +28,42 @@ export default function Layout() {
         )}
       </header>
       <div className="app__body">
-        <nav className="app__sidebar" aria-label="Extension navigation">
-          <ul className="sidebar__list">
-            {extensions.map(ext => (
-              <li key={ext.id} className="sidebar__item">
-                <NavLink
-                  to={`/extension/${ext.id}`}
-                  className={({ isActive }) =>
-                    ['sidebar__link', isActive ? 'sidebar__link--active' : '']
-                      .filter(Boolean)
-                      .join(' ')
-                  }
-                >
-                  <span className="sidebar__link-icon">
-                    <img
-                      src={getExtensionIconUrl(ext.namespace, ext.name)}
-                      alt=""
-                      loading="lazy"
-                      onError={(e) => {
-                        const target = e.currentTarget
-                        target.style.display = 'none'
-                      }}
-                    />
-                  </span>
-                  {ext.displayName}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
-          {extensions.length > 0 && (
+        {extensions.length > 0 && (
+          <nav className="app__sidebar" aria-label="Extension navigation">
+            <ul className="sidebar__list">
+              {extensions.map(ext => (
+                <li key={ext.id} className="sidebar__item">
+                  <NavLink
+                    to={`/extension/${ext.id}`}
+                    className={({ isActive }) =>
+                      ['sidebar__link', isActive ? 'sidebar__link--active' : '']
+                        .filter(Boolean)
+                        .join(' ')
+                    }
+                  >
+                    <span className="sidebar__link-icon">
+                      <img
+                        src={getExtensionIconUrl(ext.namespace, ext.name)}
+                        alt=""
+                        loading="lazy"
+                        onError={(e) => {
+                          const target = e.currentTarget
+                          target.style.display = 'none'
+                        }}
+                      />
+                    </span>
+                    {ext.displayName}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
             <div className="sidebar__overview-link">
               <NavLink to="/overview" className="sidebar__link">
                 📊 Overview
               </NavLink>
             </div>
-          )}
-        </nav>
+          </nav>
+        )}
         <main className="app__main">
           <Outlet />
         </main>

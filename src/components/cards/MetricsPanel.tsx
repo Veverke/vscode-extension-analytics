@@ -26,7 +26,7 @@ export default function MetricsPanel({ data, projectionMonths = 1 }: Props) {
   if (data.length === 0) return null
 
   const normalizedVelocity = computeVelocityNormalized(data)
-  const currentVelocity = normalizedVelocity[normalizedVelocity.length - 1]
+  const currentVelocity = normalizedVelocity.length > 0 ? normalizedVelocity[normalizedVelocity.length - 1] : 0
   const velocitySign = currentVelocity >= 0 ? '+' : ''
   const velocityLabel = `${velocitySign}${currentVelocity.toFixed(1)} /hour`
 

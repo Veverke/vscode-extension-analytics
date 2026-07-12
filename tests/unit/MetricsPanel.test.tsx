@@ -69,4 +69,30 @@ describe('MetricsPanel', () => {
     const { container } = render(<MetricsPanel data={[]} projectionMonths={1} />)
     expect(container.innerHTML).toBe('')
   })
+
+  it('shows stable acceleration when velocity does not change', () => {
+    const data = [
+      makePoint(100, '2026-01-01T00:00:00Z'),
+      makePoint(100, '2026-01-02T00:00:00Z'),
+      makePoint(100, '2026-01-03T00:00:00Z'),
+    ]
+    render(<MetricsPanel data={data} projectionMonths={1} />)
+    expect(screen.getByTestId('metric-acceleration')).toHaveTextContent('→ stable')
+  })
+
+  it('shows "Not enough data" for projection with single data point', () => {
+    const data = [makePoint(100, '2026-01-01T00:00:00Z')]
+    render(<MetricsPanel data={data} projectionMonths={1} />)
+    expect(screen.getByTestId('metric-projection')).toHaveTextContent('Not enough data')
+  })
+
+  it('shows "Not enough data" for Open VSX projection when no openVsx data', () => {
+    const data = [
+      makePoint(100, '2026-01-01T00:00:00Z'),
+      makePoint(200, '2026-01-02T00:00:00Z'),
+      makePoint(300, '2026-01-03T00:00:00Z'),
+    ]
+    render(<MetricsPanel data={data} projectionMonths={1} />)
+    expect(screen.getByTestId('metric-openvsx-projection')).toHaveTextContent('Not enough data')
+  })
 })

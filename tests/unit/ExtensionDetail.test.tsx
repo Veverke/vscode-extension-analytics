@@ -88,9 +88,9 @@ describe('ExtensionDetail', () => {
   beforeEach(() => {
     vi.resetAllMocks()
     mockUseExtensionData.mockReturnValue({ data: [], loading: true, error: null })
-    mockUseReleaseData.mockReturnValue({ releases: [] })
-    mockUseEvents.mockReturnValue({ events: [] })
-    mockUseMonthlyRollups.mockReturnValue({ rollups: [] })
+    mockUseReleaseData.mockReturnValue({ releases: [], loading: true, error: null })
+    mockUseEvents.mockReturnValue({ events: [], loading: true, error: null })
+    mockUseMonthlyRollups.mockReturnValue({ rollups: [], loading: true, error: null })
   })
 
   it('renders loading skeleton when loading', () => {
@@ -163,6 +163,8 @@ describe('ExtensionDetail', () => {
         forksEndOfMonth: 5,
         contributionsEndOfMonth: 3,
       } as MonthlyRollup],
+      loading: false,
+      error: null,
     })
     mockUseExtensionData.mockReturnValue({ data: [mockDataPoint], loading: false, error: null })
     renderExtensionDetail()

@@ -289,7 +289,7 @@ describe('fetchGitHubStats', () => {
       .mockResolvedValueOnce({
         ok: true,
         json: async () => [
-          { number: 1 },
+          { number: 1, user: { login: 'testowner' } },
         ],
       })
       .mockResolvedValueOnce({

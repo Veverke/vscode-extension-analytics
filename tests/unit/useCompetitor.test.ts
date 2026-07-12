@@ -102,15 +102,14 @@ describe('useCompetitor', () => {
   it('cancels fetch when extensionId changes rapidly', async () => {
     let resolveFirst: (value: CompetitorData) => void = () => {}
     const firstPromise = new Promise<CompetitorData>((resolve) => { resolveFirst = resolve })
-    const secondPromise = Promise.resolve({
-      displayName: 'Second Ext',
-      data: [{ ts: '2025-02-01', marketplace: { installs: 200, updates: 10, averageRating: 4.5, ratingCount: 20, trendingWeekly: 0, trendingMonthly: 0 }, openVsx: null, github: null }],
-      releases: [{ version: '2.0.0', publishedAt: '2025-02-01T00:00:00Z', installsAtRelease: 0 }],
-    })
 
     mockFetchCompetitorData
-      .mockResolvedValueOnce(firstPromise)
-      .mockResolvedValueOnce(secondPromise)
+      .mockImplementationOnce(() => firstPromise)
+      .mockResolvedValueOnce({
+        displayName: 'Second Ext',
+        data: [{ ts: '2025-02-01', marketplace: { installs: 200, updates: 10, averageRating: 4.5, ratingCount: 20, trendingWeekly: 0, trendingMonthly: 0 }, openVsx: null, github: null }],
+        releases: [{ version: '2.0.0', publishedAt: '2025-02-01T00:00:00Z', installsAtRelease: 0 }],
+      })
 
     const { result, rerender } = renderHook(
       ({ id }) => useCompetitor(id),

@@ -115,6 +115,19 @@ describe('CompetitorList', () => {
   })
 
   it('removes a competitor when remove is clicked', () => {
+    mockUseCompetitor.mockReturnValue({
+      displayName: 'Python',
+      data: [{
+        ts: '2025-01-01',
+        marketplace: { installs: 10000, updates: 50, averageRating: 4.0, ratingCount: 200, trendingWeekly: 10, trendingMonthly: 50 },
+        openVsx: null,
+        github: null,
+      }],
+      releases: [],
+      loading: false,
+      error: null,
+    })
+
     render(<CompetitorList {...defaultProps} />)
 
     const input = screen.getByLabelText('Competitor extension ID')
@@ -184,7 +197,7 @@ describe('CompetitorList', () => {
     fireEvent.change(input, { target: { value: 'ms-python.python' } })
     fireEvent.click(screen.getByRole('button', { name: 'Add' }))
 
-    expect(screen.getByText('Python')).toBeInTheDocument()
+    expect(screen.getByText(/Python/)).toBeInTheDocument()
   })
 
   it('persists competitors to sessionStorage', () => {

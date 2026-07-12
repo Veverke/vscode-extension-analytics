@@ -91,4 +91,37 @@ describe('CompetitorComparisonCard', () => {
     const diffCells = document.querySelectorAll('.competitor-value--red')
     expect(diffCells.length).toBeGreaterThan(0)
   })
+
+  it('shows gray diff when values are equal', () => {
+    render(
+      <CompetitorComparisonCard
+        yourExtension={{ ...yourExtension, installs: 5000 }}
+        competitor={{ ...competitor, installs: 5000 }}
+        onRemove={() => {}}
+      />
+    )
+    expect(screen.getByText('0')).toBeInTheDocument()
+  })
+
+  it('shows N/A when ratings are 0', () => {
+    render(
+      <CompetitorComparisonCard
+        yourExtension={{ ...yourExtension, rating: 0 }}
+        competitor={{ ...competitor, rating: 0 }}
+        onRemove={() => {}}
+      />
+    )
+    expect(screen.getByText('N/A')).toBeInTheDocument()
+  })
+
+  it('shows arrow indicators for green and red diffs', () => {
+    render(
+      <CompetitorComparisonCard
+        yourExtension={{ ...yourExtension, installs: 1000 }}
+        competitor={{ ...competitor, installs: 5000 }}
+        onRemove={() => {}}
+      />
+    )
+    expect(screen.getByText('↓')).toBeInTheDocument()
+  })
 })

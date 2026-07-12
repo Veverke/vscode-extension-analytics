@@ -24,7 +24,7 @@ class AnalyticsWebviewProvider implements vscode.WebviewViewProvider {
     webviewView.webview.html = this._getHtmlContent(webviewView.webview);
 
     // Listen for messages from the webview
-    webviewView.webview.onDidReceiveMessage((message) => {
+    webviewView.webview.onDidReceiveMessage((message: { command: string; url?: string }) => {
       switch (message.command) {
         case 'refresh':
           vscode.commands.executeCommand('vscodeExtensionAnalytics.refreshData');

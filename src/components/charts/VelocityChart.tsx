@@ -27,7 +27,7 @@ export function formatVelocityTooltipValue(value: unknown): [string, string] {
   return [`${sign}${num.toLocaleString()} installs`, 'Velocity']
 }
 
-function buildChartData(data: DataPoint[]): VelocityChartPoint[] {
+export function buildChartData(data: DataPoint[]): VelocityChartPoint[] {
   const velocities = computeVelocity(data)
   return data.map((point, i) => ({
     ts: new Date(point.ts).getTime(),

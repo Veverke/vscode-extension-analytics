@@ -356,4 +356,80 @@ describe('fetchGitHubStats', () => {
     expect(result.stars).toBe(0)
     expect(result.forks).toBe(0)
   })
+
+  it('throws when fetchRepoOwner fails (missing owner, then repo fetch fails)', async () => {
+    mockFetch
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          stargazers_count: 50,
+          forks_count: 10,
+          // no owner field
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: false,
+        status: 403,
+      })
+
+    await expect(fetchGitHubStats('testowner/test-repo', 'test-token')).rejects.toThrow(
+      '[github-stats] Failed to fetch repo info for testowner/test-repo: 403'
+    )
+  })
+
+  it('throws when contributor stats returns non-ok non-202 status', async () => {
+    mockFetch
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          stargazers_count: 50,
+          forks_count: 10,
+          owner: { login: 'testowner' },
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+      })
+
+    await expect(fetchGitHubStats('testowner/test-repo', 'test-token')).rejects.toThrow(
+      '[github-stats] Failed to fetch contributor stats for testowner/test-repo: 500'
+    )
+  })
+
+  it('handles empty PR response gracefully (no PRs)', async () => {
+    // fetchNonOwnerReviews also calls the PRs API, so we need mocks for both
+    // fetchNonOwnerPRs and fetchNonOwnerReviews
+    mockFetch
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          stargazers_count: 50,
+          forks_count: 10,
+          owner: { login: 'testowner' },
+        }),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => [],
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => [],
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => [],
+      })
+      // fetchNonOwnerReviews also fetches PRs
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => [],
+      })
+
+    const result = await fetchGitHubStats('testowner/test-repo', 'test-token')
+    expect(result.stars).toBe(50)
+    expect(result.forks).toBe(10)
+    expect(result.contributions).toBe(0)
+  })
 })

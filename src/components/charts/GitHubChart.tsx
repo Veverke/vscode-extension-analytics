@@ -23,7 +23,7 @@ interface GitHubChartPoint {
   contributions: number | null
 }
 
-function buildChartData(data: DataPoint[]): GitHubChartPoint[] {
+export function buildChartData(data: DataPoint[]): GitHubChartPoint[] {
   return data
     .filter((point): point is DataPoint & { github: NonNullable<DataPoint['github']> } => point.github != null)
     .map(point => ({
@@ -34,7 +34,7 @@ function buildChartData(data: DataPoint[]): GitHubChartPoint[] {
     }))
 }
 
-function formatTooltipValue(value: unknown, name: unknown): [string, string] {
+export function formatTooltipValue(value: unknown, name: unknown): [string, string] {
   const num = typeof value === 'number' ? value : null
   return [num !== null ? num.toLocaleString() : 'N/A', name as string]
 }

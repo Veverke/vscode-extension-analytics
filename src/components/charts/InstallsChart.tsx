@@ -49,7 +49,7 @@ interface InstallsChartPoint {
   [key: string]: number | null
 }
 
-function buildChartData(
+export function buildChartData(
   data: DataPoint[],
   projections?: ProjectionResult[],
   openVsxProjections?: ProjectionResult[],

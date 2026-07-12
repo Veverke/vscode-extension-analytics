@@ -10,13 +10,13 @@ interface Props {
   projectionMonths?: number
 }
 
-function getMomentumColor(score: number): string {
+export function getMomentumColor(score: number): string {
   if (score > 66) return '#4ade80'
   if (score >= 33) return '#facc15'
   return '#f87171'
 }
 
-function getAccelerationLabel(lastAcceleration: number): string {
+export function getAccelerationLabel(lastAcceleration: number): string {
   if (lastAcceleration > 0) return '↑ speeding up'
   if (lastAcceleration < 0) return '↓ slowing down'
   return '→ stable'

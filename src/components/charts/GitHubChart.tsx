@@ -34,7 +34,7 @@ export function buildChartData(data: DataPoint[]): GitHubChartPoint[] {
     }))
 }
 
-export function formatTooltipValue(value: unknown, name: unknown): [string, string] {
+export function formatTooltipValue(value: unknown, name: string): [string, string] {
   const num = typeof value === 'number' ? value : null
   return [num !== null ? num.toLocaleString() : 'N/A', name as string]
 }

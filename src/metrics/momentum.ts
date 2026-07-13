@@ -2,12 +2,12 @@ import { DataPoint } from '../types/schema'
 import { computeVelocity } from './velocity'
 import { computeAcceleration } from './acceleration'
 
-function mean(values: number[]): number {
+export function mean(values: number[]): number {
   if (values.length === 0) return 0
   return values.reduce((sum, v) => sum + v, 0) / values.length
 }
 
-function signedNormalize(values: number[]): number[] {
+export function signedNormalize(values: number[]): number[] {
   if (values.length === 0) return []
   const maxAbs = Math.max(...values.map(Math.abs), 1)
   return values.map(v => v / maxAbs)

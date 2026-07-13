@@ -22,7 +22,7 @@ interface RatingChartPoint {
   ratingCount: number
 }
 
-function buildChartData(data: DataPoint[]): RatingChartPoint[] {
+export function buildChartData(data: DataPoint[]): RatingChartPoint[] {
   return data.map(point => ({
     ts: new Date(point.ts).getTime(),
     rating: point.marketplace.averageRating ?? null,

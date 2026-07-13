@@ -17,7 +17,7 @@ import { formatDate } from '../../utils/normalize'
 
 export const EMPTY_DATA_MESSAGE = "No data yet — the collector hasn't run yet"
 
-export function formatInstallsTooltipValue(value: unknown, name: unknown): [string, string] {
+export function formatInstallsTooltipValue(value: unknown, name: string): [string, string] {
   const num = typeof value === 'number' ? value : null
   return [num !== null ? num.toLocaleString() : 'N/A', name as string]
 }

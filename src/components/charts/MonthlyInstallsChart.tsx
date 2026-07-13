@@ -7,13 +7,13 @@ interface Props {
   rollups: MonthlyRollup[]
 }
 
-function formatMonthLabel(yearMonth: string): string {
+export function formatMonthLabel(yearMonth: string): string {
   const [year, month] = yearMonth.split('-')
   const date = new Date(Number(year), Number(month) - 1)
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
 }
 
-function CustomTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number }>; label?: string }) {
+export function CustomTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number }>; label?: string }) {
   if (!active || !payload || !label) return null
   return (
     <div

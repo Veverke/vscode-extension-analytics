@@ -3031,7 +3031,13 @@
     "github": {
       "stars": 0,
       "forks": 0,
-      "contributions": 1
+      "contributions": 1,
+      "contributionsBreakdown": {
+        "commits": 1,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
     }
   }
 ]

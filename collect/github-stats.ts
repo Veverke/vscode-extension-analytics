@@ -3,6 +3,7 @@ import type { GitHubSnapshot } from '../src/types/schema.js';
 interface GitHubRepoData {
   stargazers_count: number;
   forks_count: number;
+  owner: { login: string };
 }
 
 interface GitHubContributorStats {
@@ -32,30 +33,6 @@ function buildHeaders(githubToken: string): Record<string, string> {
     headers['Authorization'] = `Bearer ${githubToken}`;
   }
   return headers;
-}
-
-/**
- * Fetches the repo owner's login from the GitHub API.
- * Used to filter out owner contributions from the total.
- */
-async function fetchRepoOwner(
-  repoFullName: string,
-  githubToken: string
-): Promise<string> {
-  const headers = buildHeaders(githubToken);
-  const response = await fetch(
-    `https://api.github.com/repos/${repoFullName}`,
-    { headers, signal: AbortSignal.timeout(15_000) }
-  );
-
-  if (!response.ok) {
-    throw new Error(
-      `[github-stats] Failed to fetch repo info for ${repoFullName}: ${response.status}`
-    );
-  }
-
-  const data = (await response.json()) as { owner: { login: string } };
-  return data.owner.login;
 }
 
 /**
@@ -241,7 +218,7 @@ export async function fetchGitHubStats(
 ): Promise<GitHubSnapshot> {
   const headers = buildHeaders(githubToken);
 
-  // Fetch repo info for stars and forks
+  // Fetch repo info for stars, forks, and owner
   const repoResponse = await fetch(
     `https://api.github.com/repos/${repoFullName}`,
     { headers, signal: AbortSignal.timeout(15_000) }
@@ -256,8 +233,7 @@ export async function fetchGitHubStats(
   const repoData = (await repoResponse.json()) as GitHubRepoData;
 
   // Get repo owner to filter out owner contributions
-  const ownerLogin = repoData as { owner?: { login: string } };
-  const owner = ownerLogin.owner?.login ?? (await fetchRepoOwner(repoFullName, githubToken));
+  const owner = repoData.owner.login;
 
   // Fetch contribution components in parallel
   const [commits, issues, prs, reviews] = await Promise.all([
@@ -271,5 +247,11 @@ export async function fetchGitHubStats(
     stars: repoData.stargazers_count,
     forks: repoData.forks_count,
     contributions: commits + issues + prs + reviews,
+    contributionsBreakdown: {
+      commits,
+      issues,
+      prs,
+      reviews,
+    },
   };
 }

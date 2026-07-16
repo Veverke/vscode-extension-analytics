@@ -13,6 +13,7 @@ import RatingChart from '../components/charts/RatingChart'
 import GitHubChart from '../components/charts/GitHubChart'
 import MonthlyInstallsChart from '../components/charts/MonthlyInstallsChart'
 import MonthlyTableCard from '../components/cards/MonthlyTableCard'
+import FormulaTooltip from '../components/annotations/FormulaTooltip'
 import { buildEventReferenceLines } from '../components/annotations/EventAnnotation'
 import { computeProjection } from '../metrics/projections'
 import { getExtensionIconUrl } from '../utils/icons'
@@ -113,11 +114,20 @@ export default function ExtensionDetail() {
               <span className="extension-header__link-icon">↗</span>
               Open VSX
             </a>
+            <a
+              href={`https://github.com/${extension.githubRepo}`}
+              target="_blank"
+              rel="noreferrer"
+              className="extension-header__link"
+            >
+              <span className="extension-header__link-icon">↗</span>
+              GitHub Repo
+            </a>
           </div>
         </div>
       </div>
 
-      <StatsCards data={data} trackedSince={extension.trackedSince} />
+      <StatsCards data={data} trackedSince={extension.trackedSince} githubRepo={extension.githubRepo} />
       <MetricsPanel data={data} projectionMonths={projectionMonths} />
 
       <div className="card" style={{ marginBottom: 'var(--space-lg)' }}>

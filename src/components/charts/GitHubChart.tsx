@@ -21,6 +21,10 @@ interface GitHubChartPoint {
   stars: number | null
   forks: number | null
   contributions: number | null
+  contributionsCommits: number | null
+  contributionsIssues: number | null
+  contributionsPrs: number | null
+  contributionsReviews: number | null
 }
 
 export function buildChartData(data: DataPoint[]): GitHubChartPoint[] {
@@ -31,6 +35,10 @@ export function buildChartData(data: DataPoint[]): GitHubChartPoint[] {
       stars: point.github.stars,
       forks: point.github.forks,
       contributions: point.github.contributions,
+      contributionsCommits: point.github.contributionsBreakdown?.commits ?? null,
+      contributionsIssues: point.github.contributionsBreakdown?.issues ?? null,
+      contributionsPrs: point.github.contributionsBreakdown?.prs ?? null,
+      contributionsReviews: point.github.contributionsBreakdown?.reviews ?? null,
     }))
 }
 
@@ -43,6 +51,10 @@ const METRICS = [
   { dataKey: 'stars', name: 'Stars', color: '#f59e0b', yAxisId: 'stars' },
   { dataKey: 'forks', name: 'Forks', color: '#3b82f6', yAxisId: 'forks' },
   { dataKey: 'contributions', name: 'Contributions (non-owner)', color: '#22c55e', yAxisId: 'contributions' },
+  { dataKey: 'contributionsCommits', name: '  └ Commits', color: '#86efac', yAxisId: 'contributions' },
+  { dataKey: 'contributionsIssues', name: '  └ Issues', color: '#a7f3d0', yAxisId: 'contributions' },
+  { dataKey: 'contributionsPrs', name: '  └ Pull Requests', color: '#6ee7b7', yAxisId: 'contributions' },
+  { dataKey: 'contributionsReviews', name: '  └ Code Reviews', color: '#34d399', yAxisId: 'contributions' },
 ]
 
 export default function GitHubChart({ data }: Props) {

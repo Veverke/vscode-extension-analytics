@@ -1,8 +1,10 @@
 import { DataPoint } from '../../types/schema'
+import FormulaTooltip from '../annotations/FormulaTooltip'
 
 interface Props {
   data: DataPoint[]
   trackedSince?: string
+  githubRepo?: string
 }
 
 interface CardProps {
@@ -52,7 +54,7 @@ function StatCard({ label, value, delta }: CardProps) {
   )
 }
 
-export default function StatsCards({ data, trackedSince }: Props) {
+export default function StatsCards({ data, trackedSince, githubRepo }: Props) {
   if (data.length === 0) {
     return null
   }
@@ -144,15 +146,63 @@ export default function StatsCards({ data, trackedSince }: Props) {
             : 'N/A'
         }
       />
-      <StatCard
-        label="GitHub Contributions (non-owner)"
-        value={latestContributions !== null ? formatNum(latestContributions) : 'N/A'}
-        delta={
-          latestContributions !== null && firstContributions !== null
+      <div className="stat-card" style={{ overflow: 'visible' }}>
+        <p className="stat-label">
+          <FormulaTooltip
+            label="GitHub Contributions"
+            formula="commits + issues + PRs + reviews (by non-owners)"
+            description="Total interactions (commits, issues, pull requests, and code reviews) on this repo by contributors other than the repo owner. This measures community engagement, not the owner's own activity."
+          >
+            GitHub Contributions (non-owner)
+          </FormulaTooltip>
+        </p>
+        <p className="stat-value">{latestContributions !== null ? formatNum(latestContributions) : 'N/A'}</p>
+        <p className="stat-delta">
+          {latestContributions !== null && firstContributions !== null
             ? computeDelta(latestContributions, firstContributions)
-            : 'N/A'
-        }
-      />
+            : 'N/A'}
+        </p>
+        {latestGithub?.contributionsBreakdown && (
+          <div className="contributions-breakdown">
+            <a
+              href={`https://github.com/${githubRepo}/graphs/contributors`}
+              target="_blank"
+              rel="noreferrer"
+              className="contributions-breakdown__item"
+            >
+              <span className="contributions-breakdown__dot" style={{ background: '#86efac' }} />
+              {latestGithub.contributionsBreakdown.commits} commits
+            </a>
+            <a
+              href={`https://github.com/${githubRepo}/issues`}
+              target="_blank"
+              rel="noreferrer"
+              className="contributions-breakdown__item"
+            >
+              <span className="contributions-breakdown__dot" style={{ background: '#a7f3d0' }} />
+              {latestGithub.contributionsBreakdown.issues} issues
+            </a>
+            <a
+              href={`https://github.com/${githubRepo}/pulls`}
+              target="_blank"
+              rel="noreferrer"
+              className="contributions-breakdown__item"
+            >
+              <span className="contributions-breakdown__dot" style={{ background: '#6ee7b7' }} />
+              {latestGithub.contributionsBreakdown.prs} PRs
+            </a>
+            <a
+              href={`https://github.com/${githubRepo}/pulls`}
+              target="_blank"
+              rel="noreferrer"
+              className="contributions-breakdown__item"
+            >
+              <span className="contributions-breakdown__dot" style={{ background: '#34d399' }} />
+              {latestGithub.contributionsBreakdown.reviews} reviews
+            </a>
+          </div>
+        )}
+      </div>
     </div>
   )
 }

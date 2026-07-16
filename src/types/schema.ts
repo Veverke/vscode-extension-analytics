@@ -13,11 +13,20 @@ export interface OpenVsxSnapshot {
   ratingCount: number;
 }
 
+export interface GitHubContributionBreakdown {
+  commits: number;
+  issues: number;
+  prs: number;
+  reviews: number;
+}
+
 export interface GitHubSnapshot {
   stars: number;
   forks: number;
   /** Total contributions by non-owner contributors (PRs + commits + issues + reviews) */
   contributions: number;
+  /** Breakdown of contributions by type */
+  contributionsBreakdown?: GitHubContributionBreakdown;
 }
 
 export interface DataPoint {

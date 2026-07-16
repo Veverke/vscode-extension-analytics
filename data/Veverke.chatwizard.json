@@ -1921,7 +1921,13 @@
     "github": {
       "stars": 5,
       "forks": 0,
-      "contributions": 14
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
     }
   }
 ]

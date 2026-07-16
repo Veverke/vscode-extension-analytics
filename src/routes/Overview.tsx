@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useExtensionsContext } from '../contexts/ExtensionsContext'
 import { useAllExtensionsData, type ExtensionSummary } from '../hooks/useAllExtensionsData'
 import { useUser } from '../contexts/UserContext'
@@ -66,6 +66,8 @@ export default function Overview() {
   const hasUserExtensions = userExtensions.length > 0
 
   const { results, loading, errors } = useAllExtensionsData(displayExtensions)
+
+  const navigate = useNavigate()
 
   const [sortField, setSortField] = useState<OverviewSortField>('momentum')
   const [sortAsc, setSortAsc] = useState(false)
@@ -172,9 +174,16 @@ export default function Overview() {
                 <SkeletonRow key={`skeleton-${i}`} />
               ))
             : sorted.map(summary => (
-                <tr key={summary.extension.id}>
+                <tr
+                  key={summary.extension.id}
+                  className="overview__row"
+                  onClick={() => navigate(`/extension/${summary.extension.id}`)}
+                >
                   <td>
-                    <Link to={`/extension/${summary.extension.id}`}>
+                    <Link
+                      to={`/extension/${summary.extension.id}`}
+                      onClick={e => e.stopPropagation()}
+                    >
                       {summary.extension.displayName}
                     </Link>
                   </td>
@@ -195,10 +204,17 @@ export default function Overview() {
             Object.entries(errors).map(([extId, message]) => {
               const ext = displayExtensions.find(e => e.id === extId)
               return (
-                <tr key={`error-${extId}`} className="overview__error-row">
+                <tr
+                  key={`error-${extId}`}
+                  className="overview__error-row"
+                  onClick={() => ext && navigate(`/extension/${extId}`)}
+                >
                   <td>
                     {ext ? (
-                      <Link to={`/extension/${extId}`}>
+                      <Link
+                        to={`/extension/${extId}`}
+                        onClick={e => e.stopPropagation()}
+                      >
                         {ext.displayName}
                       </Link>
                     ) : (

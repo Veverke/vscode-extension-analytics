@@ -66,6 +66,12 @@ describe('fetchGitHubStats', () => {
       stars: 100,
       forks: 20,
       contributions: 53, // 30 + 20 (commits) + 1 (issue) + 1 (PR) + 1 (review) = 53
+      contributionsBreakdown: {
+        commits: 50,
+        issues: 1,
+        prs: 1,
+        reviews: 1,
+      },
     })
   })
 
@@ -305,18 +311,15 @@ describe('fetchGitHubStats', () => {
     expect(result.contributions).toBe(0)
   })
 
-  it('handles missing owner in repo data by fetching it separately', async () => {
+  it('handles missing owner in repo data gracefully (owner is always present in GitHub API)', async () => {
     mockFetch
       .mockResolvedValueOnce({
         ok: true,
         json: async () => ({
           stargazers_count: 50,
           forks_count: 10,
+          owner: { login: 'testowner' },
         }),
-      })
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({ owner: { login: 'testowner' } }),
       })
       .mockResolvedValueOnce({
         ok: true,
@@ -357,23 +360,15 @@ describe('fetchGitHubStats', () => {
     expect(result.forks).toBe(0)
   })
 
-  it('throws when fetchRepoOwner fails (missing owner, then repo fetch fails)', async () => {
+  it('throws when repo fetch fails (owner not available)', async () => {
     mockFetch
-      .mockResolvedValueOnce({
-        ok: true,
-        json: async () => ({
-          stargazers_count: 50,
-          forks_count: 10,
-          // no owner field
-        }),
-      })
       .mockResolvedValueOnce({
         ok: false,
         status: 403,
       })
 
     await expect(fetchGitHubStats('testowner/test-repo', 'test-token')).rejects.toThrow(
-      '[github-stats] Failed to fetch repo info for testowner/test-repo: 403'
+      '[github-stats] Failed to fetch repo testowner/test-repo: 403'
     )
   })
 

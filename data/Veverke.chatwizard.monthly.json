@@ -6,7 +6,10 @@
     "avgRating": 5,
     "ratingCountEndOfMonth": 1,
     "openVsxDownloadsEndOfMonth": 1592,
-    "dataPointsInMonth": 30
+    "dataPointsInMonth": 30,
+    "starsEndOfMonth": 0,
+    "forksEndOfMonth": 0,
+    "contributionsEndOfMonth": 0
   },
   {
     "yearMonth": "2026-06",
@@ -15,6 +18,21 @@
     "avgRating": 5,
     "ratingCountEndOfMonth": 1,
     "openVsxDownloadsEndOfMonth": 1998,
-    "dataPointsInMonth": 30
+    "dataPointsInMonth": 30,
+    "starsEndOfMonth": 0,
+    "forksEndOfMonth": 0,
+    "contributionsEndOfMonth": 0
+  },
+  {
+    "yearMonth": "2026-07",
+    "installsEndOfMonth": 166,
+    "installsGained": 30,
+    "avgRating": 5,
+    "ratingCountEndOfMonth": 1,
+    "openVsxDownloadsEndOfMonth": 2162,
+    "dataPointsInMonth": 60,
+    "starsEndOfMonth": 5,
+    "forksEndOfMonth": 0,
+    "contributionsEndOfMonth": 14
   }
 ]

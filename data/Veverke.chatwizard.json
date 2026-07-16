@@ -432,59 +432,7 @@
     }
   },
   {
-<<<<<<< Updated upstream
     "ts": "2026-05-27T06:00:00Z",
-=======
-    "ts": "2026-06-05T00:59:13.274Z",
-    "marketplace": {
-      "installs": 106,
-      "updates": 76,
-      "averageRating": 5,
-      "ratingCount": 1,
-      "trendingWeekly": 16.19047619047619,
-      "trendingMonthly": 55.23809523809524
-    },
-    "openVsx": {
-      "downloads": 1826,
-      "averageRating": null,
-      "ratingCount": 0
-    }
-  },
-  {
-    "ts": "2026-06-05T01:00:13.025Z",
-    "marketplace": {
-      "installs": 105,
-      "updates": 75,
-      "averageRating": 5,
-      "ratingCount": 1,
-      "trendingWeekly": 16.19047619047619,
-      "trendingMonthly": 55.23809523809524
-    },
-    "openVsx": {
-      "downloads": 1826,
-      "averageRating": null,
-      "ratingCount": 0
-    }
-  },
-  {
-    "ts": "2026-06-05T07:30:01.148Z",
-    "marketplace": {
-      "installs": 105,
-      "updates": 75,
-      "averageRating": 5,
-      "ratingCount": 1,
-      "trendingWeekly": 16.19047619047619,
-      "trendingMonthly": 55.23809523809524
-    },
-    "openVsx": {
-      "downloads": 1826,
-      "averageRating": null,
-      "ratingCount": 0
-    }
-  },
-  {
-    "ts": "2026-06-05T13:01:00.623Z",
->>>>>>> Stashed changes
     "marketplace": {
       "installs": 107,
       "updates": 472,

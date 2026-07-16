@@ -81,8 +81,8 @@ test.describe('Phase 5 Analytics features', () => {
     expect(projectionText).toBeTruthy()
     expect(projectionText).not.toBe('Not enough data')
 
-    // Parse the projected value (remove commas) and compare to last fixture install count (1380)
+    // Parse the projected value (remove commas) and compare to last fixture install count (136)
     const projectedValue = parseInt((projectionText ?? '').replace(/,/g, ''), 10)
-    expect(projectedValue).toBeGreaterThan(1380) // fixture last install count
+    expect(projectedValue).toBeGreaterThan(136) // fixture last install count
   })
 })

@@ -24,7 +24,7 @@ function SkeletonRow() {
   )
 }
 
-function sortSummaries(
+export function sortSummaries(
   summaries: ExtensionSummary[],
   field: OverviewSortField,
   asc: boolean

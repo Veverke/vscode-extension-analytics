@@ -71,6 +71,7 @@ describe('toChartPoints — branch coverage', () => {
       ts: '2026-05-15T00:00:00Z',
       marketplace: { installs: 100, updates: 10, averageRating: undefined, ratingCount: 0, trendingWeekly: 0, trendingMonthly: 0 },
       openVsx: null,
+      github: null,
     }
     const result = toChartPoints([point], 'rating')
     expect(result[0].value).toBe(0)
@@ -81,6 +82,7 @@ describe('toChartPoints — branch coverage', () => {
       ts: '2026-05-15T00:00:00Z',
       marketplace: { installs: 100, updates: 10, averageRating: 4.0, ratingCount: 5, trendingWeekly: 0, trendingMonthly: 0 },
       openVsx: null,
+      github: null,
     }
     const result = toChartPoints([point], 'openVsxDownloads')
     expect(result[0].value).toBe(0)

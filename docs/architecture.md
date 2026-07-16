@@ -46,10 +46,20 @@ The system is composed of three decoupled layers:
       "downloads": 9876,
       "averageRating": 4.1,
       "ratingCount": 34
+    },
+    "github": {
+      "stars": 42,
+      "forks": 8,
+      "contributions": 156
     }
   }
 ]
 ```
+
+**GitHub fields:**
+- `stars` — Total stargazers count from the GitHub API.
+- `forks` — Total fork count from the GitHub API.
+- `contributions` — Composite metric: sum of non-owner commits, issues, pull requests, and code reviews. Excludes contributions by the repo owner.
 
 ### Release Timeline (`data/<namespace>.<name>.releases.json`)
 
@@ -121,6 +131,9 @@ The system is composed of three decoupled layers:
 | Release correlation | Vertical reference lines at release dates |
 | Installs per release | `installs(now) - installs(releaseDate)` |
 | Cross-registry split | Marketplace vs Open VSX as % of total |
+| GitHub stars over time | Line chart from `github.stars` |
+| GitHub forks over time | Line chart from `github.forks` |
+| GitHub contributions over time | Line chart from `github.contributions` (non-owner) |
 
 ---
 

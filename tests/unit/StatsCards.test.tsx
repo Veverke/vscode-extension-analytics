@@ -11,13 +11,16 @@ const noOpenVsxFixture = fixtureNoOpenVsx as DataPoint[]
 describe('StatsCards', () => {
   it('correct values — latest install count is visible and matches last data point', () => {
     render(<StatsCards data={fixture} />)
-    // Last data point installs: 1380 → formatted as "1,380"
-    expect(screen.getByText('1,380')).toBeInTheDocument()
+    // Last data point installs: 136 → formatted as "136"
+    expect(screen.getByText('136')).toBeInTheDocument()
   })
 
-  it('delta calculation — shows +880 since tracking started (1380 - 500)', () => {
+  it('delta calculation — shows +54 since tracking started (136 - 82)', () => {
     render(<StatsCards data={fixture} />)
-    expect(screen.getByText('+880 since tracking started')).toBeInTheDocument()
+    const lastInstall = fixture[fixture.length - 1].marketplace.installs
+    const firstInstall = fixture[0].marketplace.installs
+    const delta = lastInstall - firstInstall
+    expect(screen.getByText(`+${delta} since tracking started`)).toBeInTheDocument()
   })
 
   it('no openVsx — shows N/A for Open VSX Downloads value and delta', () => {
@@ -40,8 +43,10 @@ describe('StatsCards', () => {
     // Reverse the fixture so last installs < first installs
     const reversed = [...fixture].reverse() as DataPoint[]
     render(<StatsCards data={reversed} />)
-    // first=1380, last=500 → delta = -880
-    expect(screen.getByText('-880 since tracking started')).toBeInTheDocument()
+    const firstInstall = reversed[0].marketplace.installs
+    const lastInstall = reversed[reversed.length - 1].marketplace.installs
+    const delta = lastInstall - firstInstall
+    expect(screen.getByText(`${delta} since tracking started`)).toBeInTheDocument()
   })
 
   it('undefined averageRating — shows N/A for rating value and delta', () => {

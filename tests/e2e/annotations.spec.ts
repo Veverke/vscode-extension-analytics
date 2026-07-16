@@ -60,7 +60,8 @@ test.describe('Phase 6 — Annotations and Release Impact', () => {
     })
 
     await expect(page.getByText('Release Impact')).toBeVisible()
-    await expect(page.locator('table')).toBeVisible()
+    const releaseSection = page.getByRole('region', { name: 'Release Impact' })
+    await expect(releaseSection.locator('table')).toBeVisible()
   })
 
   test('release impact table has 3 rows matching fixture', async ({ page }) => {
@@ -70,7 +71,8 @@ test.describe('Phase 6 — Annotations and Release Impact', () => {
       timeout: 10000,
     })
 
-    const dataRows = page.locator('tbody tr')
+    const releaseSection = page.getByRole('region', { name: 'Release Impact' })
+    const dataRows = releaseSection.locator('tbody tr')
     await expect(dataRows).toHaveCount(releasesFixture.length)
   })
 
@@ -81,7 +83,8 @@ test.describe('Phase 6 — Annotations and Release Impact', () => {
       timeout: 10000,
     })
 
-    const firstRow = page.locator('tbody tr').first()
+    const releaseSection = page.getByRole('region', { name: 'Release Impact' })
+    const firstRow = releaseSection.locator('tbody tr').first()
     await expect(firstRow).toHaveClass(/top-release/)
   })
 

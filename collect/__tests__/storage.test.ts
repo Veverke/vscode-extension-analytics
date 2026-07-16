@@ -35,6 +35,7 @@ function makePoint(ts: string): DataPoint {
       trendingMonthly: 0.5,
     },
     openVsx: { downloads: 50, averageRating: null, ratingCount: 0 },
+    github: null,
   };
 }
 

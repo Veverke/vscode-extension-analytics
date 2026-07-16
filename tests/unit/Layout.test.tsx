@@ -95,6 +95,24 @@ describe('Layout — with username', () => {
     )
   })
 
+  it('does not render user bar when no username is set', () => {
+    renderLayout()
+    expect(screen.queryByText('testuser')).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Switch user' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Discover' })).not.toBeInTheDocument()
+  })
+
+  it('does not render sidebar nav when extensions list is empty', () => {
+    render(
+      <ExtensionsContext.Provider value={[]}>
+        <MemoryRouter>
+          <Layout />
+        </MemoryRouter>
+      </ExtensionsContext.Provider>,
+    )
+    expect(screen.queryByRole('navigation', { name: 'Extension navigation' })).not.toBeInTheDocument()
+  })
+
   it('calls clearUsername when Switch user is clicked', () => {
     const clearUsername = vi.fn()
     render(

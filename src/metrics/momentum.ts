@@ -2,24 +2,24 @@ import { DataPoint } from '../types/schema'
 import { computeVelocity } from './velocity'
 import { computeAcceleration } from './acceleration'
 
-function mean(values: number[]): number {
+export function mean(values: number[]): number {
   if (values.length === 0) return 0
   return values.reduce((sum, v) => sum + v, 0) / values.length
 }
 
-function minMaxNormalize(values: number[]): number[] {
-  const min = Math.min(...values)
-  const max = Math.max(...values)
-  if (max === min) return values.map(() => 0.5)
-  return values.map(v => (v - min) / (max - min))
+export function signedNormalize(values: number[]): number[] {
+  if (values.length === 0) return []
+  const maxAbs = Math.max(...values.map(Math.abs), 1)
+  return values.map(v => v / maxAbs)
 }
 
 /**
- * Computes a 0–100 momentum score for an extension based on recent metrics.
- * Higher = faster growing, accelerating, and recently active.
+ * Computes a momentum score for an extension based on recent metrics.
+ * Positive = growing, negative = declining, near-zero = flat.
+ * Returns a value in the range [-1, 1].
  */
 export function computeMomentum(data: DataPoint[]): number {
-  if (data.length === 0) return 0
+  if (data.length <= 1) return 0
 
   const window = Math.min(7, data.length)
   const velocity = computeVelocity(data)
@@ -28,8 +28,11 @@ export function computeMomentum(data: DataPoint[]): number {
   const recentVelocity = velocity.slice(-window)
   const recentAcceleration = acceleration.slice(-window)
 
-  const normalizedVelocity = minMaxNormalize(recentVelocity)
-  const normalizedAcceleration = minMaxNormalize(recentAcceleration)
+  // If all velocity values are zero (flat data), return 0
+  if (recentVelocity.every(v => v === 0)) return 0
+
+  const normalizedVelocity = signedNormalize(recentVelocity)
+  const normalizedAcceleration = signedNormalize(recentAcceleration)
 
   const meanVelocityScore = mean(normalizedVelocity)
   const meanAccelerationScore = mean(normalizedAcceleration)
@@ -44,5 +47,6 @@ export function computeMomentum(data: DataPoint[]): number {
     0.3 * meanAccelerationScore +
     0.2 * recencyFactor
 
-  return Math.min(100, Math.max(0, rawScore * 100))
+  // Return signed score in [-1, 1] range
+  return Math.max(-1, Math.min(1, rawScore))
 }

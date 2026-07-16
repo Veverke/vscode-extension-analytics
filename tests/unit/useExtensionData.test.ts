@@ -8,7 +8,7 @@ describe('useExtensionData', () => {
     vi.restoreAllMocks()
   })
 
-  it('success — returns 30 data points, first installs matches fixture', async () => {
+  it('success — returns data points matching fixture', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn().mockResolvedValue({
@@ -24,8 +24,8 @@ describe('useExtensionData', () => {
     await waitFor(() => expect(result.current.loading).toBe(false))
 
     expect(result.current.error).toBeNull()
-    expect(result.current.data).toHaveLength(30)
-    expect(result.current.data[0].marketplace.installs).toBe(500)
+    expect(result.current.data).toHaveLength(fixtureData.length)
+    expect(result.current.data[0].marketplace.installs).toBe(fixtureData[0].marketplace.installs)
   })
 
   it('404 — sets error and returns empty data array', async () => {

@@ -10,6 +10,8 @@ vi.mock('../storage.js', () => ({
   ensureDataDir: vi.fn(),
   readReleases: vi.fn().mockReturnValue([]),
   writeReleases: vi.fn(),
+  readTimeSeries: vi.fn().mockReturnValue([]),
+  getDataDir: vi.fn().mockReturnValue('/tmp'),
 }));
 
 vi.mock('../marketplace.js', () => ({
@@ -21,7 +23,11 @@ vi.mock('../openvsx.js', () => ({
   fetchOpenVsxStats: vi.fn(),
 }));
 
-import { runCollector } from '../index.js';
+vi.mock('../github-stats.js', () => ({
+  fetchGitHubStats: vi.fn().mockResolvedValue({ stars: 10, forks: 3, contributions: 25 }),
+}));
+
+import { runCollector, mergeReleases } from '../index.js';
 import * as storage from '../storage.js';
 import * as marketplace from '../marketplace.js';
 import * as openvsx from '../openvsx.js';
@@ -105,5 +111,93 @@ describe('collector index', () => {
     expect(appendCall[1].ts).toBeTruthy();
     expect(new Date(appendCall[1].ts).toISOString()).toBe(appendCall[1].ts);
     expect(appendCall[1].openVsx).toBeNull();
+  });
+
+  it('writes releases when new versions are found', async () => {
+    vi.mocked(storage.readExtensionRegistry).mockReturnValue([mockEntry]);
+    vi.mocked(marketplace.fetchMarketplaceStats).mockResolvedValue(mockMarketplace);
+    vi.mocked(marketplace.fetchReleaseHistory).mockResolvedValue([
+      { version: '1.0.0', publishedAt: '2026-01-01T00:00:00Z', installsAtRelease: 0 },
+    ]);
+    vi.mocked(openvsx.fetchOpenVsxStats).mockResolvedValue(mockOpenVsx);
+    vi.mocked(storage.readReleases).mockReturnValue([]);
+
+    const code = await runCollector();
+    expect(code).toBe(0);
+    expect(storage.writeReleases).toHaveBeenCalledOnce();
+  });
+
+  it('does not write releases when no new versions', async () => {
+    vi.mocked(storage.readExtensionRegistry).mockReturnValue([mockEntry]);
+    vi.mocked(marketplace.fetchMarketplaceStats).mockResolvedValue(mockMarketplace);
+    vi.mocked(marketplace.fetchReleaseHistory).mockResolvedValue([
+      { version: '1.0.0', publishedAt: '2026-01-01T00:00:00Z', installsAtRelease: 0 },
+    ]);
+    vi.mocked(openvsx.fetchOpenVsxStats).mockResolvedValue(mockOpenVsx);
+    vi.mocked(storage.readReleases).mockReturnValue([
+      { version: '1.0.0', publishedAt: '2026-01-01T00:00:00Z', installsAtRelease: 100 },
+    ]);
+
+    const code = await runCollector();
+    expect(code).toBe(0);
+    expect(storage.writeReleases).not.toHaveBeenCalled();
+  });
+
+  it('handles GitHub stats fetch failure gracefully', async () => {
+    vi.mocked(storage.readExtensionRegistry).mockReturnValue([mockEntry]);
+    vi.mocked(marketplace.fetchMarketplaceStats).mockResolvedValue(mockMarketplace);
+    vi.mocked(marketplace.fetchReleaseHistory).mockResolvedValue([]);
+    vi.mocked(openvsx.fetchOpenVsxStats).mockResolvedValue(mockOpenVsx);
+    vi.mocked(storage.readReleases).mockReturnValue([]);
+
+    // Import the mocked module to override the mock
+    const githubStats = await import('../github-stats.js');
+    vi.mocked(githubStats.fetchGitHubStats).mockRejectedValue(new Error('API error'));
+
+    const code = await runCollector();
+    expect(code).toBe(0);
+    expect(storage.appendDataPoint).toHaveBeenCalledOnce();
+  });
+});
+
+describe('mergeReleases', () => {
+  it('new version detection — only appends versions not already stored', () => {
+    const stored = [
+      { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 50 },
+    ];
+    const fetched = [
+      { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 0 },
+      { version: '1.1.0', publishedAt: '2026-04-01T00:00:00.000Z', installsAtRelease: 0 },
+    ];
+    const result = mergeReleases(stored, fetched, 120);
+
+    expect(result).toHaveLength(2);
+    expect(result[0].installsAtRelease).toBe(50);
+    expect(result[1].version).toBe('1.1.0');
+    expect(result[1].installsAtRelease).toBe(120);
+  });
+
+  it('no new versions — returns stored unchanged', () => {
+    const stored = [
+      { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 50 },
+    ];
+    const fetched = [
+      { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 0 },
+    ];
+    const result = mergeReleases(stored, fetched, 120);
+    expect(result).toHaveLength(1);
+    expect(result[0].installsAtRelease).toBe(50);
+  });
+
+  it('empty stored — all fetched are new with currentInstalls', () => {
+    const stored: import('../../src/types/schema.js').ReleaseEntry[] = [];
+    const fetched = [
+      { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 0 },
+      { version: '1.1.0', publishedAt: '2026-04-01T00:00:00.000Z', installsAtRelease: 0 },
+    ];
+    const result = mergeReleases(stored, fetched, 200);
+    expect(result).toHaveLength(2);
+    expect(result[0].installsAtRelease).toBe(200);
+    expect(result[1].installsAtRelease).toBe(200);
   });
 });

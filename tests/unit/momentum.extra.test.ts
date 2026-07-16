@@ -21,7 +21,6 @@ function makeDataset(installs: number[], baseDate = '2026-01-01'): DataPoint[] {
 // Test the internal functions that aren't exported
 describe('momentum internal branch coverage', () => {
   it('computes mean with empty array', () => {
-    const values: number[] = []
     // The function returns 0 for empty array
     // We test via computeMomentum which internally calls mean
     const data = makeDataset([100, 100, 100, 100, 100])

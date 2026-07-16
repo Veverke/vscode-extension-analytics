@@ -43,6 +43,7 @@ describe('buildChartData', () => {
       model: 'linear' as const,
       r2: 0.95,
       points: [{ ts: Date.UTC(2026, 0, 10), value: 150 }],
+      equation: 'y = 5x + 100',
     }]
     // buildChartData now adds a "today" continuation point, so we may have more points
     const result = buildChartData(data, projections)
@@ -65,11 +66,13 @@ describe('buildChartData', () => {
       model: 'linear' as const,
       r2: 0.95,
       points: [{ ts: Date.UTC(2026, 0, 10), value: 150 }],
+      equation: 'y = 5x + 100',
     }]
     const openVsxProjections = [{
       model: 'linear' as const,
       r2: 0.90,
       points: [{ ts: Date.UTC(2026, 0, 10), value: 75 }],
+      equation: 'y = 2.5x + 50',
     }]
     const result = buildChartData(data, projections, openVsxProjections)
     const projKeys = result.filter(p => p.proj_openVsx_linear !== null && p.proj_openVsx_linear !== undefined)

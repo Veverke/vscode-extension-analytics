@@ -24,26 +24,6 @@ function createMockResponse(data: unknown): Response {
   } as Response
 }
 
-function createErrorResponse(status: number, statusText: string): Response {
-  return {
-    ok: false,
-    json: async () => ({}),
-    text: async () => `Error ${status}`,
-    status,
-    statusText,
-    headers: new Headers(),
-    redirected: false,
-    type: 'basic' as ResponseType,
-    url: '',
-    clone: () => createErrorResponse(status, statusText),
-    body: null,
-    bodyUsed: false,
-    arrayBuffer: async () => new ArrayBuffer(0),
-    blob: async () => new Blob(),
-    formData: async () => new FormData(),
-  } as Response
-}
-
 describe('marketplaceApi branch coverage', () => {
   beforeEach(() => {
     vi.resetAllMocks()

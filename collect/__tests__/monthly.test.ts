@@ -4,7 +4,7 @@ import type { DataPoint } from '../../src/types/schema.js'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
-import { setDataDir, getDataDir } from '../storage.js'
+import { setDataDir } from '../storage.js'
 
 function makePoint(ts: string, installs: number, rating?: number, ratingCount?: number, openVsxDownloads?: number): DataPoint {
   const hasRating = rating !== undefined;

@@ -18,7 +18,7 @@ describe('CustomTooltip', () => {
     const result = CustomTooltip({ active: true, payload: [{ value: 100 }], label: '2026-01' })
     expect(result).not.toBeNull()
     if (result) {
-      const div = result as React.ReactElement
+      const div = result as React.ReactElement<{ children: React.ReactNode }>
       expect(div.props.children).toBeDefined()
     }
   })

@@ -85,7 +85,7 @@ describe('InstallsChart buildChartData', () => {
 
   it('handles data with openVsx', () => {
     const data = makeData([100, 200])
-    data[1] = { ...data[1], openVsx: { downloads: 50, uniqueDownloads: 25, averageRating: 4.0, ratingCount: 1, trendingWeekly: 0 } }
+    data[1] = { ...data[1], openVsx: { downloads: 50, averageRating: 4.0, ratingCount: 1 } }
     const result = buildInstallsChartData(data)
     expect(result[1].openVsxDownloads).toBe(50)
   })

@@ -31,11 +31,10 @@ function relativeTime(iso: string): string {
   const d = new Date(iso)
   const now = new Date()
   const diffMs = now.getTime() - d.getTime()
-  const diffMonths = Math.floor(diffMs / (1000 * 60 * 60 * 24 * 30.44))
-  if (diffMonths < 1) {
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-    return diffDays <= 0 ? 'Today' : `${diffDays} day${diffDays > 1 ? 's' : ''} ago`
-  }
+  const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24))
+  if (diffDays <= 0) return 'Today'
+  const diffMonths = Math.round(diffDays / 30.44)
+  if (diffMonths < 1) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`
   if (diffMonths < 12) return `${diffMonths} month${diffMonths > 1 ? 's' : ''} ago`
   const diffYears = Math.floor(diffMonths / 12)
   const remMonths = diffMonths % 12

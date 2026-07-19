@@ -23,6 +23,11 @@ export default function MonthlyTableCard({ rollups }: Props) {
   const [sortKey, setSortKey] = useState<SortKey>('yearMonth')
   const [sortDir, setSortDir] = useState<SortDir>('desc')
 
+  const maxInstallsGained = useMemo(() => {
+    if (rollups.length === 0) return 0
+    return Math.max(...rollups.map(r => r.installsGained))
+  }, [rollups])
+
   const sorted = useMemo(() => {
     const sorted = [...rollups].sort((a, b) => {
       let cmp = 0
@@ -108,7 +113,7 @@ export default function MonthlyTableCard({ rollups }: Props) {
         </thead>
         <tbody>
           {sorted.map((row) => (
-            <tr key={row.yearMonth}>
+            <tr key={row.yearMonth} className={row.installsGained === maxInstallsGained && maxInstallsGained > 0 ? 'monthly-table__row--best' : ''}>
               <td>{formatMonth(row.yearMonth)}</td>
               <td>{formatNum(row.installsEndOfMonth)}</td>
               <td>

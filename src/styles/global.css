@@ -1867,6 +1867,19 @@ ol {
   background: var(--color-surface-raised);
 }
 
+.monthly-table tbody tr.monthly-table__row--best {
+  background: rgba(74, 222, 128, 0.12);
+}
+
+.monthly-table tbody tr.monthly-table__row--best td:first-child {
+  border-left: 3px solid var(--color-success);
+  box-shadow: inset 3px 0 0 0 var(--color-success);
+}
+
+.monthly-table tbody tr.monthly-table__row--best:hover {
+  background: rgba(74, 222, 128, 0.2);
+}
+
 .monthly-table tbody tr td {
   padding: var(--space-md) var(--space-sm);
   font-size: var(--font-size-sm);

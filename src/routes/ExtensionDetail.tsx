@@ -240,6 +240,7 @@ export default function ExtensionDetail() {
             yourInstalls={currentInstalls}
             yourRating={data.length > 0 ? data[data.length - 1].marketplace.averageRating : undefined}
             yourRatingCount={data.length > 0 ? data[data.length - 1].marketplace.ratingCount : 0}
+            yourGithubStars={data.length > 0 ? (data[data.length - 1].github?.stars ?? null) : null}
             trackedSince={extension.trackedSince}
           />
         </section>

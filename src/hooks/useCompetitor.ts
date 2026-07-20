@@ -8,6 +8,9 @@ export interface UseCompetitorResult {
   releases: ReleaseEntry[]
   loading: boolean
   error: string | null
+  githubStars: number | null
+  githubForks: number | null
+  githubRepo: string | null
 }
 
 /**
@@ -19,6 +22,9 @@ export function useCompetitor(extensionId: string | null, bypassCache = false): 
   const [displayName, setDisplayName] = useState<string | null>(null)
   const [data, setData] = useState<DataPoint[]>([])
   const [releases, setReleases] = useState<ReleaseEntry[]>([])
+  const [githubStars, setGithubStars] = useState<number | null>(null)
+  const [githubForks, setGithubForks] = useState<number | null>(null)
+  const [githubRepo, setGithubRepo] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const previousId = useRef<string | null>(null)
@@ -28,6 +34,9 @@ export function useCompetitor(extensionId: string | null, bypassCache = false): 
       setDisplayName(null)
       setData([])
       setReleases([])
+      setGithubStars(null)
+      setGithubForks(null)
+      setGithubRepo(null)
       setLoading(false)
       setError(null)
       previousId.current = null
@@ -54,6 +63,9 @@ export function useCompetitor(extensionId: string | null, bypassCache = false): 
         setDisplayName(result.displayName)
         setData(result.data)
         setReleases(result.releases)
+        setGithubStars(result.githubStars ?? null)
+        setGithubForks(result.githubForks ?? null)
+        setGithubRepo(result.githubRepo ?? null)
         setError(null)
       } catch (err: unknown) {
         if (cancelled) return
@@ -62,6 +74,9 @@ export function useCompetitor(extensionId: string | null, bypassCache = false): 
         setDisplayName(null)
         setData([])
         setReleases([])
+        setGithubStars(null)
+        setGithubForks(null)
+        setGithubRepo(null)
       } finally {
         if (!cancelled) setLoading(false)
       }
@@ -75,5 +90,5 @@ export function useCompetitor(extensionId: string | null, bypassCache = false): 
     }
   }, [extensionId, bypassCache])
 
-  return { displayName, data, releases, loading, error }
+  return { displayName, data, releases, loading, error, githubStars, githubForks, githubRepo }
 }

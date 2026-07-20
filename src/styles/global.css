@@ -2217,6 +2217,69 @@ ol {
   text-align: center;
 }
 
+/* Your Extension header in competitor section */
+.competitor-your-ext {
+  background: var(--color-surface);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  animation: fadeInUp 0.3s ease-out both;
+  margin-bottom: var(--space-md);
+}
+
+.competitor-your-ext__title {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-primary);
+  letter-spacing: 0.03em;
+}
+
+/* Single-column competitor card table (value + diff columns) */
+.competitor-table--single tbody tr td:last-child {
+  min-width: 140px;
+}
+
+/* Your extension header table */
+.competitor-table--your-ext {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 3px;
+  max-width: 500px;
+}
+
+.competitor-table--your-ext thead th {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--space-sm) var(--space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.competitor-table--your-ext tbody tr td {
+  padding: var(--space-sm) var(--space-md);
+  font-size: var(--font-size-sm);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.competitor-table--your-ext tbody tr td:first-child {
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-left: 1px solid var(--color-border);
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.competitor-table--your-ext tbody tr td:last-child {
+  border-right: 1px solid var(--color-border);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
 /* ============================================================
    PROJECTION INPUT
    ============================================================ */

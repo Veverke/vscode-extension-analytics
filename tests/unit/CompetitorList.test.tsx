@@ -12,6 +12,18 @@ const defaultProps = {
   yourInstalls: 5000,
   yourRating: 4.5,
   yourRatingCount: 100,
+  yourGithubStars: 50,
+}
+
+const defaultMockReturn = {
+  displayName: null,
+  data: [],
+  releases: [],
+  loading: false,
+  error: null,
+  githubStars: null,
+  githubForks: null,
+  githubRepo: null,
 }
 
 describe('CompetitorList', () => {
@@ -19,13 +31,7 @@ describe('CompetitorList', () => {
     vi.resetAllMocks()
     sessionStorage.clear()
     localStorage.clear()
-    mockUseCompetitor.mockReturnValue({
-      displayName: null,
-      data: [],
-      releases: [],
-      loading: false,
-      error: null,
-    })
+    mockUseCompetitor.mockReturnValue(defaultMockReturn)
   })
 
   it('renders input and add button', () => {
@@ -117,6 +123,7 @@ describe('CompetitorList', () => {
 
   it('removes a competitor when remove is clicked', () => {
     mockUseCompetitor.mockReturnValue({
+      ...defaultMockReturn,
       displayName: 'Python',
       data: [{
         ts: '2025-01-01',
@@ -124,9 +131,6 @@ describe('CompetitorList', () => {
         openVsx: null,
         github: null,
       }],
-      releases: [],
-      loading: false,
-      error: null,
     })
 
     render(<CompetitorList {...defaultProps} />)
@@ -144,11 +148,8 @@ describe('CompetitorList', () => {
 
   it('shows loading state for competitor', () => {
     mockUseCompetitor.mockReturnValue({
-      displayName: null,
-      data: [],
-      releases: [],
+      ...defaultMockReturn,
       loading: true,
-      error: null,
     })
 
     render(<CompetitorList {...defaultProps} />)
@@ -162,10 +163,7 @@ describe('CompetitorList', () => {
 
   it('shows error state for competitor', () => {
     mockUseCompetitor.mockReturnValue({
-      displayName: null,
-      data: [],
-      releases: [],
-      loading: false,
+      ...defaultMockReturn,
       error: 'Failed to fetch',
     })
 
@@ -180,6 +178,7 @@ describe('CompetitorList', () => {
 
   it('shows competitor comparison card when data is available', () => {
     mockUseCompetitor.mockReturnValue({
+      ...defaultMockReturn,
       displayName: 'Python',
       data: [{
         ts: '2025-01-01',
@@ -187,9 +186,6 @@ describe('CompetitorList', () => {
         openVsx: null,
         github: null,
       }],
-      releases: [],
-      loading: false,
-      error: null,
     })
 
     render(<CompetitorList {...defaultProps} />)

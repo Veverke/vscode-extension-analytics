@@ -2,15 +2,6 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import CompetitorComparisonCard from '../../src/components/cards/CompetitorComparisonCard'
 
-const yourExtension = {
-  id: 'myext.myext',
-  displayName: 'My Extension',
-  installs: 5000,
-  rating: 4.5,
-  ratingCount: 100,
-  sinceDate: '2024-01-01T00:00:00Z',
-}
-
 const competitor = {
   id: 'comp.ext',
   displayName: 'Competitor Ext',
@@ -18,14 +9,24 @@ const competitor = {
   rating: 4.0,
   ratingCount: 200,
   sinceDate: '2023-01-01T00:00:00Z',
+  githubStars: null,
+  githubRepo: null,
+}
+
+const defaultDiffs = {
+  installs: { label: '+5,000 (+100.0%)', className: 'competitor-value--red' },
+  rating: { label: '0', className: 'competitor-value--gray' },
+  ratingCount: { label: '+100 (+100.0%)', className: 'competitor-value--red' },
+  avgMonthly: { label: '+50 (+100.0%)', className: 'competitor-value--red' },
+  githubStars: { label: '0', className: 'competitor-value--gray' },
 }
 
 describe('CompetitorComparisonCard', () => {
   it('renders competitor name and id', () => {
     render(
       <CompetitorComparisonCard
-        yourExtension={yourExtension}
         competitor={competitor}
+        diffs={defaultDiffs}
         onRemove={() => {}}
       />
     )
@@ -36,24 +37,22 @@ describe('CompetitorComparisonCard', () => {
   it('renders installs comparison', () => {
     render(
       <CompetitorComparisonCard
-        yourExtension={yourExtension}
         competitor={competitor}
+        diffs={defaultDiffs}
         onRemove={() => {}}
       />
     )
-    expect(screen.getByText('5,000')).toBeInTheDocument()
     expect(screen.getByText('10,000')).toBeInTheDocument()
   })
 
   it('renders rating comparison', () => {
     render(
       <CompetitorComparisonCard
-        yourExtension={yourExtension}
         competitor={competitor}
+        diffs={defaultDiffs}
         onRemove={() => {}}
       />
     )
-    expect(screen.getByText(/⭐ 4.5/)).toBeInTheDocument()
     expect(screen.getByText(/⭐ 4.0/)).toBeInTheDocument()
   })
 
@@ -61,8 +60,8 @@ describe('CompetitorComparisonCard', () => {
     const onRemove = vi.fn()
     render(
       <CompetitorComparisonCard
-        yourExtension={yourExtension}
         competitor={competitor}
+        diffs={defaultDiffs}
         onRemove={onRemove}
       />
     )
@@ -70,11 +69,15 @@ describe('CompetitorComparisonCard', () => {
     expect(onRemove).toHaveBeenCalledOnce()
   })
 
-  it('shows green diff when your value is higher (rating)', () => {
+  it('shows green diff when your value is higher', () => {
+    const greenDiffs = {
+      ...defaultDiffs,
+      rating: { label: '-0.5 (-12.5%)', className: 'competitor-value--green' },
+    }
     render(
       <CompetitorComparisonCard
-        yourExtension={{ ...yourExtension, rating: 4.5 }}
-        competitor={{ ...competitor, rating: 4.0 }}
+        competitor={competitor}
+        diffs={greenDiffs}
         onRemove={() => {}}
       />
     )
@@ -82,11 +85,11 @@ describe('CompetitorComparisonCard', () => {
     expect(diffCells.length).toBeGreaterThan(0)
   })
 
-  it('shows red diff when your value is lower (installs)', () => {
+  it('shows red diff when your value is lower', () => {
     render(
       <CompetitorComparisonCard
-        yourExtension={{ ...yourExtension, installs: 1000 }}
-        competitor={{ ...competitor, installs: 5000 }}
+        competitor={competitor}
+        diffs={defaultDiffs}
         onRemove={() => {}}
       />
     )
@@ -95,35 +98,30 @@ describe('CompetitorComparisonCard', () => {
   })
 
   it('shows gray diff when values are equal', () => {
+    const grayDiffs = {
+      ...defaultDiffs,
+      installs: { label: '0', className: 'competitor-value--gray' },
+    }
     render(
       <CompetitorComparisonCard
-        yourExtension={{ ...yourExtension, installs: 5000 }}
-        competitor={{ ...competitor, installs: 5000 }}
+        competitor={competitor}
+        diffs={grayDiffs}
         onRemove={() => {}}
       />
     )
-    expect(screen.getByText('0')).toBeInTheDocument()
+    const grayCells = document.querySelectorAll('.competitor-value--gray')
+    expect(grayCells.length).toBeGreaterThan(0)
   })
 
   it('shows N/A when ratings are 0', () => {
+    const noRatingCompetitor = { ...competitor, rating: 0 }
     render(
       <CompetitorComparisonCard
-        yourExtension={{ ...yourExtension, rating: 0 }}
-        competitor={{ ...competitor, rating: 0 }}
+        competitor={noRatingCompetitor}
+        diffs={defaultDiffs}
         onRemove={() => {}}
       />
     )
     expect(screen.getAllByText('N/A').length).toBeGreaterThanOrEqual(1)
-  })
-
-  it('shows arrow indicators for green and red diffs', () => {
-    render(
-      <CompetitorComparisonCard
-        yourExtension={{ ...yourExtension, installs: 1000 }}
-        competitor={{ ...competitor, installs: 5000 }}
-        onRemove={() => {}}
-      />
-    )
-    expect(screen.getByText('↓')).toBeInTheDocument()
   })
 })

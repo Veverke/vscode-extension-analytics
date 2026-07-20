@@ -1,14 +1,20 @@
-import type { MarketplaceSnapshot, ReleaseEntry, DataPoint } from '../types/schema'
+import type { MarketplaceSnapshot, ReleaseEntry, DataPoint, GitHubSnapshot } from '../types/schema'
 
 interface MarketplaceStat {
   statisticName: string
   value: number
 }
 
+interface MarketplaceProperty {
+  key: string
+  value: string
+}
+
 interface MarketplaceVersion {
   version: string
   lastUpdated: string
   targetPlatform?: string
+  properties?: MarketplaceProperty[]
 }
 
 interface MarketplaceExtension {
@@ -25,7 +31,7 @@ interface MarketplaceResponse {
 
 /** Detects whether the code is running inside a VS Code webview. */
 function isWebview(): boolean {
-  return typeof window !== 'undefined' && window.vscode !== undefined
+  return typeof window !== 'undefined' && (window as unknown as Record<string, unknown>).vscode !== undefined
 }
 
 const CACHE_PREFIX = 'competitor:'
@@ -68,6 +74,7 @@ function setSessionCache<T>(key: string, data: T): void {
 
 export interface MarketplaceSnapshotWithDisplayName extends MarketplaceSnapshot {
   displayName: string
+  githubRepo?: string
 }
 
 /**
@@ -86,6 +93,53 @@ function webviewCorsError(extensionId: string): never {
   )
 }
 
+/** Extract GitHub repo full name from a repository URL string */
+function extractGitHubRepo(url: string): string | null {
+  if (!url) return null
+  const match = url.match(/github\.com\/([^/]+\/[^/\s?#]+)/i)
+  return match ? match[1].replace(/\.git$/, '') : null
+}
+
+/** Try to extract the GitHub repo from marketplace extension version properties */
+function findGitHubRepoFromProperties(ext: MarketplaceExtension): string | null {
+  const versions = ext.versions ?? []
+  for (const v of versions) {
+    const props = v.properties ?? []
+    for (const p of props) {
+      if (
+        p.key === 'Microsoft.VisualStudio.Services.Links.Repository' ||
+        p.key === 'Microsoft.VisualStudio.Code.GitHubRepo' ||
+        p.key === 'Microsoft.VisualStudio.Services.Links.Source'
+      ) {
+        const repo = extractGitHubRepo(p.value)
+        if (repo) return repo
+      }
+    }
+  }
+  return null
+}
+
+/**
+ * Fetches GitHub stats (stars) for a given repo.
+ * Uses unauthenticated API (60 req/hr). Returns null on failure.
+ */
+async function fetchCompetitorGitHubStats(repoFullName: string): Promise<Pick<GitHubSnapshot, 'stars' | 'forks'> | null> {
+  try {
+    const response = await fetch(
+      `https://api.github.com/repos/${repoFullName}`,
+      { signal: AbortSignal.timeout(10_000) }
+    )
+    if (!response.ok) return null
+    const data = await response.json() as { stargazers_count: number; forks_count: number }
+    return {
+      stars: data.stargazers_count,
+      forks: data.forks_count,
+    }
+  } catch {
+    return null
+  }
+}
+
 export async function fetchCompetitorStats(
   extensionId: string
 ): Promise<MarketplaceSnapshotWithDisplayName> {
@@ -96,6 +150,9 @@ export async function fetchCompetitorStats(
   if (isWebview()) {
     webviewCorsError(extensionId)
   }
+
+  // Flags: 2 (categories) + 8 (versionProperties) + 128 (statistics) + 256 (latestVersionOnly) + 512 (unpublished) = 906
+  const flags = 906
 
   const response = await fetch(
     'https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery',
@@ -108,7 +165,7 @@ export async function fetchCompetitorStats(
       },
       body: JSON.stringify({
         filters: [{ criteria: [{ filterType: 7, value: extensionId }] }],
-        flags: 914,
+        flags,
       }),
     }
   )
@@ -136,6 +193,9 @@ export async function fetchCompetitorStats(
   const statistics: MarketplaceStat[] = ext.statistics!
   const averageRating = getStat(statistics, 'averagerating')
 
+  // Try to extract GitHub repo from version properties
+  const githubRepo = findGitHubRepoFromProperties(ext)
+
   const result: MarketplaceSnapshotWithDisplayName = {
     displayName: ext.displayName ?? extensionId,
     installs: getStat(statistics, 'install'),
@@ -144,6 +204,7 @@ export async function fetchCompetitorStats(
     ratingCount: getStat(statistics, 'ratingcount'),
     trendingWeekly: getStat(statistics, 'trendingweekly'),
     trendingMonthly: getStat(statistics, 'trendingmonthly'),
+    githubRepo: githubRepo ?? undefined,
   }
 
   setSessionCache(extensionId, result)
@@ -223,10 +284,16 @@ export interface CompetitorData {
   displayName: string
   data: DataPoint[]
   releases: ReleaseEntry[]
+  /** GitHub repo full name if found, null otherwise */
+  githubRepo?: string
+  /** GitHub stars info if repo was found */
+  githubStars?: number
+  githubForks?: number
 }
 
 /**
  * Fetches competitor data and constructs a synthetic DataPoint[] with current stats.
+ * Also attempts to fetch GitHub stars for the competitor if a GitHub repo is found.
  */
 export async function fetchCompetitorData(extensionId: string): Promise<CompetitorData> {
   const cached = getFromSessionCache<CompetitorData>(COMPETITOR_CACHE_PREFIX + extensionId)
@@ -255,6 +322,18 @@ export async function fetchCompetitorData(extensionId: string): Promise<Competit
     displayName: stats.displayName,
     data: [dataPoint],
     releases,
+    githubRepo: stats.githubRepo,
+  }
+
+  // Try to fetch GitHub stats if we have a repo
+  if (stats.githubRepo) {
+    const ghStats = await fetchCompetitorGitHubStats(stats.githubRepo)
+    if (ghStats) {
+      result.githubStars = ghStats.stars
+      result.githubForks = ghStats.forks
+      // Also attach to the data point
+      dataPoint.github = { stars: ghStats.stars, forks: ghStats.forks, contributions: 0 }
+    }
   }
 
   setSessionCache(COMPETITOR_CACHE_PREFIX + extensionId, result)

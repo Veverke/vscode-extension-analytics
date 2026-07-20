@@ -7,7 +7,19 @@ interface Props {
   yourInstalls: number
   yourRating: number | undefined
   yourRatingCount: number
+  yourGithubStars: number | null
   trackedSince?: string
+}
+
+interface CompetitorInfo {
+  id: string
+  displayName: string
+  installs: number
+  rating: number | undefined
+  ratingCount: number
+  sinceDate?: string
+  githubStars: number | null
+  githubRepo: string | null
 }
 
 const STORAGE_PREFIX = 'competitors:'
@@ -51,7 +63,22 @@ function isValidExtensionId(id: string): boolean {
   return /^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(id)
 }
 
-export default function CompetitorList({ extensionId, yourInstalls, yourRating, yourRatingCount, trackedSince }: Props) {
+function formatDiff(yours: number, theirs: number): { label: string; className: string } {
+  if (yours === theirs) return { label: '0', className: 'competitor-value--gray' }
+  const diff = theirs - yours
+  const pct = yours !== 0 ? ((diff / yours) * 100).toFixed(1) : '∞'
+  const sign = diff > 0 ? '+' : ''
+  return {
+    label: `${sign}${formatNum(diff)} (${sign}${pct}%)`,
+    className: diff > 0 ? 'competitor-value--red' : 'competitor-value--green',
+  }
+}
+
+function formatNum(n: number): string {
+  return new Intl.NumberFormat('en-US').format(n)
+}
+
+export default function CompetitorList({ extensionId, yourInstalls, yourRating, yourRatingCount, yourGithubStars, trackedSince }: Props) {
   const [competitorIds, setCompetitorIds] = useState<string[]>(() => getStoredIds(extensionId))
   const [visibility, setVisibility] = useState<Record<string, boolean>>(() => getStoredVisibility(extensionId))
   const [inputValue, setInputValue] = useState('')
@@ -114,14 +141,9 @@ export default function CompetitorList({ extensionId, yourInstalls, yourRating, 
     }))
   }, [])
 
-  const yourExtension = {
-    id: extensionId,
-    displayName: 'Your Extension',
-    installs: yourInstalls,
-    rating: yourRating,
-    ratingCount: yourRatingCount,
-    sinceDate: trackedSince,
-  }
+  const yourAvgMonthly = trackedSince
+    ? Math.round(yourInstalls / Math.max(1, (Date.now() - new Date(trackedSince).getTime()) / (1000 * 60 * 60 * 24 * 30.44)))
+    : 0
 
   const visibleCount = competitorIds.filter((id) => visibility[id] ?? true).length
   const hiddenCount = competitorIds.length - visibleCount
@@ -152,8 +174,44 @@ export default function CompetitorList({ extensionId, yourInstalls, yourRating, 
           {inputError}
         </p>
       )}
+
+      {/* Your Extension Header Row */}
+      <div className="competitor-your-ext">
+        <div className="competitor-your-ext__title">Your Extension</div>
+        <table className="competitor-table competitor-table--your-ext">
+          <thead>
+            <tr>
+              <th>Metric</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Installs</td>
+              <td>{formatNum(yourInstalls)}</td>
+            </tr>
+            <tr>
+              <td>Avg Installs / Month</td>
+              <td>{yourAvgMonthly > 0 ? formatNum(yourAvgMonthly) : 'N/A'}</td>
+            </tr>
+            <tr>
+              <td>Rating</td>
+              <td>{yourRating != null && yourRating > 0 ? `⭐ ${yourRating.toFixed(1)}` : 'N/A'}</td>
+            </tr>
+            <tr>
+              <td>Rating Count</td>
+              <td>{formatNum(yourRatingCount)}</td>
+            </tr>
+            <tr>
+              <td>GitHub Stars</td>
+              <td>{yourGithubStars != null ? formatNum(yourGithubStars) : 'N/A'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       {competitorIds.length > 0 && (
-        <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-dim)', marginBottom: 'var(--space-sm)' }}>
+        <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-dim)', marginBottom: 'var(--space-sm)', marginTop: 'var(--space-md)' }}>
           {visibleCount} visible{hiddenCount > 0 ? `, ${hiddenCount} hidden` : ''} &middot; Use checkboxes to filter
         </p>
       )}
@@ -162,7 +220,7 @@ export default function CompetitorList({ extensionId, yourInstalls, yourRating, 
           <CompetitorItem
             key={id + ':' + refreshKey}
             id={id}
-            yourExtension={yourExtension}
+            yourExtension={{ installs: yourInstalls, rating: yourRating, ratingCount: yourRatingCount, sinceDate: trackedSince, githubStars: yourGithubStars }}
             onRemove={() => removeCompetitor(id)}
             visible={visibility[id] ?? true}
             onToggleVisibility={() => toggleVisibility(id)}
@@ -188,13 +246,13 @@ function CompetitorItem({
   bypassCache,
 }: {
   id: string
-  yourExtension: { id: string; displayName: string; installs: number; rating: number | undefined; ratingCount: number; sinceDate?: string }
+  yourExtension: { installs: number; rating: number | undefined; ratingCount: number; sinceDate?: string; githubStars: number | null }
   onRemove: () => void
   visible: boolean
   onToggleVisibility: () => void
   bypassCache: boolean
 }) {
-  const { displayName, data, releases, loading, error } = useCompetitor(id, bypassCache)
+  const { displayName, data, releases, loading, error, githubStars, githubRepo } = useCompetitor(id, bypassCache)
 
   if (loading) {
     return (
@@ -228,26 +286,30 @@ function CompetitorItem({
   // Use the first release's publishedAt as the competitor's "since" date
   const firstRelease = releases.length > 0 ? releases[0] : null
 
-  const competitorInfo: {
-    id: string
-    displayName: string
-    installs: number
-    rating: number | undefined
-    ratingCount: number
-    sinceDate?: string
-  } = {
+  const competitorInfo: CompetitorInfo = {
     id,
     displayName: displayName ?? id,
     installs: lastPoint.marketplace.installs,
     rating: lastPoint.marketplace.averageRating,
     ratingCount: lastPoint.marketplace.ratingCount,
     sinceDate: firstRelease?.publishedAt ?? undefined,
+    githubStars,
+    githubRepo,
+  }
+
+  // Compute diffs: positive means competitor is ahead (bad for us), negative means we're ahead (good for us)
+  const diffs = {
+    installs: formatDiff(yourExtension.installs, competitorInfo.installs),
+    rating: formatDiff(yourExtension.rating ?? 0, competitorInfo.rating ?? 0),
+    ratingCount: formatDiff(yourExtension.ratingCount, competitorInfo.ratingCount),
+    avgMonthly: formatDiff(yourExtension.installs / Math.max(1, (Date.now() - new Date(yourExtension.sinceDate ?? Date.now()).getTime()) / (1000 * 60 * 60 * 24 * 30.44)), competitorInfo.installs / Math.max(1, (Date.now() - new Date(competitorInfo.sinceDate ?? Date.now()).getTime()) / (1000 * 60 * 60 * 24 * 30.44))),
+    githubStars: formatDiff(yourExtension.githubStars ?? 0, competitorInfo.githubStars ?? 0),
   }
 
   return (
     <CompetitorComparisonCard
-      yourExtension={yourExtension}
       competitor={competitorInfo}
+      diffs={diffs}
       onRemove={onRemove}
       onToggleVisibility={onToggleVisibility}
       visible={visible}

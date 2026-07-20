@@ -15,7 +15,7 @@ export interface UseCompetitorResult {
  * Results are cached in sessionStorage for the current session.
  * Pass null to skip fetching (e.g., when no ID is entered yet).
  */
-export function useCompetitor(extensionId: string | null): UseCompetitorResult {
+export function useCompetitor(extensionId: string | null, bypassCache = false): UseCompetitorResult {
   const [displayName, setDisplayName] = useState<string | null>(null)
   const [data, setData] = useState<DataPoint[]>([])
   const [releases, setReleases] = useState<ReleaseEntry[]>([])
@@ -43,6 +43,12 @@ export function useCompetitor(extensionId: string | null): UseCompetitorResult {
       setError(null)
 
       try {
+        // If bypassCache is requested, clear the session cache for this extension
+        const cacheKey = 'competitor-data:' + extensionId
+        try { sessionStorage.removeItem(cacheKey) } catch { /* ignore */ }
+        try { sessionStorage.removeItem('competitor:' + extensionId) } catch { /* ignore */ }
+        try { sessionStorage.removeItem('competitor:' + extensionId + ':releases') } catch { /* ignore */ }
+
         const result = await fetchCompetitorData(extensionId)
         if (cancelled) return
         setDisplayName(result.displayName)
@@ -67,7 +73,7 @@ export function useCompetitor(extensionId: string | null): UseCompetitorResult {
       cancelled = true
       previousId.current = null
     }
-  }, [extensionId])
+  }, [extensionId, bypassCache])
 
   return { displayName, data, releases, loading, error }
 }

@@ -13,7 +13,6 @@ import RatingChart from '../components/charts/RatingChart'
 import GitHubChart from '../components/charts/GitHubChart'
 import MonthlyInstallsChart from '../components/charts/MonthlyInstallsChart'
 import MonthlyTableCard from '../components/cards/MonthlyTableCard'
-import FormulaTooltip from '../components/annotations/FormulaTooltip'
 import { buildEventReferenceLines } from '../components/annotations/EventAnnotation'
 import { computeProjection } from '../metrics/projections'
 import { getExtensionIconUrl } from '../utils/icons'
@@ -241,6 +240,7 @@ export default function ExtensionDetail() {
             yourInstalls={currentInstalls}
             yourRating={data.length > 0 ? data[data.length - 1].marketplace.averageRating : undefined}
             yourRatingCount={data.length > 0 ? data[data.length - 1].marketplace.ratingCount : 0}
+            trackedSince={extension.trackedSince}
           />
         </section>
       </div>

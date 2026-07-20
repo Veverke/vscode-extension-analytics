@@ -8,6 +8,7 @@ const yourExtension = {
   installs: 5000,
   rating: 4.5,
   ratingCount: 100,
+  sinceDate: '2024-01-01T00:00:00Z',
 }
 
 const competitor = {
@@ -16,6 +17,7 @@ const competitor = {
   installs: 10000,
   rating: 4.0,
   ratingCount: 200,
+  sinceDate: '2023-01-01T00:00:00Z',
 }
 
 describe('CompetitorComparisonCard', () => {

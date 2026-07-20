@@ -18,6 +18,7 @@ describe('CompetitorList', () => {
   beforeEach(() => {
     vi.resetAllMocks()
     sessionStorage.clear()
+    localStorage.clear()
     mockUseCompetitor.mockReturnValue({
       displayName: null,
       data: [],
@@ -200,7 +201,7 @@ describe('CompetitorList', () => {
     expect(screen.getByText(/Python/)).toBeInTheDocument()
   })
 
-  it('persists competitors to sessionStorage', () => {
+  it('persists competitors to localStorage', () => {
     const { unmount } = render(<CompetitorList {...defaultProps} />)
 
     const input = screen.getByLabelText('Competitor extension ID')
@@ -209,7 +210,7 @@ describe('CompetitorList', () => {
 
     unmount()
 
-    // Re-render should restore from sessionStorage
+    // Re-render should restore from localStorage
     render(<CompetitorList {...defaultProps} />)
     expect(screen.queryByText(/No competitors added yet/)).not.toBeInTheDocument()
   })

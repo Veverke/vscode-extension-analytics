@@ -7,13 +7,15 @@ interface Props {
   yourInstalls: number
   yourRating: number | undefined
   yourRatingCount: number
+  trackedSince?: string
 }
 
 const STORAGE_PREFIX = 'competitors:'
+const VISIBILITY_PREFIX = 'competitors-vis:'
 
 function getStoredIds(extensionId: string): string[] {
   try {
-    const stored = sessionStorage.getItem(STORAGE_PREFIX + extensionId)
+    const stored = localStorage.getItem(STORAGE_PREFIX + extensionId)
     return stored ? (JSON.parse(stored) as string[]) : []
   } catch {
     return []
@@ -22,9 +24,26 @@ function getStoredIds(extensionId: string): string[] {
 
 function storeIds(extensionId: string, ids: string[]): void {
   try {
-    sessionStorage.setItem(STORAGE_PREFIX + extensionId, JSON.stringify(ids))
+    localStorage.setItem(STORAGE_PREFIX + extensionId, JSON.stringify(ids))
   } catch {
-    // sessionStorage may be full
+    // localStorage may be full
+  }
+}
+
+function getStoredVisibility(extensionId: string): Record<string, boolean> {
+  try {
+    const stored = localStorage.getItem(VISIBILITY_PREFIX + extensionId)
+    return stored ? (JSON.parse(stored) as Record<string, boolean>) : {}
+  } catch {
+    return {}
+  }
+}
+
+function storeVisibility(extensionId: string, vis: Record<string, boolean>): void {
+  try {
+    localStorage.setItem(VISIBILITY_PREFIX + extensionId, JSON.stringify(vis))
+  } catch {
+    // localStorage may be full
   }
 }
 
@@ -32,15 +51,28 @@ function isValidExtensionId(id: string): boolean {
   return /^[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(id)
 }
 
-export default function CompetitorList({ extensionId, yourInstalls, yourRating, yourRatingCount }: Props) {
+export default function CompetitorList({ extensionId, yourInstalls, yourRating, yourRatingCount, trackedSince }: Props) {
   const [competitorIds, setCompetitorIds] = useState<string[]>(() => getStoredIds(extensionId))
+  const [visibility, setVisibility] = useState<Record<string, boolean>>(() => getStoredVisibility(extensionId))
   const [inputValue, setInputValue] = useState('')
   const [inputError, setInputError] = useState<string | null>(null)
+  // Increment to force re-fetch all competitors on mount
+  const [refreshKey, setRefreshKey] = useState(0)
 
-  // Persist to sessionStorage whenever list changes
+  // Persist to localStorage whenever list changes
   useEffect(() => {
     storeIds(extensionId, competitorIds)
   }, [extensionId, competitorIds])
+
+  // Persist visibility whenever it changes
+  useEffect(() => {
+    storeVisibility(extensionId, visibility)
+  }, [extensionId, visibility])
+
+  // Auto-refetch on mount by incrementing refreshKey
+  useEffect(() => {
+    setRefreshKey((k) => k + 1)
+  }, [extensionId])
 
   const addCompetitor = useCallback(() => {
     const trimmed = inputValue.trim()
@@ -68,6 +100,18 @@ export default function CompetitorList({ extensionId, yourInstalls, yourRating, 
 
   const removeCompetitor = useCallback((id: string) => {
     setCompetitorIds((prev) => prev.filter((c) => c !== id))
+    setVisibility((prev) => {
+      const next = { ...prev }
+      delete next[id]
+      return next
+    })
+  }, [])
+
+  const toggleVisibility = useCallback((id: string) => {
+    setVisibility((prev) => ({
+      ...prev,
+      [id]: !(prev[id] ?? true),
+    }))
   }, [])
 
   const yourExtension = {
@@ -76,7 +120,11 @@ export default function CompetitorList({ extensionId, yourInstalls, yourRating, 
     installs: yourInstalls,
     rating: yourRating,
     ratingCount: yourRatingCount,
+    sinceDate: trackedSince,
   }
+
+  const visibleCount = competitorIds.filter((id) => visibility[id] ?? true).length
+  const hiddenCount = competitorIds.length - visibleCount
 
   return (
     <div className="competitor-section">
@@ -104,13 +152,21 @@ export default function CompetitorList({ extensionId, yourInstalls, yourRating, 
           {inputError}
         </p>
       )}
+      {competitorIds.length > 0 && (
+        <p style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-dim)', marginBottom: 'var(--space-sm)' }}>
+          {visibleCount} visible{hiddenCount > 0 ? `, ${hiddenCount} hidden` : ''} &middot; Use checkboxes to filter
+        </p>
+      )}
       <div className="competitor-list">
         {competitorIds.map((id) => (
           <CompetitorItem
-            key={id}
+            key={id + ':' + refreshKey}
             id={id}
             yourExtension={yourExtension}
             onRemove={() => removeCompetitor(id)}
+            visible={visibility[id] ?? true}
+            onToggleVisibility={() => toggleVisibility(id)}
+            bypassCache={refreshKey > 0}
           />
         ))}
         {competitorIds.length === 0 && (
@@ -127,12 +183,18 @@ function CompetitorItem({
   id,
   yourExtension,
   onRemove,
+  visible,
+  onToggleVisibility,
+  bypassCache,
 }: {
   id: string
-  yourExtension: { id: string; displayName: string; installs: number; rating: number | undefined; ratingCount: number }
+  yourExtension: { id: string; displayName: string; installs: number; rating: number | undefined; ratingCount: number; sinceDate?: string }
   onRemove: () => void
+  visible: boolean
+  onToggleVisibility: () => void
+  bypassCache: boolean
 }) {
-  const { displayName, data, loading, error } = useCompetitor(id)
+  const { displayName, data, releases, loading, error } = useCompetitor(id, bypassCache)
 
   if (loading) {
     return (
@@ -162,18 +224,24 @@ function CompetitorItem({
   if (data.length === 0) return null
 
   const lastPoint = data[data.length - 1]
+
+  // Use the first release's publishedAt as the competitor's "since" date
+  const firstRelease = releases.length > 0 ? releases[0] : null
+
   const competitorInfo: {
     id: string
     displayName: string
     installs: number
     rating: number | undefined
     ratingCount: number
+    sinceDate?: string
   } = {
     id,
     displayName: displayName ?? id,
     installs: lastPoint.marketplace.installs,
     rating: lastPoint.marketplace.averageRating,
     ratingCount: lastPoint.marketplace.ratingCount,
+    sinceDate: firstRelease?.publishedAt ?? undefined,
   }
 
   return (
@@ -181,6 +249,8 @@ function CompetitorItem({
       yourExtension={yourExtension}
       competitor={competitorInfo}
       onRemove={onRemove}
+      onToggleVisibility={onToggleVisibility}
+      visible={visible}
     />
   )
 }

@@ -39,12 +39,17 @@ function buildHeaders(githubToken: string): Record<string, string> {
  * Fetches the total number of non-owner contributions (commits) from
  * the contributor stats API. This includes all-time commit counts per contributor.
  */
+function normalizeLogin(login: string | null | undefined): string {
+  return (login ?? '').toLowerCase();
+}
+
 async function fetchNonOwnerCommits(
   repoFullName: string,
   ownerLogin: string,
   githubToken: string
 ): Promise<number> {
   const headers = buildHeaders(githubToken);
+  const normalizedOwner = normalizeLogin(ownerLogin);
   const response = await fetch(
     `https://api.github.com/repos/${repoFullName}/stats/contributors`,
     { headers, signal: AbortSignal.timeout(30_000) }
@@ -62,7 +67,7 @@ async function fetchNonOwnerCommits(
   if (!Array.isArray(data)) return 0;
 
   return data
-    .filter((c) => c.author?.login !== ownerLogin)
+    .filter((c) => normalizeLogin(c.author?.login) !== normalizedOwner)
     .reduce((sum, c) => sum + (c.total || 0), 0);
 }
 
@@ -76,6 +81,7 @@ async function fetchNonOwnerIssues(
   githubToken: string
 ): Promise<number> {
   const headers = buildHeaders(githubToken);
+  const normalizedOwner = normalizeLogin(ownerLogin);
   let totalCount = 0;
   let page = 1;
   const perPage = 100;
@@ -97,7 +103,7 @@ async function fetchNonOwnerIssues(
 
     // Count non-owner, non-PR issues
     for (const issue of issues) {
-      if (issue.user?.login !== ownerLogin && !issue.pull_request) {
+      if (normalizeLogin(issue.user?.login) !== normalizedOwner && !issue.pull_request) {
         totalCount++;
       }
     }
@@ -118,6 +124,7 @@ async function fetchNonOwnerPRs(
   githubToken: string
 ): Promise<number> {
   const headers = buildHeaders(githubToken);
+  const normalizedOwner = normalizeLogin(ownerLogin);
   let totalCount = 0;
   let page = 1;
   const perPage = 100;
@@ -138,7 +145,7 @@ async function fetchNonOwnerPRs(
     if (!Array.isArray(prs) || prs.length === 0) break;
 
     for (const pr of prs) {
-      if (pr.user?.login !== ownerLogin) {
+      if (normalizeLogin(pr.user?.login) !== normalizedOwner) {
         totalCount++;
       }
     }
@@ -161,6 +168,7 @@ async function fetchNonOwnerReviews(
   githubToken: string
 ): Promise<number> {
   const headers = buildHeaders(githubToken);
+  const normalizedOwner = normalizeLogin(ownerLogin);
   let totalCount = 0;
   let page = 1;
   const perPage = 100;
@@ -190,7 +198,7 @@ async function fetchNonOwnerReviews(
       if (!Array.isArray(reviews)) continue;
 
       for (const review of reviews) {
-        if (review.user?.login !== ownerLogin) {
+        if (normalizeLogin(review.user?.login) !== normalizedOwner) {
           totalCount++;
         }
       }

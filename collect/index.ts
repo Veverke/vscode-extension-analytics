@@ -55,6 +55,21 @@ export async function runCollector(): Promise<number> {
         }),
       ]);
 
+      // Marketplace API sometimes returns stale install counts that are lower
+      // than previously recorded values. Since installs are cumulative, clamp
+      // to the last known maximum to prevent impossible decreases.
+      const storedPoints = readTimeSeries(entry.id);
+      const lastInstalls =
+        storedPoints.length > 0
+          ? storedPoints[storedPoints.length - 1].marketplace.installs
+          : 0;
+      if (marketplace.installs < lastInstalls) {
+        console.warn(
+          `[collector] Install count decreased for ${entry.id}: ${lastInstalls} → ${marketplace.installs}. Using last known max: ${lastInstalls}.`
+        );
+        marketplace.installs = lastInstalls;
+      }
+
       const point: DataPoint = {
         ts: new Date().toISOString(),
         marketplace,

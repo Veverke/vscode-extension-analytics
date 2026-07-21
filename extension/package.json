@@ -6,7 +6,6 @@
   "publisher": "Veverke",
   "license": "ISC",
   "repository": {
-    "type": "git",
     "url": "https://github.com/Veverke/vscode-extension-analytics.git"
   },
   "bugs": {
@@ -74,9 +73,11 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./tsconfig.json",
-    "watch": "tsc -watch -p ./tsconfig.json"
+    "watch": "tsc -watch -p ./tsconfig.json",
+    "package": "vsce package"
   },
   "devDependencies": {
-    "@types/vscode": "^1.125.0"
+    "@types/vscode": "^1.125.0",
+    "@vscode/vsce": "^3.9.2"
   }
 }

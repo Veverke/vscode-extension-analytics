@@ -2847,5 +2847,32 @@
         "reviews": 14
       }
     }
+  },
+  {
+    "ts": "2026-07-26T12:24:00.705Z",
+    "marketplace": {
+      "installs": 195,
+      "updates": 83,
+      "averageRating": 5,
+      "ratingCount": 1,
+      "trendingWeekly": 7.8125,
+      "trendingMonthly": 33.85416666666667
+    },
+    "openVsx": {
+      "downloads": 2198,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 6,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
   }
 ]

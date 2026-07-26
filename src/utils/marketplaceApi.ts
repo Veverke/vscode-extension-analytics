@@ -1,4 +1,4 @@
-import type { MarketplaceSnapshot, ReleaseEntry, DataPoint, GitHubSnapshot } from '../types/schema'
+import type { MarketplaceSnapshot, ReleaseEntry, DataPoint } from '../types/schema'
 
 interface MarketplaceStat {
   statisticName: string
@@ -120,20 +120,27 @@ function findGitHubRepoFromProperties(ext: MarketplaceExtension): string | null 
 }
 
 /**
- * Fetches GitHub stats (stars) for a given repo.
+ * Fetches GitHub stats (stars, forks, last push date) for a given repo.
  * Uses unauthenticated API (60 req/hr). Returns null on failure.
  */
-async function fetchCompetitorGitHubStats(repoFullName: string): Promise<Pick<GitHubSnapshot, 'stars' | 'forks'> | null> {
+interface CompetitorGitHubInfo {
+  stars: number
+  forks: number
+  pushedAt: string | null
+}
+
+async function fetchCompetitorGitHubStats(repoFullName: string): Promise<CompetitorGitHubInfo | null> {
   try {
     const response = await fetch(
       `https://api.github.com/repos/${repoFullName}`,
       { signal: AbortSignal.timeout(10_000) }
     )
     if (!response.ok) return null
-    const data = await response.json() as { stargazers_count: number; forks_count: number }
+    const data = await response.json() as { stargazers_count: number; forks_count: number; pushed_at: string }
     return {
       stars: data.stargazers_count,
       forks: data.forks_count,
+      pushedAt: data.pushed_at ?? null,
     }
   } catch {
     return null
@@ -289,6 +296,8 @@ export interface CompetitorData {
   /** GitHub stars info if repo was found */
   githubStars?: number
   githubForks?: number
+  /** ISO date of last push to the GitHub repo */
+  lastCommit?: string | null
 }
 
 /**
@@ -318,19 +327,27 @@ export async function fetchCompetitorData(extensionId: string): Promise<Competit
     github: null,
   }
 
+  // Use the latest release date as the "last commit" / last updated date
+  // Prefer GitHub pushed_at if available (more accurate), fall back to marketplace latest release
+  const latestRelease = releases.length > 0 ? releases[releases.length - 1] : null
+
   const result: CompetitorData = {
     displayName: stats.displayName,
     data: [dataPoint],
     releases,
     githubRepo: stats.githubRepo,
+    lastCommit: latestRelease?.publishedAt ?? null,
   }
 
-  // Try to fetch GitHub stats if we have a repo
+  // Try to fetch GitHub stats if we have a repo (may override lastCommit with more accurate pushed_at)
   if (stats.githubRepo) {
     const ghStats = await fetchCompetitorGitHubStats(stats.githubRepo)
     if (ghStats) {
       result.githubStars = ghStats.stars
       result.githubForks = ghStats.forks
+      if (ghStats.pushedAt) {
+        result.lastCommit = ghStats.pushedAt
+      }
       // Also attach to the data point
       dataPoint.github = { stars: ghStats.stars, forks: ghStats.forks, contributions: 0 }
     }

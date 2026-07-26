@@ -11,6 +11,7 @@ export interface UseCompetitorResult {
   githubStars: number | null
   githubForks: number | null
   githubRepo: string | null
+  lastCommit: string | null
 }
 
 /**
@@ -25,6 +26,7 @@ export function useCompetitor(extensionId: string | null, bypassCache = false): 
   const [githubStars, setGithubStars] = useState<number | null>(null)
   const [githubForks, setGithubForks] = useState<number | null>(null)
   const [githubRepo, setGithubRepo] = useState<string | null>(null)
+  const [lastCommit, setLastCommit] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const previousId = useRef<string | null>(null)
@@ -37,6 +39,7 @@ export function useCompetitor(extensionId: string | null, bypassCache = false): 
       setGithubStars(null)
       setGithubForks(null)
       setGithubRepo(null)
+      setLastCommit(null)
       setLoading(false)
       setError(null)
       previousId.current = null
@@ -66,6 +69,7 @@ export function useCompetitor(extensionId: string | null, bypassCache = false): 
         setGithubStars(result.githubStars ?? null)
         setGithubForks(result.githubForks ?? null)
         setGithubRepo(result.githubRepo ?? null)
+        setLastCommit(result.lastCommit ?? null)
         setError(null)
       } catch (err: unknown) {
         if (cancelled) return
@@ -77,6 +81,7 @@ export function useCompetitor(extensionId: string | null, bypassCache = false): 
         setGithubStars(null)
         setGithubForks(null)
         setGithubRepo(null)
+        setLastCommit(null)
       } finally {
         if (!cancelled) setLoading(false)
       }
@@ -90,5 +95,5 @@ export function useCompetitor(extensionId: string | null, bypassCache = false): 
     }
   }, [extensionId, bypassCache])
 
-  return { displayName, data, releases, loading, error, githubStars, githubForks, githubRepo }
+  return { displayName, data, releases, loading, error, githubStars, githubForks, githubRepo, lastCommit }
 }

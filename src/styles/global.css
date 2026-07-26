@@ -2116,6 +2116,15 @@ ol {
   font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.competitor-card__id {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-dim);
+  font-family: 'SF Mono', 'Fira Code', monospace;
 }
 
 .competitor-card__remove {
@@ -2237,47 +2246,40 @@ ol {
   letter-spacing: 0.03em;
 }
 
-/* Single-column competitor card table (value + diff columns) */
-.competitor-table--single tbody tr td:last-child {
-  min-width: 140px;
+/* Compact metrics row layout (replaces old table-based competitor layout) */
+.competitor-metrics-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-lg);
+  padding: var(--space-sm) 0;
 }
 
-/* Your extension header table */
-.competitor-table--your-ext {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 3px;
-  max-width: 500px;
+.competitor-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 80px;
 }
 
-.competitor-table--your-ext thead th {
+.competitor-metric__label {
   font-size: var(--font-size-xs);
   font-weight: 600;
   color: var(--color-text-dim);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: var(--space-sm) var(--space-md);
-  text-align: left;
-  border-bottom: 1px solid var(--color-border);
 }
 
-.competitor-table--your-ext tbody tr td {
-  padding: var(--space-sm) var(--space-md);
-  font-size: var(--font-size-sm);
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
+.competitor-metric__value {
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
 }
 
-.competitor-table--your-ext tbody tr td:first-child {
-  font-weight: 600;
-  color: var(--color-text-muted);
-  border-left: 1px solid var(--color-border);
-  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-}
-
-.competitor-table--your-ext tbody tr td:last-child {
-  border-right: 1px solid var(--color-border);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+.competitor-metric__diff {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 /* ============================================================

@@ -20,6 +20,7 @@ interface CompetitorInfo {
   sinceDate?: string
   githubStars: number | null
   githubRepo: string | null
+  lastCommit: string | null
 }
 
 const STORAGE_PREFIX = 'competitors:'
@@ -178,36 +179,32 @@ export default function CompetitorList({ extensionId, yourInstalls, yourRating, 
       {/* Your Extension Header Row */}
       <div className="competitor-your-ext">
         <div className="competitor-your-ext__title">Your Extension</div>
-        <table className="competitor-table competitor-table--your-ext">
-          <thead>
-            <tr>
-              <th>Metric</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Installs</td>
-              <td>{formatNum(yourInstalls)}</td>
-            </tr>
-            <tr>
-              <td>Avg Installs / Month</td>
-              <td>{yourAvgMonthly > 0 ? formatNum(yourAvgMonthly) : 'N/A'}</td>
-            </tr>
-            <tr>
-              <td>Rating</td>
-              <td>{yourRating != null && yourRating > 0 ? `⭐ ${yourRating.toFixed(1)}` : 'N/A'}</td>
-            </tr>
-            <tr>
-              <td>Rating Count</td>
-              <td>{formatNum(yourRatingCount)}</td>
-            </tr>
-            <tr>
-              <td>GitHub Stars</td>
-              <td>{yourGithubStars != null ? formatNum(yourGithubStars) : 'N/A'}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="competitor-metrics-row">
+          <div className="competitor-metric">
+            <span className="competitor-metric__label">Installs</span>
+            <span className="competitor-metric__value">{formatNum(yourInstalls)}</span>
+          </div>
+          <div className="competitor-metric">
+            <span className="competitor-metric__label">Avg/Mo</span>
+            <span className="competitor-metric__value">{yourAvgMonthly > 0 ? formatNum(yourAvgMonthly) : 'N/A'}</span>
+          </div>
+          <div className="competitor-metric">
+            <span className="competitor-metric__label">Rating</span>
+            <span className="competitor-metric__value">{yourRating != null && yourRating > 0 ? `⭐ ${yourRating.toFixed(1)}` : 'N/A'}</span>
+          </div>
+          <div className="competitor-metric">
+            <span className="competitor-metric__label">Reviews</span>
+            <span className="competitor-metric__value">{formatNum(yourRatingCount)}</span>
+          </div>
+          <div className="competitor-metric">
+            <span className="competitor-metric__label">GitHub</span>
+            <span className="competitor-metric__value">{yourGithubStars != null ? formatNum(yourGithubStars) : 'N/A'}</span>
+          </div>
+          <div className="competitor-metric">
+            <span className="competitor-metric__label">Tracked Since</span>
+            <span className="competitor-metric__value">{trackedSince ? new Date(trackedSince).toLocaleDateString('en-US', { year: 'numeric', month: 'short' }) : 'N/A'}</span>
+          </div>
+        </div>
       </div>
 
       {competitorIds.length > 0 && (
@@ -252,7 +249,7 @@ function CompetitorItem({
   onToggleVisibility: () => void
   bypassCache: boolean
 }) {
-  const { displayName, data, releases, loading, error, githubStars, githubRepo } = useCompetitor(id, bypassCache)
+  const { displayName, data, releases, loading, error, githubStars, githubRepo, lastCommit } = useCompetitor(id, bypassCache)
 
   if (loading) {
     return (
@@ -295,6 +292,7 @@ function CompetitorItem({
     sinceDate: firstRelease?.publishedAt ?? undefined,
     githubStars,
     githubRepo,
+    lastCommit,
   }
 
   // Compute diffs: positive means competitor is ahead (bad for us), negative means we're ahead (good for us)

@@ -25,6 +25,11 @@ interface GitHubReview {
   user: { login: string };
 }
 
+interface GitHubPR {
+  number: number;
+  user: { login: string };
+}
+
 function buildHeaders(githubToken: string): Record<string, string> {
   const headers: Record<string, string> = {
     Accept: 'application/vnd.github+json',
@@ -158,9 +163,15 @@ async function fetchNonOwnerPRs(
 }
 
 /**
+ * Returns true if the login looks like a bot account (ends with [bot]).
+ */
+function isBotLogin(login: string | null | undefined): boolean {
+  return (login ?? '').endsWith('[bot]');
+}
+
+/**
  * Fetches the count of non-owner code reviews on pull requests.
- * This is an approximation — we count reviews on PRs where the reviewer
- * is not the repo owner.
+ * Excludes reviews by the repo owner, bots, and self-reviews (PR author reviewing their own PR).
  */
 async function fetchNonOwnerReviews(
   repoFullName: string,
@@ -182,11 +193,13 @@ async function fetchNonOwnerReviews(
 
     if (!prResponse.ok) break;
 
-    const prs = (await prResponse.json()) as Array<{ number: number }>;
+    const prs = (await prResponse.json()) as GitHubPR[];
     if (!Array.isArray(prs) || prs.length === 0) break;
 
     // For each PR, fetch reviews
     for (const pr of prs) {
+      const normalizedPrAuthor = normalizeLogin(pr.user?.login);
+
       const reviewResponse = await fetch(
         `https://api.github.com/repos/${repoFullName}/pulls/${pr.number}/reviews?per_page=100`,
         { headers, signal: AbortSignal.timeout(15_000) }
@@ -198,7 +211,13 @@ async function fetchNonOwnerReviews(
       if (!Array.isArray(reviews)) continue;
 
       for (const review of reviews) {
-        if (normalizeLogin(review.user?.login) !== normalizedOwner) {
+        const reviewer = normalizeLogin(review.user?.login);
+        // Exclude: repo owner, bots, and self-reviews (PR author reviewing own PR)
+        if (
+          reviewer !== normalizedOwner &&
+          reviewer !== normalizedPrAuthor &&
+          !isBotLogin(review.user?.login)
+        ) {
           totalCount++;
         }
       }

@@ -10,6 +10,8 @@ interface Competitor {
   githubStars?: number | null
   /** GitHub repo */
   githubRepo?: string | null
+  /** ISO date of last commit / push to the GitHub repo */
+  lastCommit?: string | null
 }
 
 interface Props {
@@ -31,6 +33,23 @@ function formatNum(n: number): string {
   return new Intl.NumberFormat('en-US').format(n)
 }
 
+function formatShortDate(isoDate?: string): string {
+  if (!isoDate) return 'N/A'
+  return new Date(isoDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
+}
+
+function MetricItem({ label, value, diff }: { label: string; value: string; diff?: { label: string; className: string } }) {
+  return (
+    <div className="competitor-metric">
+      <span className="competitor-metric__label">{label}</span>
+      <span className="competitor-metric__value">{value}</span>
+      {diff && (
+        <span className={`competitor-metric__diff ${diff.className}`}>{diff.label}</span>
+      )}
+    </div>
+  )
+}
+
 export default function CompetitorComparisonCard({
   competitor,
   diffs,
@@ -39,6 +58,9 @@ export default function CompetitorComparisonCard({
   visible = true,
 }: Props) {
   const ratingTheirs = competitor.rating ?? 0
+  const avgMonthly = competitor.sinceDate
+    ? formatNum(Math.round(competitor.installs / Math.max(1, (Date.now() - new Date(competitor.sinceDate).getTime()) / (1000 * 60 * 60 * 24 * 30.44))))
+    : 'N/A'
 
   return (
     <div className="competitor-card" style={{ opacity: visible ? 1 : 0.5 }}>
@@ -54,62 +76,22 @@ export default function CompetitorComparisonCard({
             />
           )}
           {competitor.displayName}
-          <span style={{ fontSize: 'var(--font-size-xs)', color: 'var(--color-text-dim)', marginLeft: 8 }}>
-            ({competitor.id})
-          </span>
+          <span className="competitor-card__id">({competitor.id})</span>
         </div>
         <button className="competitor-card__remove" onClick={onRemove} aria-label={`Remove ${competitor.displayName}`}>
           Remove
         </button>
       </div>
       {visible && (
-        <table className="competitor-table competitor-table--single">
-          <thead>
-            <tr>
-              <th>Metric</th>
-              <th>Value</th>
-              <th>vs Your Extension</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Installs</td>
-              <td>{formatNum(competitor.installs)}</td>
-              <td className={diffs.installs.className}>
-                {diffs.installs.label}
-                <span className="competitor-diff">{diffs.installs.className.includes('green') ? '↑' : diffs.installs.className.includes('red') ? '↓' : '→'}</span>
-              </td>
-            </tr>
-            <tr>
-              <td>Avg Installs / Month</td>
-              <td>{competitor.sinceDate ? formatNum(Math.round(competitor.installs / Math.max(1, (Date.now() - new Date(competitor.sinceDate).getTime()) / (1000 * 60 * 60 * 24 * 30.44)))) : 'N/A'}</td>
-              <td className={diffs.avgMonthly.className}>
-                {diffs.avgMonthly.label}
-              </td>
-            </tr>
-            <tr>
-              <td>Rating</td>
-              <td>{ratingTheirs > 0 ? `⭐ ${ratingTheirs.toFixed(1)}` : 'N/A'}</td>
-              <td className={diffs.rating.className}>
-                {diffs.rating.label}
-              </td>
-            </tr>
-            <tr>
-              <td>Rating Count</td>
-              <td>{formatNum(competitor.ratingCount)}</td>
-              <td className={diffs.ratingCount.className}>
-                {diffs.ratingCount.label}
-              </td>
-            </tr>
-            <tr>
-              <td>GitHub Stars</td>
-              <td>{competitor.githubStars != null ? formatNum(competitor.githubStars) : 'N/A'}</td>
-              <td className={diffs.githubStars.className}>
-                {diffs.githubStars.label}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="competitor-metrics-row">
+          <MetricItem label="Installs" value={formatNum(competitor.installs)} diff={diffs.installs} />
+          <MetricItem label="Avg/Mo" value={avgMonthly} diff={diffs.avgMonthly} />
+          <MetricItem label="Rating" value={ratingTheirs > 0 ? `⭐ ${ratingTheirs.toFixed(1)}` : 'N/A'} diff={diffs.rating} />
+          <MetricItem label="Reviews" value={formatNum(competitor.ratingCount)} diff={diffs.ratingCount} />
+          <MetricItem label="GitHub" value={competitor.githubStars != null ? formatNum(competitor.githubStars) : 'N/A'} diff={diffs.githubStars} />
+          <MetricItem label="Released" value={formatShortDate(competitor.sinceDate)} />
+          <MetricItem label="Last Updated" value={formatShortDate(competitor.lastCommit ?? undefined)} />
+        </div>
       )}
     </div>
   )

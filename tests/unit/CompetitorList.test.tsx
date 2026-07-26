@@ -24,6 +24,7 @@ const defaultMockReturn = {
   githubStars: null,
   githubForks: null,
   githubRepo: null,
+  lastCommit: null,
 }
 
 describe('CompetitorList', () => {

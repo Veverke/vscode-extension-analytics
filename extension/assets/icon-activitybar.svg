@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Chart area - centered -->
+  <g transform="translate(22, 22)">
+    <!-- Grid lines -->
+    <line x1="0" y1="64" x2="84" y2="64" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="0" y1="48" x2="84" y2="48" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="0" y1="32" x2="84" y2="32" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="0" y1="16" x2="84" y2="16" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="3,3"/>
+    <line x1="0" y1="0" x2="84" y2="0" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="3,3"/>
+    <!-- Bottom axis -->
+    <line x1="0" y1="64" x2="84" y2="64" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    
+    <!-- Bar 1 -->
+    <rect x="2" y="40" width="14" height="24" rx="3" fill="white" opacity="0.85" filter="url(#glow)"/>
+    <rect x="3" y="40" width="12" height="4" rx="1.5" fill="white" opacity="0.4"/>
+    
+    <!-- Bar 2 -->
+    <rect x="22" y="26" width="14" height="38" rx="3" fill="white" opacity="0.95" filter="url(#glow)"/>
+    <rect x="23" y="26" width="12" height="4" rx="1.5" fill="white" opacity="0.4"/>
+    
+    <!-- Bar 3 -->
+    <rect x="42" y="14" width="14" height="50" rx="3" fill="white" filter="url(#glow)"/>
+    <rect x="43" y="14" width="12" height="4" rx="1.5" fill="white" opacity="0.4"/>
+    
+    <!-- Bar 4 -->
+    <rect x="62" y="22" width="14" height="42" rx="3" fill="white" opacity="0.9" filter="url(#glow)"/>
+    <rect x="63" y="22" width="12" height="4" rx="1.5" fill="white" opacity="0.4"/>
+    
+    <!-- Trend line going up -->
+    <polyline points="4,36 24,22 44,10 64,18" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Dot markers on trend line -->
+    <circle cx="4" cy="36" r="2.5" fill="white"/>
+    <circle cx="24" cy="22" r="2.5" fill="white"/>
+    <circle cx="44" cy="10" r="2.5" fill="white"/>
+    <circle cx="64" cy="18" r="2.5" fill="white"/>
+  </g>
+</svg>

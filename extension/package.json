@@ -42,7 +42,7 @@
         {
           "id": "vscodeExtensionAnalytics",
           "title": "Extension Analytics",
-          "icon": "assets/icon.png"
+          "icon": "assets/icon-activitybar.png"
         }
       ]
     },
@@ -88,6 +88,7 @@
   },
   "devDependencies": {
     "@types/vscode": "^1.125.0",
-    "@vscode/vsce": "^3.9.2"
+    "@vscode/vsce": "^3.9.2",
+    "sharp": "^0.35.3"
   }
 }

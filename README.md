@@ -2,7 +2,7 @@
 
 Analytics dashboard for tracking VS Code extension metrics over time.
 
-**Self-hosted, zero-cost time-series analytics** for VS Code extension authors. Collects install counts, ratings, and release data from both the Visual Studio Marketplace and Open VSX registry, computes derived signals (velocity, acceleration, projections, peaks), and renders interactive charts — all on a pure static stack with no backend.
+**Self-hosted, zero-cost time-series analytics** for VS Code extension authors. Collects install counts, ratings, GitHub stats, and release data from both the Visual Studio Marketplace and Open VSX registry, computes derived signals (velocity, acceleration, projections, peaks, momentum), and renders interactive charts — all on a pure static stack with no backend.
 
 ---
 
@@ -11,6 +11,7 @@ Analytics dashboard for tracking VS Code extension metrics over time.
 | Feature | Description |
 |---|---|
 | **Multi-registry data** | Collects from both VS Marketplace and Open VSX |
+| **GitHub stats** | Stars, forks, and community contributions per extension |
 | **Time-series charts** | Install counts, ratings, and daily/weekly velocity over time |
 | **Growth velocity** | Install growth rate (Δinstalls/Δtime) with trend analysis |
 | **Acceleration** | Change in velocity — detect speeding up vs slowing down |
@@ -19,12 +20,15 @@ Analytics dashboard for tracking VS Code extension metrics over time.
 | **Release impact** | Installs gained per version with correlation timeline |
 | **Event annotations** | Developer-defined events (blog posts, launches) overlaid on charts |
 | **Momentum score** | Weighted composite ranking (velocity + acceleration + recency) |
+| **Monthly statistics** | Per-month rollups with install gains, average rating, and export to CSV/JSON |
+| **Competitor analysis** | Compare your extension's installs, rating, and GitHub stars against similar extensions |
 | **Auto-discovery** | Automatically find all VS Code extensions in a GitHub account |
 | **Track requests** | Request extension tracking via pre-filled GitHub issues |
 | **Session management** | Username persistence, switch user, clear session |
 | **User-scoped overview** | Filter extensions by requesting user with "show all" toggle |
 | **Error & empty states** | Graceful handling of network failures, 404s, malformed data |
 | **Rate limit awareness** | GitHub API rate limit display with token suggestion |
+| **VS Code extension** | Embedded dashboard as a webview inside VS Code |
 
 ---
 
@@ -56,8 +60,9 @@ Analytics dashboard for tracking VS Code extension metrics over time.
 ```json
 [{
   "ts": "2026-05-27T10:00:00Z",
-  "marketplace": { "installs": 12345, "updates": 4567, "averageRating": 4.3 },
-  "openVsx": { "downloads": 9876, "averageRating": 4.1 }
+  "marketplace": { "installs": 12345, "updates": 4567, "averageRating": 4.3, "ratingCount": 12, "trendingWeekly": 0, "trendingMonthly": 0 },
+  "openVsx": { "downloads": 9876, "averageRating": 4.1, "ratingCount": 5 },
+  "github": { "stars": 150, "forks": 20, "contributions": 8 }
 }]
 ```
 
@@ -68,6 +73,22 @@ Analytics dashboard for tracking VS Code extension metrics over time.
   "publishedAt": "2026-04-15T08:00:00Z",
   "installsAtRelease": 9800,
   "changelog": "Added chat history export"
+}]
+```
+
+**Monthly rollups** (`data/<namespace>.<name>.monthly.json`):
+```json
+[{
+  "yearMonth": "2026-05",
+  "installsEndOfMonth": 12345,
+  "installsGained": 2340,
+  "avgRating": 4.3,
+  "ratingCountEndOfMonth": 12,
+  "openVsxDownloadsEndOfMonth": 9876,
+  "dataPointsInMonth": 48,
+  "starsEndOfMonth": 150,
+  "forksEndOfMonth": 20,
+  "contributionsEndOfMonth": 8
 }]
 ```
 
@@ -109,7 +130,18 @@ Analytics dashboard for tracking VS Code extension metrics over time.
 
 ### VS Code Extension
 
-TODO: Package and publish the VS Code extension that embeds this dashboard as a webview.
+The dashboard is also available as a VS Code extension that embeds the analytics view as a webview panel inside your editor.
+
+**Install from VSIX** (included in the repository):
+1. Open VS Code
+2. Go to Extensions view → `...` → Install from VSIX...
+3. Select `extension/vscode-extension-analytics-1.0.0.vsix`
+
+**Commands:**
+| Command | Description |
+|---|---|
+| `Extension Analytics: Open Extension Analytics Dashboard` | Opens the analytics view in the sidebar |
+| `Extension Analytics: Refresh Analytics Data` | Refreshes the analytics data |
 
 ---
 
@@ -117,11 +149,11 @@ TODO: Package and publish the VS Code extension that embeds this dashboard as a 
 
 ### 1. Landing Page
 
-Enter your GitHub username to begin. The username is stored in `localStorage` and used to scope the extension registry and auto-discovery.
+Enter your GitHub username to begin. The username is stored in `localStorage` and used to scope the extension registry and auto-discovery. Returning users are automatically redirected to the overview dashboard.
 
 ### 2. Auto-Discovery
 
-Navigates to `/discover/<username>` to scan all public repositories of the given GitHub user. Each repo's `package.json` is checked for an `engines.vscode` field — repos that match are listed as **discovered extensions**.
+Navigate to `/discover/<username>` to scan all public repositories of the given GitHub user. Each repo's `package.json` is checked for an `engines.vscode` field — repos that match are listed as **discovered extensions**.
 
 Discovered extensions show one of two states:
 - **✅ Tracked** — already in the extension registry.
@@ -145,14 +177,17 @@ View all tracked extensions in a sortable table with:
 ### 5. Extension Detail
 
 Click any extension to see:
-- **Installs chart** with Marketplace vs Open VSX lines.
+- **Installs chart** with Marketplace vs Open VSX lines, projection lines, and peak markers.
 - **Rating chart** over time.
 - **Growth Velocity chart** with acceleration signal.
-- **30-day projections** with confidence indicators (R²).
+- **GitHub chart** — stars, forks, and contributions over time.
+- **30-day projections** with confidence indicators (R²) and adjustable horizon.
 - **Peak markers** — vertical reference lines at detected spike events.
 - **Release impact table** — installs gained per version, sorted by impact.
 - **Event annotations** — dashed lines for developer-defined events.
 - **Metrics panel** — momentum score, velocity, acceleration, projection.
+- **Monthly Statistics** — per-month install gains, average rating, with CSV/JSON export.
+- **Competitor analysis** — compare against other extensions from the Marketplace.
 
 ---
 
@@ -208,6 +243,9 @@ npm install
 │   ├── unit/             # Vitest unit tests
 │   └── setup.ts          # Test setup (jsdom, mocks)
 ├── extension/            # VS Code extension (webview wrapper)
+│   ├── extension.ts      # Extension activation & webview provider
+│   ├── webview/          # Webview assets
+│   └── vscode-extension-analytics-1.0.0.vsix  # Packaged extension
 └── fixtures/data/        # Test fixture data
 ```
 

@@ -3,9 +3,9 @@
  *
  * **Browser context:** fetches from relative paths (e.g. `./data/extensions.json`).
  *
- * **Webview context:** tries bundled local copies first (injected at build time
- * into the VSIX via `window.__VSCODE_DATA_BASE__`), then falls back to GitHub
- * raw URLs if the local fetch fails.
+ * **Webview context:** tries GitHub raw URLs first (always up-to-date), falls back
+ * to bundled local copies (injected at build time into the VSIX via
+ * `window.__VSCODE_DATA_BASE__`) if the network fetch fails.
  *
  * @example
  * ```ts
@@ -39,35 +39,20 @@ function stripDataPrefix(path: string): string {
 }
 
 /**
- * Resolves a data path to a GitHub raw URL (fallback for webview context).
+ * Resolves a data path to a GitHub raw URL (primary for webview context).
  */
 function toGitHubRawUrl(path: string): string {
   return `${GITHUB_RAW_BASE}${stripDataPrefix(path)}`;
 }
 
 /**
- * Resolves a data path to a bundled webview URI (primary for webview context).
+ * Resolves a data path to a bundled webview URI (fallback for webview context).
  * Returns `null` if no `__VSCODE_DATA_BASE__` has been injected.
  */
 function toBundledUrl(path: string): string | null {
   if (!window.__VSCODE_DATA_BASE__) return null;
   const base = window.__VSCODE_DATA_BASE__.replace(/\/+$/, '');
   return `${base}/${stripDataPrefix(path)}`;
-}
-
-/**
- * Resolves a data path to the appropriate URL based on runtime context.
- *
- * - Webview: prefers bundled local copies (inside VSIX), falls back to GitHub raw.
- * - Browser: returns the path unchanged for relative fetch.
- */
-function resolveDataUrl(path: string): string {
-  if (isWebviewContext()) {
-    const bundled = toBundledUrl(path);
-    if (bundled) return bundled;
-    return toGitHubRawUrl(path);
-  }
-  return path;
 }
 
 export interface LoadDataOptions {
@@ -81,8 +66,8 @@ export interface LoadDataOptions {
 /**
  * Loads JSON data from the given path.
  *
- * In webview context, tries the bundled VSIX copy first. If that fails with
- * a network error or non-200 status, falls back to the GitHub raw URL.
+ * In webview context, tries the GitHub raw URL first (always up-to-date).
+ * If that fails, falls back to the bundled VSIX copy.
  *
  * @typeParam T - The expected shape of the JSON response.
  * @param path - Relative data path (e.g. `./data/extensions.json`).
@@ -94,8 +79,6 @@ export async function loadData<T>(
   path: string,
   options?: LoadDataOptions,
 ): Promise<T | null> {
-  const primaryUrl = resolveDataUrl(path);
-
   const tryFetch = async (url: string): Promise<Response> => {
     const res = await fetch(url);
     if (options?.tolerate404 && res.status === 404) {
@@ -105,42 +88,52 @@ export async function loadData<T>(
     return res;
   };
 
+  if (isWebviewContext()) {
+    // Webview: try GitHub raw first (always up-to-date), fall back to bundled
+    const gitHubUrl = toGitHubRawUrl(path);
+
+    try {
+      const res = await tryFetch(gitHubUrl);
+      if (options?.tolerate404 && res.status === 404) {
+        return null;
+      }
+      return res.json() as Promise<T>;
+    } catch (err: unknown) {
+      // GitHub raw failed — try bundled copy as fallback
+      const bundledUrl = toBundledUrl(path);
+      if (bundledUrl) {
+        try {
+          const res = await tryFetch(bundledUrl);
+          if (options?.tolerate404 && res.status === 404) {
+            return null;
+          }
+          return res.json() as Promise<T>;
+        } catch {
+          // Both failed — throw the original error
+          throw err;
+        }
+      }
+      // No bundled URL available — re-throw the original error
+      throw err;
+    }
+  }
+
+  // Browser context: use relative path
+  const primaryUrl = path;
+
   try {
     const res = await tryFetch(primaryUrl);
-
-    // tolerate404 and 404 → return null
     if (options?.tolerate404 && res.status === 404) {
       return null;
     }
-
     return res.json() as Promise<T>;
   } catch (err: unknown) {
-    // When tolerate404 is set, only actual 404 errors should be silently handled
     if (options?.tolerate404) {
       if (err instanceof Error && err.message === 'HTTP 404') {
         return null;
       }
       throw err;
     }
-
-    // In webview context, if the bundled copy failed, fall back to GitHub raw
-    if (isWebviewContext()) {
-      const fallbackUrl = toGitHubRawUrl(path);
-      try {
-        const res = await tryFetch(fallbackUrl);
-
-        if (options?.tolerate404 && res.status === 404) {
-          return null;
-        }
-
-        return res.json() as Promise<T>;
-      } catch {
-        // Both attempts failed — throw the original error
-        throw err;
-      }
-    }
-
-    // In browser context, re-throw the original error
     throw err;
   }
 }

@@ -4,12 +4,19 @@
   "description": "View analytics and trends for tracked VS Code extensions directly inside VS Code",
   "version": "1.0.0",
   "publisher": "Veverke",
-  "license": "ISC",
+  "author": "Avraham Y. Kahana",
+  "license": "MIT",
   "repository": {
+    "type": "git",
     "url": "https://github.com/Veverke/vscode-extension-analytics.git"
   },
   "bugs": {
     "url": "https://github.com/Veverke/vscode-extension-analytics/issues"
+  },
+  "homepage": "https://github.com/Veverke/vscode-extension-analytics#readme",
+  "galleryBanner": {
+    "color": "#0F1A2E",
+    "theme": "dark"
   },
   "engines": {
     "vscode": "^1.125.0"
@@ -22,7 +29,10 @@
     "analytics",
     "extensions",
     "marketplace",
-    "tracking"
+    "tracking",
+    "statistics",
+    "dashboard",
+    "metrics"
   ],
   "icon": "assets/icon.png",
   "activationEvents": [],

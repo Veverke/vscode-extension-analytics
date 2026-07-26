@@ -29,14 +29,62 @@ interface MarketplaceResponse {
   }>
 }
 
+/** Minimal VS Code webview API interface */
+interface VsCodeApi {
+  postMessage(message: Record<string, unknown>): void
+  getState(): unknown
+  setState(state: unknown): void
+}
+
 /** Detects whether the code is running inside a VS Code webview. */
 function isWebview(): boolean {
-  return typeof window !== 'undefined' && (window as unknown as Record<string, unknown>).vscode !== undefined
+  return typeof window !== 'undefined' && (window as { vscode?: VsCodeApi }).vscode !== undefined
+}
+
+function getWebviewApi(): VsCodeApi {
+  return (window as { vscode: VsCodeApi }).vscode
+}
+
+/**
+ * Proxy a request through the VS Code extension host (which has no CORS restrictions).
+ * Sends a postMessage and waits for the extension host to respond.
+ */
+function proxyViaExtensionHost<T>(command: string, args: Record<string, unknown>): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const requestId = Math.random().toString(36).slice(2) + Date.now().toString(36)
+
+    const handler = (event: MessageEvent) => {
+      const msg = event.data as Record<string, unknown>
+      if (msg?.requestId === requestId) {
+        window.removeEventListener('message', handler)
+        if (msg.error) {
+          reject(new Error(msg.error as string))
+        } else {
+          resolve(msg.result as T)
+        }
+      }
+    }
+
+    window.addEventListener('message', handler)
+
+    // Send the request to the extension host
+    getWebviewApi().postMessage({
+      command,
+      requestId,
+      args,
+    })
+
+    // Timeout fallback
+    setTimeout(() => {
+      window.removeEventListener('message', handler)
+      reject(new Error(`Proxy request "${command}" timed out`))
+    }, 15_000)
+  })
 }
 
 const CACHE_PREFIX = 'competitor:'
 const CACHE_TTL_MS = 60 * 60 * 1000 // 1 hour
-const FETCH_TIMEOUT_MS = isWebview() ? 3_000 : 15_000 // shorter in webview (CORS blocks marketplace API)
+const FETCH_TIMEOUT_MS = 15_000
 
 function getStat(statistics: MarketplaceStat[], name: string): number {
   const stat = statistics.find((s) => s.statisticName === name)
@@ -81,17 +129,6 @@ export interface MarketplaceSnapshotWithDisplayName extends MarketplaceSnapshot 
  * Fetches current marketplace stats for a competitor extension.
  * Results are cached in sessionStorage for 1 hour.
  */
-/**
- * Returns a descriptive error message for webview environments where
- * the marketplace API is blocked by content security policy.
- */
-function webviewCorsError(extensionId: string): never {
-  throw new Error(
-    `Cannot fetch competitor "${extensionId}" from VS Code webview. ` +
-    'The Marketplace API is blocked by the webview content security policy. ' +
-    'Competitor comparison works when running in a browser (via `npm run dev`).'
-  )
-}
 
 /** Extract GitHub repo full name from a repository URL string */
 function extractGitHubRepo(url: string): string | null {
@@ -130,6 +167,10 @@ interface CompetitorGitHubInfo {
 }
 
 async function fetchCompetitorGitHubStats(repoFullName: string): Promise<CompetitorGitHubInfo | null> {
+  // In webview, proxy through the extension host
+  if (isWebview()) {
+    return proxyViaExtensionHost<CompetitorGitHubInfo | null>('fetchCompetitorGitHubStats', { repoFullName })
+  }
   try {
     const response = await fetch(
       `https://api.github.com/repos/${repoFullName}`,
@@ -153,9 +194,9 @@ export async function fetchCompetitorStats(
   const cached = getFromSessionCache<MarketplaceSnapshotWithDisplayName>(extensionId)
   if (cached) return cached
 
-  // Marketplace API is blocked in webview — fail immediately
+  // In webview, proxy through the extension host (no CORS restrictions)
   if (isWebview()) {
-    webviewCorsError(extensionId)
+    return proxyViaExtensionHost<MarketplaceSnapshotWithDisplayName>('fetchCompetitorStats', { extensionId })
   }
 
   // Flags: 2 (categories) + 8 (versionProperties) + 128 (statistics) + 256 (latestVersionOnly) + 512 (unpublished) = 906
@@ -226,6 +267,11 @@ export async function fetchCompetitorReleases(
 ): Promise<ReleaseEntry[]> {
   const cached = getFromSessionCache<ReleaseEntry[]>(extensionId + ':releases')
   if (cached) return cached
+
+  // In webview, proxy through the extension host
+  if (isWebview()) {
+    return proxyViaExtensionHost<ReleaseEntry[]>('fetchCompetitorReleases', { extensionId })
+  }
 
   const response = await fetch(
     'https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery',

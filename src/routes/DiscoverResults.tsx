@@ -49,6 +49,11 @@ export default function DiscoverResults() {
             </Link>
           </p>
         )}
+        <p className="discover__how-it-works">
+          Found an extension you want to track? Click <strong>"Track on GitHub"</strong> to
+          open a pre-filled issue. It gets auto-processed within seconds and will appear
+          in your dashboard after the next data collection run (every 6 hours).
+        </p>
       </div>
 
       {/* Loading state with skeleton cards */}

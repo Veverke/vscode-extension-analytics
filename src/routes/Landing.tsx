@@ -44,7 +44,7 @@ export default function Landing() {
 
     setValidationError(null)
     setUsername(trimmed)
-    navigate('/overview')
+    navigate(`/discover/${encodeURIComponent(trimmed)}`)
   }
 
   return (

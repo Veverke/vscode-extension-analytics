@@ -27,6 +27,10 @@ function renderLanding() {
         path: '/overview',
         element: <div>overview page</div>,
       },
+      {
+        path: '/discover/:username',
+        element: <div>discover page</div>,
+      },
     ],
     { initialEntries: ['/'] },
   )

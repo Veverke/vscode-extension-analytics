@@ -100,13 +100,51 @@ Analytics dashboard for tracking VS Code extension metrics over time.
   "name": "chatwizard",
   "displayName": "ChatWizard",
   "githubRepo": "Veverke/chatwizard",
-  "trackedSince": "2026-05-27T00:00:00Z"
+  "trackedSince": "2026-05-27T00:00:00Z",
+  "requestedBy": "Veverke"
 }]
 ```
 
 ---
 
+## Using the Dashboard (Community Platform)
+
+The dashboard is available at **[veverke.github.io/vscode-extension-analytics](https://veverke.github.io/vscode-extension-analytics)** — a centralized platform that collects analytics for any VS Code extension.
+
+### Quick Start
+
+1. Go to the dashboard
+2. Enter your GitHub username
+3. The app scans your public repos and discovers VS Code extensions you've authored
+4. For each discovered extension, click **"Track on GitHub"**
+5. This opens a pre-filled issue — it's **auto-processed within seconds** and the extension is added to the tracking registry
+6. After the next data collection run (every 6 hours), your extension's analytics appear on the dashboard
+7. You get a GitHub notification when someone requests tracking for a new extension — no manual action needed
+
+### Returning Users
+
+On subsequent visits, enter your username again to see only your tracked extensions. Use the "Show all tracked extensions" toggle to see every extension in the registry.
+
+### VS Code Extension
+
+The dashboard is also available as a VS Code extension that embeds the analytics view as a webview panel inside your editor.
+
+**Install from VSIX** (included in the repository):
+1. Open VS Code
+2. Go to Extensions view → `...` → Install from VSIX...
+3. Select `extension/vscode-extension-analytics-1.0.0.vsix`
+
+**Commands:**
+| Command | Description |
+|---|---|
+| `Extension Analytics: Open Extension Analytics Dashboard` | Opens the analytics view in the sidebar |
+| `Extension Analytics: Refresh Analytics Data` | Refreshes the analytics data |
+
+---
+
 ## Getting Started (Self-Hosting)
+
+If you prefer to run your own instance (data collection on your GitHub Actions, dashboard on your GitHub Pages):
 
 ### Prerequisites
 
@@ -128,32 +166,17 @@ Analytics dashboard for tracking VS Code extension metrics over time.
    ```
 5. **Add extensions to track** in `data/extensions.json`, or use the auto-discovery feature from the frontend.
 
-### VS Code Extension
-
-The dashboard is also available as a VS Code extension that embeds the analytics view as a webview panel inside your editor.
-
-**Install from VSIX** (included in the repository):
-1. Open VS Code
-2. Go to Extensions view → `...` → Install from VSIX...
-3. Select `extension/vscode-extension-analytics-1.0.0.vsix`
-
-**Commands:**
-| Command | Description |
-|---|---|
-| `Extension Analytics: Open Extension Analytics Dashboard` | Opens the analytics view in the sidebar |
-| `Extension Analytics: Refresh Analytics Data` | Refreshes the analytics data |
-
 ---
 
 ## Using the Frontend
 
 ### 1. Landing Page
 
-Enter your GitHub username to begin. The username is stored in `localStorage` and used to scope the extension registry and auto-discovery. Returning users are automatically redirected to the overview dashboard.
+Enter your GitHub username to begin. The username is stored in `localStorage` and used to scope the extension registry and auto-discovery. After entering your username, you're taken directly to the discovery page to find and track your extensions.
 
 ### 2. Auto-Discovery
 
-Navigate to `/discover/<username>` to scan all public repositories of the given GitHub user. Each repo's `package.json` is checked for an `engines.vscode` field — repos that match are listed as **discovered extensions**.
+After entering your username, the app scans all public repositories of the given GitHub user. Each repo's `package.json` is checked for an `engines.vscode` field — repos that match are listed as **discovered extensions**.
 
 Discovered extensions show one of two states:
 - **✅ Tracked** — already in the extension registry.
@@ -164,7 +187,9 @@ Discovered extensions show one of two states:
 Click **"Track on GitHub"** on any untracked extension. This opens a pre-filled GitHub issue using the `add-extension.yml` template with:
 - Extension ID auto-populated in the title and body.
 - `tracking-request` label applied.
-- Repository maintainer processes the issue by adding the extension to `data/extensions.json`.
+- The issue is **auto-processed within seconds** by a GitHub Action that validates and adds the extension to `data/extensions.json`.
+- The issue is automatically closed with a success comment.
+- You'll get a GitHub notification when someone requests tracking.
 
 ### 4. Overview Dashboard
 
@@ -271,6 +296,12 @@ The project maintains ≥90% code coverage across all modules. Tests cover:
 ---
 
 ## Troubleshooting
+
+### "No extensions found"
+
+- Ensure your extensions are published to the VS Marketplace.
+- Run auto-discovery to scan your GitHub repositories.
+- Verify that `data/extensions.json` contains your extension entries.
 
 ### "GitHub API rate limit reached"
 

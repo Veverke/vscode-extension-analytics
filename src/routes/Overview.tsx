@@ -239,16 +239,29 @@ export default function Overview() {
         </table>
       </div>
 
-      {!hasUserExtensions && showAll && hasTrackedExtensions && (
-        <div className="overview__discover-cta">
-          <Link
-            to={username ? `/discover/${encodeURIComponent(username)}` : '/'}
-            className="overview__cta-link"
-          >
-            ← Discover extensions for your GitHub account
-          </Link>
-        </div>
-      )}
+          {hasUserExtensions && (
+            <div className="overview__discover-cta">
+              <Link
+                to={username ? `/discover/${encodeURIComponent(username)}` : '/'}
+                className="overview__cta-link"
+              >
+                ← Add more extensions to track
+              </Link>
+              <span className="overview__cta-hint">
+                Found new extensions? Click to discover and request tracking.
+              </span>
+            </div>
+          )}
+          {!hasUserExtensions && showAll && hasTrackedExtensions && (
+            <div className="overview__discover-cta">
+              <Link
+                to={username ? `/discover/${encodeURIComponent(username)}` : '/'}
+                className="overview__cta-link"
+              >
+                ← Discover extensions for your GitHub account
+              </Link>
+            </div>
+          )}
     </div>
   )
 }

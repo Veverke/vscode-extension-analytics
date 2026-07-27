@@ -179,7 +179,7 @@ describe('dataLoader', () => {
       );
     });
 
-    it('prefers bundled __VSCODE_DATA_BASE__ URL when injected', async () => {
+    it('prefers GitHub raw URL and ignores __VSCODE_DATA_BASE__ when fetch succeeds', async () => {
       window.__VSCODE_DATA_BASE__ = 'vscode-resource:/path/to/dist/data';
 
       vi.stubGlobal(
@@ -192,20 +192,21 @@ describe('dataLoader', () => {
 
       const result = await loadData('./data/extensions.json');
 
+      expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith(
-        'vscode-resource:/path/to/dist/data/extensions.json',
+        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/extensions.json',
       );
       expect(result).toEqual(FIXTURE_DATA);
     });
 
-    it('falls back to GitHub raw URL when bundled fetch fails', async () => {
+    it('falls back to bundled __VSCODE_DATA_BASE__ URL when GitHub raw fetch fails', async () => {
       window.__VSCODE_DATA_BASE__ = 'vscode-resource:/path/to/dist/data';
 
       const fetchMock = vi
         .fn<typeof fetch>()
-        // First call — bundled URL fails with network error
+        // First call — GitHub raw fails with network error
         .mockRejectedValueOnce(new Error('Network failure'))
-        // Second call — fallback succeeds
+        // Second call — bundled fallback succeeds
         .mockResolvedValueOnce({
           ok: true,
           json: () => Promise.resolve(FIXTURE_DATA),
@@ -218,27 +219,27 @@ describe('dataLoader', () => {
       expect(fetchMock).toHaveBeenCalledTimes(2);
       expect(fetchMock).toHaveBeenNthCalledWith(
         1,
-        'vscode-resource:/path/to/dist/data/extensions.json',
+        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/extensions.json',
       );
       expect(fetchMock).toHaveBeenNthCalledWith(
         2,
-        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/extensions.json',
+        'vscode-resource:/path/to/dist/data/extensions.json',
       );
       expect(result).toEqual(FIXTURE_DATA);
     });
 
-    it('falls back to GitHub raw when bundled returns 500', async () => {
+    it('throws when GitHub raw returns 500 and no bundled fallback', async () => {
       window.__VSCODE_DATA_BASE__ = 'vscode-resource:/path/to/dist/data';
 
       const fetchMock = vi
         .fn<typeof fetch>()
-        // First call — bundled URL returns 500
+        // First call — GitHub raw returns 500 (the code throws for non-ok responses)
         .mockResolvedValueOnce({
           ok: false,
           status: 500,
           json: () => Promise.resolve(null),
         } as Response)
-        // Second call — fallback succeeds
+        // Second call — bundled fallback succeeds
         .mockResolvedValueOnce({
           ok: true,
           json: () => Promise.resolve(FIXTURE_DATA),
@@ -249,6 +250,14 @@ describe('dataLoader', () => {
       const result = await loadData('./data/extensions.json');
 
       expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(fetchMock).toHaveBeenNthCalledWith(
+        1,
+        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/extensions.json',
+      );
+      expect(fetchMock).toHaveBeenNthCalledWith(
+        2,
+        'vscode-resource:/path/to/dist/data/extensions.json',
+      );
       expect(result).toEqual(FIXTURE_DATA);
     });
 

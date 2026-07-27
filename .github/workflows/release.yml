@@ -1,23 +1,20 @@
 # Release
 #
 # Purpose: Produces a versioned GitHub Release for the analytics dashboard.
+# Also builds and publishes the VS Code extension (.vsix) to:
+#   - VS Code Marketplace (via vsce)
+#   - Open VSX Registry (via ovsx)
+#
 # Triggered by pushing a semver tag (e.g. v1.2.3) or manually via
 # workflow_dispatch. Validates the full test suite, verifies that
-# package.json version matches the tag, builds the static site, creates a
-# GitHub Release with auto-extracted CHANGELOG notes, and attaches the dist/
-# bundle as a downloadable artifact. GitHub Pages deployment itself is handled
-# by deploy.yml and is NOT part of this workflow.
+# package.json version matches the tag, builds the static site and
+# extension, creates a GitHub Release with auto-extracted CHANGELOG
+# notes, and publishes to both extension registries.
+#
+# Required secrets:
+#   MARKETPLACE_TOKEN  — VS Code Publisher PAT (https://marketplace.visualstudio.com/manage)
+#   OPEN_VSX_TOKEN     — Open VSX PAT (https://open-vsx.org/user-settings/tokens)
 name: Release
-
-# Triggered by pushing a version tag: git tag v1.2.3 && git push --tags
-# Or manually via workflow_dispatch (e.g. for pre-releases / dry-runs).
-#
-# This is a web app deployed to GitHub Pages — there is no .vsix package or
-# marketplace publishing step. A release creates a tagged GitHub Release with
-# auto-extracted CHANGELOG notes and uploads the static build as an artifact.
-#
-# The version in package.json MUST match the pushed tag before tagging.
-# Convention: bump version in package.json, commit, tag, push tag.
 
 on:
   push:
@@ -41,7 +38,6 @@ env:
 
 jobs:
   # ─── Job 1: Validate ────────────────────────────────────────────────────────
-  # Full test suite must be green before any artifact is produced.
   validate:
     name: Validate
     runs-on: ubuntu-latest
@@ -58,7 +54,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # All quality gates must be green before any artifact is produced
       - name: Lint
         run: npm run lint
 
@@ -68,7 +63,6 @@ jobs:
       - name: Unit tests with coverage
         run: npm run test -- --coverage
 
-      # Non-blocking — coverage badge/history only
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5.5.4
         if: always()
@@ -78,12 +72,11 @@ jobs:
           flags: unit,release
           name: release-${{ env.TAG }}
           fail_ci_if_error: false
-  
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      # First build is used for E2E testing
-      - name: Build
+      - name: Build frontend (used for E2E)
         run: npm run build
 
       - name: E2E tests
@@ -102,24 +95,78 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      # Passed to the github-release job so the dist/ folder doesn’t need rebuilding
-      - name: Upload build artifact
+      - name: Upload frontend build artifact
         uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
           retention-days: 30
 
-  # ─── Job 2: GitHub Release ───────────────────────────────────────────────────
-  # Creates a GitHub Release tagged at the semver version. Extracts release
-  # notes from CHANGELOG.md (falls back to git log if no matching section is
-  # found) and marks the release as a pre-release when the tag contains a
-  # pre-release suffix (e.g. -beta.1). The static build from the validate job
-  # is attached as a downloadable artifact. GitHub Pages deployment is handled
-  # separately by deploy.yml on push to main.
+  # ─── Job 2: Build & Publish Extension ────────────────────────────────────────
+  extension:
+    name: Build & Publish Extension
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      # Install root deps (needed for webview build)
+      - name: Install root dependencies
+        run: npm ci
+
+      # Install extension deps (needed for extension compilation)
+      - name: Install extension dependencies
+        run: cd extension && npm ci
+
+      # Build the webview bundle first (extension depends on it)
+      - name: Build webview bundle
+        run: npm run build:webview
+
+      # Compile the extension TypeScript
+      - name: Compile extension
+        run: cd extension && npm run compile
+
+      # Package the .vsix
+      - name: Package VSIX
+        run: cd extension && npx vsce package --out vscode-extension-analytics-${{ env.TAG }}.vsix
+
+      # Upload .vsix as artifact (always, even on dry-run)
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: extension/vscode-extension-analytics-${{ env.TAG }}.vsix
+          retention-days: 90
+
+      # Publish to VS Code Marketplace (unless dry-run)
+      - name: Publish to VS Code Marketplace
+        if: ${{ !inputs.dry_run }}
+        run: |
+          cd extension
+          npx vsce publish \
+            --pat "${{ secrets.MARKETPLACE_TOKEN }}" \
+            --packagePath vscode-extension-analytics-${{ env.TAG }}.vsix
+
+      # Publish to Open VSX Registry (unless dry-run)
+      - name: Publish to Open VSX Registry
+        if: ${{ !inputs.dry_run }}
+        run: |
+          cd extension
+          npx ovsx publish \
+            --pat "${{ secrets.OPEN_VSX_TOKEN }}" \
+            vscode-extension-analytics-${{ env.TAG }}.vsix
+
+  # ─── Job 3: GitHub Release ───────────────────────────────────────────────────
   github-release:
     name: GitHub Release
-    needs: validate
+    needs: [validate, extension]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -129,19 +176,22 @@ jobs:
           ref: ${{ env.TAG }}
           fetch-depth: 0
 
-      # Reuse the dist/ built and validated in the validate job
-      - name: Download build artifact
+      - name: Download frontend build artifact
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
 
+      - name: Download VSIX artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: vsix
+          path: vsix/
+
       # Tries to pull the matching section from CHANGELOG.md; falls back to git log
       - name: Extract changelog for this version
         id: changelog
         run: |
-          # Extract the block between this tag's header and the previous one in CHANGELOG.md.
-          # Falls back to git log if CHANGELOG.md is absent or has no matching section.
           TAG="${{ env.TAG }}"
           if [ -f CHANGELOG.md ]; then
             NOTES=$(awk "/^## \[?${TAG#v}\]?/{flag=1; next} flag && /^## /{flag=0} flag{print}" CHANGELOG.md)
@@ -154,11 +204,9 @@ jobs:
               NOTES=$(git log --pretty=format:"- %s (%h)" "${TAG}")
             fi
           fi
-          # Write to a file to safely pass multi-line content
           echo "$NOTES" > release-notes.txt
           echo "notes_file=release-notes.txt" >> "$GITHUB_OUTPUT"
 
-      # Tags containing a hyphen (e.g. v1.0.0-beta.1) are marked as pre-releases
       - name: Determine pre-release flag
         id: prerelease
         run: |
@@ -175,3 +223,6 @@ jobs:
           name: ${{ env.TAG }}
           body_path: ${{ steps.changelog.outputs.notes_file }}
           prerelease: ${{ steps.prerelease.outputs.is_prerelease }}
+          files: |
+            vsix/vscode-extension-analytics-${{ env.TAG }}.vsix
+            dist/

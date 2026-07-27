@@ -319,4 +319,6 @@ Verify that `data/extensions.json` contains the extension entry and that the cor
 
 ## License
 
-ISC
+MIT License — see [LICENSE](LICENSE) for details.
+
+Copyright (c) 2026 Avraham Y. Kahana. Licensed under the MIT License with Commons Clause — you may not sell the software.

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { ExtensionEntry, DataPoint } from '../types/schema';
-import { loadData } from '../utils/dataLoader';
+import { loadData, extensionDataPath } from '../utils/dataLoader';
 import { computeVelocity } from '../metrics/velocity';
 import { computeMomentum } from '../metrics/momentum';
 
@@ -48,7 +48,7 @@ export function useAllExtensionsData(
 
     Promise.allSettled(
       extensions.map(async (ext): Promise<ExtensionSummary> => {
-        const raw = await loadData<unknown>(`./data/${ext.id}.json`);
+        const raw = await loadData<unknown>(extensionDataPath(ext.id));
         const data = Array.isArray(raw) ? (raw as DataPoint[]) : [];
 
         const velocity = computeVelocity(data);

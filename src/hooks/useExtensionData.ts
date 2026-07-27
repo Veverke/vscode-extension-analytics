@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { DataPoint } from '../types/schema'
-import { loadData } from '../utils/dataLoader'
+import { loadData, extensionDataPath } from '../utils/dataLoader'
 
 export interface UseExtensionDataResult {
   data: DataPoint[]
@@ -16,7 +16,7 @@ export function useExtensionData(extensionId: string): UseExtensionDataResult {
   useEffect(() => {
     let cancelled = false
 
-    loadData<DataPoint[]>(`./data/${extensionId}.json`)
+    loadData<DataPoint[]>(extensionDataPath(extensionId))
       .then((raw) => {
         if (cancelled) return
         if (!raw || !Array.isArray(raw)) {

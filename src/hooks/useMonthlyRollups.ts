@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { MonthlyRollup } from '../types/schema'
-import { loadData } from '../utils/dataLoader'
+import type { MonthlyRollup } from '../types/schema'
+import { loadData, extensionMonthlyPath } from '../utils/dataLoader'
 
 export interface UseMonthlyRollupsResult {
   rollups: MonthlyRollup[]
@@ -16,7 +16,7 @@ export function useMonthlyRollups(extensionId: string): UseMonthlyRollupsResult 
   useEffect(() => {
     let cancelled = false
 
-    loadData<MonthlyRollup[]>(`./data/${extensionId}.monthly.json`, { tolerate404: true })
+    loadData<MonthlyRollup[]>(extensionMonthlyPath(extensionId), { tolerate404: true })
       .then((raw) => {
         if (cancelled) return
         if (!raw || !Array.isArray(raw)) {

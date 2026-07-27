@@ -102,8 +102,11 @@ describe('storage', () => {
   });
 
   it('appendDataPoint — existing data: append to 30-point fixture; assert length 31', () => {
+    // The new storage writes to data/<namespace>/<name>/data.json
+    const extDir = path.join(tmpDir, 'Veverke', 'chatwizard');
+    fs.mkdirSync(extDir, { recursive: true });
     fs.writeFileSync(
-      path.join(tmpDir, 'Veverke.chatwizard.json'),
+      path.join(extDir, 'data.json'),
       JSON.stringify(chatwizardFixture, null, 2)
     );
 

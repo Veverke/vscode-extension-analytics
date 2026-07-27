@@ -9,8 +9,14 @@ import { fileURLToPath } from 'url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = resolve(__dirname, '..')
 
+import { mkdirSync } from 'fs'
+
 const fixturePath = resolve(root, 'fixtures', 'data', 'Veverke.chatwizard.json')
-const dataPath = resolve(root, 'data', 'Veverke.chatwizard.json')
+
+// New structure: data/<namespace>/<name>/data.json
+const dataDir = resolve(root, 'data', 'Veverke', 'chatwizard')
+mkdirSync(dataDir, { recursive: true })
+const dataPath = resolve(dataDir, 'data.json')
 
 // Realistic data reflecting actual values fetched from the marketplace APIs:
 // VS Marketplace: installs=136 (as of 2026-07-02)

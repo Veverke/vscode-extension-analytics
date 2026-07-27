@@ -18,10 +18,29 @@ export function getDataDir(): string {
   return dataDir;
 }
 
-export function ensureDataDir(): void {
-  if (!fs.existsSync(dataDir)) {
-    fs.mkdirSync(dataDir, { recursive: true });
+export function ensureDataDir(dir?: string): void {
+  const target = dir ?? dataDir;
+  if (!fs.existsSync(target)) {
+    fs.mkdirSync(target, { recursive: true });
   }
+}
+
+/**
+ * Derives the subdirectory path for an extension from its ID (e.g. "Veverke.chatwizard").
+ * Returns e.g. "data/Veverke/chatwizard".
+ */
+export function extensionDir(extensionId: string): string {
+  const parts = extensionId.split('.');
+  return path.join(getDataDir(), parts[0], parts.slice(1).join('.'));
+}
+
+/**
+ * Ensures the extension's data subdirectory exists.
+ */
+export function ensureExtensionDir(extensionId: string): string {
+  const dir = extensionDir(extensionId);
+  ensureDataDir(dir);
+  return dir;
 }
 
 export function readExtensionRegistry(): ExtensionRegistry {
@@ -40,7 +59,7 @@ export function writeExtensionRegistry(registry: ExtensionRegistry): void {
 }
 
 export function readTimeSeries(extensionId: string): DataPoint[] {
-  const filePath = path.join(dataDir, `${extensionId}.json`);
+  const filePath = path.join(extensionDir(extensionId), 'data.json');
   if (!fs.existsSync(filePath)) {
     return [];
   }
@@ -49,15 +68,15 @@ export function readTimeSeries(extensionId: string): DataPoint[] {
 }
 
 export function appendDataPoint(extensionId: string, point: DataPoint): void {
-  ensureDataDir();
+  const dir = ensureExtensionDir(extensionId);
   const existing = readTimeSeries(extensionId);
   existing.push(point);
-  const filePath = path.join(dataDir, `${extensionId}.json`);
+  const filePath = path.join(dir, 'data.json');
   fs.writeFileSync(filePath, JSON.stringify(existing, null, 2), 'utf-8');
 }
 
 export function readReleases(extensionId: string): ReleaseEntry[] {
-  const filePath = path.join(dataDir, `${extensionId}.releases.json`);
+  const filePath = path.join(extensionDir(extensionId), 'releases.json');
   if (!fs.existsSync(filePath)) {
     return [];
   }
@@ -66,7 +85,7 @@ export function readReleases(extensionId: string): ReleaseEntry[] {
 }
 
 export function writeReleases(extensionId: string, releases: ReleaseEntry[]): void {
-  ensureDataDir();
-  const filePath = path.join(dataDir, `${extensionId}.releases.json`);
+  const dir = ensureExtensionDir(extensionId);
+  const filePath = path.join(dir, 'releases.json');
   fs.writeFileSync(filePath, JSON.stringify(releases, null, 2), 'utf-8');
 }

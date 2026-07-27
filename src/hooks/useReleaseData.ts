@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { ReleaseEntry } from '../types/schema';
-import { loadData } from '../utils/dataLoader';
+import { loadData, extensionReleasesPath } from '../utils/dataLoader';
 
 export interface UseReleaseDataResult {
   releases: ReleaseEntry[];
@@ -16,7 +16,7 @@ export function useReleaseData(extensionId: string): UseReleaseDataResult {
   useEffect(() => {
     let cancelled = false;
 
-    loadData<ReleaseEntry[]>('./data/' + extensionId + '.releases.json', {
+    loadData<ReleaseEntry[]>(extensionReleasesPath(extensionId), {
       tolerate404: true,
     })
       .then((data) => {

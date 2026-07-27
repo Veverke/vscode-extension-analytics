@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import type { DataPoint, MonthlyRollup } from '../src/types/schema.js';
-import { getDataDir } from './storage.js';
+import { extensionDir } from './storage.js';
 
 /**
  * Groups data points by calendar month (UTC) and produces one summary record per month.
@@ -72,20 +72,22 @@ export function computeMonthlyRollup(data: DataPoint[]): MonthlyRollup[] {
 }
 
 /**
- * Writes monthly rollups to data/<extensionId>.monthly.json
+ * Writes monthly rollups to data/<namespace>/<name>/monthly.json
  */
 export function writeMonthlyRollup(extensionId: string, rollups: MonthlyRollup[]): void {
-  const dataDir = getDataDir();
-  const filePath = path.join(dataDir, `${extensionId}.monthly.json`);
+  const dir = extensionDir(extensionId);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  const filePath = path.join(dir, 'monthly.json');
   fs.writeFileSync(filePath, JSON.stringify(rollups, null, 2), 'utf-8');
 }
 
 /**
- * Reads monthly rollups from data/<extensionId>.monthly.json
+ * Reads monthly rollups from data/<namespace>/<name>/monthly.json
  */
 export function readMonthlyRollup(extensionId: string): MonthlyRollup[] {
-  const dataDir = getDataDir();
-  const filePath = path.join(dataDir, `${extensionId}.monthly.json`);
+  const filePath = path.join(extensionDir(extensionId), 'monthly.json');
   if (!fs.existsSync(filePath)) {
     return [];
   }

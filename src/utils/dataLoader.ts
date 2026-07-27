@@ -26,6 +26,36 @@ const GITHUB_RAW_BASE =
   'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/';
 const DATA_PREFIX = './data/';
 
+/**
+ * Resolves the data file path for an extension's time-series data.
+ * New structure: data/<namespace>/<name>/data.json
+ *
+ * @param extensionId - e.g. "Veverke.chatwizard"
+ * @returns e.g. "./data/Veverke/chatwizard/data.json"
+ */
+export function extensionDataPath(extensionId: string): string {
+  const parts = extensionId.split('.');
+  return `./data/${parts[0]}/${parts.slice(1).join('.')}/data.json`;
+}
+
+/**
+ * Resolves the releases file path for an extension.
+ * New structure: data/<namespace>/<name>/releases.json
+ */
+export function extensionReleasesPath(extensionId: string): string {
+  const parts = extensionId.split('.');
+  return `./data/${parts[0]}/${parts.slice(1).join('.')}/releases.json`;
+}
+
+/**
+ * Resolves the monthly rollups file path for an extension.
+ * New structure: data/<namespace>/<name>/monthly.json
+ */
+export function extensionMonthlyPath(extensionId: string): string {
+  const parts = extensionId.split('.');
+  return `./data/${parts[0]}/${parts.slice(1).join('.')}/monthly.json`;
+}
+
 /** Detects whether the code is running inside a VS Code webview. */
 function isWebviewContext(): boolean {
   return typeof window !== 'undefined' && window.vscode !== undefined;

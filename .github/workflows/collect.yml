@@ -32,10 +32,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Only commits when new data was actually written; [skip ci] prevents a CI loop
+      # Pull --rebase first to handle race conditions where another run pushed between checkout and push
       - name: Commit and push data
         run: |
           git config user.name "analytics-bot"
           git config user.email "analytics-bot@users.noreply.github.com"
           git add data/
           git diff --staged --quiet || git commit -m "chore: update extension stats [skip ci]"
+          git pull --rebase
           git push

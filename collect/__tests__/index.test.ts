@@ -12,6 +12,9 @@ vi.mock('../storage.js', () => ({
   writeReleases: vi.fn(),
   readTimeSeries: vi.fn().mockReturnValue([]),
   getDataDir: vi.fn().mockReturnValue('/tmp'),
+  extensionDir: vi.fn().mockReturnValue('/tmp'),
+  ensureExtensionDir: vi.fn().mockReturnValue('/tmp'),
+  setDataDir: vi.fn(),
 }));
 
 vi.mock('../marketplace.js', () => ({

@@ -25,21 +25,21 @@ function mockFetchForMulti() {
           json: () => Promise.resolve(extensionsMulti),
         })
       }
-      if (url.includes('Veverke.chatwizard')) {
+      if (url.includes('/Veverke/chatwizard/')) {
         return Promise.resolve({
           ok: true,
           status: 200,
           json: () => Promise.resolve(chatwizardData),
         })
       }
-      if (url.includes('Veverke.fast-grower')) {
+      if (url.includes('/Veverke/fast-grower/')) {
         return Promise.resolve({
           ok: true,
           status: 200,
           json: () => Promise.resolve(fastGrowerData),
         })
       }
-      if (url.includes('Veverke.slow-grower')) {
+      if (url.includes('/Veverke/slow-grower/')) {
         return Promise.resolve({
           ok: true,
           status: 200,
@@ -160,14 +160,14 @@ describe('Overview', () => {
     vi.stubGlobal(
       'fetch',
       vi.fn().mockImplementation((url: string) => {
-        if (url.includes('Veverke.chatwizard')) {
+        if (url.includes('/Veverke/chatwizard/')) {
           return Promise.resolve({
             ok: true,
             status: 200,
             json: () => Promise.resolve(chatwizardData),
           })
         }
-        if (url.includes('Veverke.fast-grower')) {
+        if (url.includes('/Veverke/fast-grower/')) {
           return Promise.resolve({
             ok: true,
             status: 200,
@@ -243,7 +243,7 @@ describe('Overview', () => {
             json: () => Promise.resolve(singleExt),
           })
         }
-        if (url.includes('Veverke.chatwizard')) {
+        if (url.includes('/Veverke/chatwizard/')) {
           return Promise.resolve({
             ok: true,
             json: () => Promise.resolve(chatwizardData),

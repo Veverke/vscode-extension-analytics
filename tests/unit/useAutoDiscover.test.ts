@@ -226,6 +226,102 @@ describe('useAutoDiscover', () => {
     expect(result.current.results).toHaveLength(0)
   })
 
+  it('discover — silently skips repo when package.json returns non-404 non-ok status', async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(reposFixture as unknown as Response)
+      // Veverke/chatwizard: package.json returns 500 (non-404 non-ok)
+      .mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        json: () => Promise.resolve(null),
+      } as unknown as Response)
+      // Veverke/some-website: valid extension
+      .mockResolvedValueOnce(makeContentsResponse(extensionPackageJson) as unknown as Response)
+      // Veverke/mystery: not found
+      .mockResolvedValueOnce(makeNotFoundResponse() as unknown as Response)
+
+    vi.stubGlobal('fetch', fetchMock)
+
+    const { result } = renderHook(() => useAutoDiscover())
+
+    await act(async () => {
+      await result.current.discover('Veverke')
+    })
+
+    expect(result.current.loading).toBe(false)
+    expect(result.current.error).toBeNull()
+    // Only some-website (which has valid extension) should be discovered
+    expect(result.current.results).toHaveLength(1)
+    expect(result.current.results[0].extensionId).toBe('Veverke.chatwizard')
+  })
+
+  it('discover — silently skips repo when package.json has non-base64 encoding', async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(reposFixture as unknown as Response)
+      // Veverke/chatwizard: package.json with non-base64 encoding
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({
+          content: 'plain text content',
+          encoding: 'plain',
+        }),
+      } as unknown as Response)
+      // Veverke/some-website: valid extension
+      .mockResolvedValueOnce(makeContentsResponse(extensionPackageJson) as unknown as Response)
+      // Veverke/mystery: not found
+      .mockResolvedValueOnce(makeNotFoundResponse() as unknown as Response)
+
+    vi.stubGlobal('fetch', fetchMock)
+
+    const { result } = renderHook(() => useAutoDiscover())
+
+    await act(async () => {
+      await result.current.discover('Veverke')
+    })
+
+    expect(result.current.loading).toBe(false)
+    expect(result.current.error).toBeNull()
+    // Only some-website should be discovered
+    expect(result.current.results).toHaveLength(1)
+    expect(result.current.results[0].extensionId).toBe('Veverke.chatwizard')
+  })
+
+  it('discover — silently skips repo when package.json has invalid JSON content', async () => {
+    // Base64-encoded "not valid json" which will fail JSON.parse
+    const invalidContent = Buffer.from('not valid json').toString('base64')
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(reposFixture as unknown as Response)
+      // Veverke/chatwizard: package.json with invalid JSON content
+      .mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({
+          content: invalidContent,
+          encoding: 'base64',
+        }),
+      } as unknown as Response)
+      // Veverke/some-website: valid extension
+      .mockResolvedValueOnce(makeContentsResponse(extensionPackageJson) as unknown as Response)
+      // Veverke/mystery: not found
+      .mockResolvedValueOnce(makeNotFoundResponse() as unknown as Response)
+
+    vi.stubGlobal('fetch', fetchMock)
+
+    const { result } = renderHook(() => useAutoDiscover())
+
+    await act(async () => {
+      await result.current.discover('Veverke')
+    })
+
+    expect(result.current.loading).toBe(false)
+    expect(result.current.error).toBeNull()
+    // Only some-website should be discovered
+    expect(result.current.results).toHaveLength(1)
+    expect(result.current.results[0].extensionId).toBe('Veverke.chatwizard')
+  })
+
   it('discover — skips repos without package.json', async () => {
     const fetchMock = vi
       .fn<typeof fetch>()

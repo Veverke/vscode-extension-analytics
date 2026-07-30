@@ -99,6 +99,32 @@ describe('useCompetitor', () => {
     await new Promise((resolve) => setTimeout(resolve, 1500))
   })
 
+  it('cancels fetch on unmount when fetch rejects', async () => {
+    let rejectPromise!: (reason: Error) => void
+    const deferredPromise = new Promise<CompetitorData>((_resolve, reject) => {
+      rejectPromise = reject
+    })
+    mockFetchCompetitorData.mockImplementationOnce(() => deferredPromise)
+
+    const { result, unmount } = renderHook(() => useCompetitor('test.test-ext'))
+
+    expect(result.current.loading).toBe(true)
+
+    // Wait for the useEffect to fire (doFetch is now pending on the deferred promise)
+    await new Promise<void>((r) => setTimeout(r, 10))
+
+    unmount()
+
+    // Reject the promise after unmount, so cancelled is true in the catch block
+    rejectPromise(new Error('Network error'))
+
+    // Wait for the promise chain to complete
+    await new Promise<void>((r) => setTimeout(r, 100))
+
+    // After unmount, loading should still be true (cancelled prevented state update)
+    expect(result.current.loading).toBe(true)
+  })
+
   it('cancels fetch when extensionId changes rapidly', async () => {
     let resolveFirst: (value: CompetitorData) => void = () => {}
     const firstPromise = new Promise<CompetitorData>((resolve) => { resolveFirst = resolve })

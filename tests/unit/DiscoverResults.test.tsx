@@ -141,4 +141,16 @@ describe('DiscoverResults', () => {
     renderDiscoverResults('testuser')
     expect(screen.getByText('My Extension')).toBeInTheDocument()
   })
+
+  it('retry button calls discover with the username', () => {
+    const mockDiscover = vi.fn().mockResolvedValue(undefined)
+    vi.spyOn(useAutoDiscoverModule, 'useAutoDiscover').mockReturnValue(
+      createMockDiscovery({ error: 'Something went wrong', discover: mockDiscover }),
+    )
+
+    renderDiscoverResults('testuser')
+    const retryButton = screen.getByText('Retry')
+    retryButton.click()
+    expect(mockDiscover).toHaveBeenCalledWith('testuser')
+  })
 })

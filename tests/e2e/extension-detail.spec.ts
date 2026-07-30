@@ -22,7 +22,7 @@ test.describe('Extension detail page', () => {
   })
 
   test('loading state is visible during data fetch delay', async ({ page }) => {
-    await page.route('**/data/Veverke.chatwizard.json', async route => {
+    await page.route('**/data/Veverke/chatwizard/data.json', async route => {
       await new Promise<void>(resolve => setTimeout(resolve, 1000))
       await route.continue()
     })
@@ -39,7 +39,7 @@ test.describe('Extension detail page', () => {
   })
 
   test('error state is shown when fetch returns 500', async ({ page }) => {
-    await page.route('**/data/Veverke.chatwizard.json', route =>
+    await page.route('**/data/Veverke/chatwizard/data.json', route =>
       route.fulfill({ status: 500, body: 'Internal Server Error' }),
     )
 
@@ -50,7 +50,7 @@ test.describe('Extension detail page', () => {
   })
 
   test('empty data state shows "No data yet" message', async ({ page }) => {
-    await page.route('**/data/Veverke.chatwizard.json', route =>
+    await page.route('**/data/Veverke/chatwizard/data.json', route =>
       route.fulfill({ status: 200, contentType: 'application/json', body: '[]' }),
     )
 

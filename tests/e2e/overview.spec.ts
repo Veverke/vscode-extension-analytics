@@ -28,21 +28,21 @@ test.describe('Overview Dashboard', () => {
     )
 
     // Serve time-series data for each extension
-    await page.route('**/data/Veverke.chatwizard.json', (route) =>
+    await page.route('**/data/Veverke/chatwizard/data.json', (route) =>
       route.fulfill({
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify(chatwizardData),
       })
     )
-    await page.route('**/data/Veverke.fast-grower.json', (route) =>
+    await page.route('**/data/Veverke/fast-grower/data.json', (route) =>
       route.fulfill({
         status: 200,
         contentType: 'application/json',
         body: JSON.stringify(fastGrowerData),
       })
     )
-    await page.route('**/data/Veverke.slow-grower.json', (route) =>
+    await page.route('**/data/Veverke/slow-grower/data.json', (route) =>
       route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -51,7 +51,7 @@ test.describe('Overview Dashboard', () => {
     )
 
     // Stub releases and events to avoid 404 console noise
-    await page.route('**/data/*.releases.json', (route) =>
+    await page.route('**/data/*/releases.json', (route) =>
       route.fulfill({ status: 404, body: 'Not Found' })
     )
     await page.route('**/data/events.json', (route) =>
@@ -155,7 +155,7 @@ test.describe('Overview Dashboard', () => {
 
   test('loading skeletons visible before data loads', async ({ page }) => {
     // Delay all extension data fetches by 1.5s
-    await page.route('**/data/Veverke.*.json', async (route) => {
+    await page.route('**/data/Veverke/*/data.json', async (route) => {
       await new Promise<void>((resolve) => setTimeout(resolve, 1500))
       const url = route.request().url()
       let body: object[] = []
@@ -182,7 +182,7 @@ test.describe('Overview Dashboard', () => {
 
   test('per-row error isolation: broken extension shows error icon, others render', async ({ page }) => {
     // Override slow-grower to return 500
-    await page.route('**/data/Veverke.slow-grower.json', (route) =>
+    await page.route('**/data/Veverke/slow-grower/data.json', (route) =>
       route.fulfill({ status: 500, body: 'Internal Server Error' })
     )
 
@@ -200,8 +200,8 @@ test.describe('Overview Dashboard', () => {
     })
     await expect(table.getByRole('link', { name: 'Fast Grower' })).toBeVisible()
 
-    // Error icon should be visible
-    await expect(page.getByRole('img', { name: 'error' })).toBeVisible()
+    // Error icon should be visible (scoped to the table to avoid strict mode)
+    await expect(table.getByRole('img', { name: 'error' })).toBeVisible()
   })
 
   test('sort by installs reverse — click twice toggles ascending', async ({ page }) => {
@@ -233,7 +233,7 @@ test.describe('Overview Dashboard', () => {
     )
 
     // Also serve the chatwizard data directly
-    await page.route('**/data/Veverke.chatwizard.json', (route) =>
+    await page.route('**/data/Veverke/chatwizard/data.json', (route) =>
       route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -242,10 +242,10 @@ test.describe('Overview Dashboard', () => {
     )
 
     // Remove routes for the other extensions — stub them to avoid unmocked fetches
-    await page.route('**/data/Veverke.fast-grower.json', (route) =>
+    await page.route('**/data/Veverke/fast-grower/data.json', (route) =>
       route.fulfill({ status: 404, body: 'Not Found' })
     )
-    await page.route('**/data/Veverke.slow-grower.json', (route) =>
+    await page.route('**/data/Veverke/slow-grower/data.json', (route) =>
       route.fulfill({ status: 404, body: 'Not Found' })
     )
 

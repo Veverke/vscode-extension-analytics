@@ -19,7 +19,7 @@ const eventsFixture = require('../../fixtures/data/events.json') as {
 test.describe('Phase 6 — Annotations and Release Impact', () => {
   test.beforeEach(async ({ page }) => {
     // Intercept releases and events JSON with fixture data
-    await page.route('**/data/Veverke.chatwizard.releases.json', (route) =>
+    await page.route('**/data/Veverke/chatwizard/releases.json', (route) =>
       route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -105,7 +105,7 @@ test.describe('Phase 6 — Annotations and Release Impact', () => {
 
   test('release impact panel shows empty state when releases file is 404', async ({ page }) => {
     // Override the releases route to return 404
-    await page.route('**/data/Veverke.chatwizard.releases.json', (route) =>
+    await page.route('**/data/Veverke/chatwizard/releases.json', (route) =>
       route.fulfill({ status: 404, body: 'Not Found' })
     )
 

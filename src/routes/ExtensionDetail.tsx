@@ -70,6 +70,14 @@ export default function ExtensionDetail() {
     )
   }
 
+  if (data.length === 0) {
+    return (
+      <div className="extension-detail">
+        <p>No data yet — the collector hasn't run yet.</p>
+      </div>
+    )
+  }
+
   const currentInstalls =
     data.length > 0 ? data[data.length - 1].marketplace.installs : 0
 

@@ -223,13 +223,11 @@ describe('ExtensionDetail', () => {
     expect(input).toHaveValue(1)
   })
 
-  it('handles empty data gracefully for currentInstalls', () => {
+  it('shows no-data message when extension data is empty', () => {
     mockUseExtensionData.mockReturnValue({ data: [], loading: false, error: null })
     renderExtensionDetail()
-    // Should still render the page with currentInstalls = 0
-    expect(screen.getByText('Test Extension')).toBeInTheDocument()
-    // With empty data, ProjectionSummary returns null (neither projection works)
-    expect(screen.getByText('StatsCards')).toBeInTheDocument()
+    // With empty data, the component shows a "no data yet" message
+    expect(screen.getByText("No data yet — the collector hasn't run yet.")).toBeInTheDocument()
   })
 
   it('renders competitors section', () => {

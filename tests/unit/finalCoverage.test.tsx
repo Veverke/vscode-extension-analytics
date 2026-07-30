@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
-import { MemoryRouter, Route, Routes } from 'react-router-dom'
+import { render, fireEvent } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import { ExtensionsContext } from '../../src/contexts/ExtensionsContext'
 import { sortSummaries } from '../../src/routes/Overview'
 import { buildChartData as buildInstallsChartData } from '../../src/components/charts/InstallsChart'
@@ -479,9 +479,9 @@ describe('marketplaceApi — webview path', () => {
   beforeEach(() => {
     vi.restoreAllMocks()
     sessionStorage.clear()
-    originalVscode = (window as Record<string, unknown>).vscode
+    originalVscode = (window as unknown as Record<string, unknown>).vscode
     // Mock the vscode API to simulate webview environment
-    ;(window as Record<string, unknown>).vscode = {
+    ;(window as unknown as Record<string, unknown>).vscode = {
       postMessage: vi.fn().mockImplementation((msg: { command: string; requestId: string }) => {
         // Simulate extension host responding to each proxy request
         setTimeout(() => {
@@ -502,7 +502,7 @@ describe('marketplaceApi — webview path', () => {
   })
 
   afterEach(() => {
-    ;(window as Record<string, unknown>).vscode = originalVscode
+    ;(window as unknown as Record<string, unknown>).vscode = originalVscode
   })
 
   it('uses proxyViaExtensionHost in webview context for fetchCompetitorData', async () => {
@@ -531,7 +531,7 @@ describe('marketplaceApi — webview path', () => {
 
   it('uses proxyViaExtensionHost for fetchCompetitorGitHubStats when repo is found', async () => {
     // Override the postMessage mock to return stats with a githubRepo
-    ;(window as Record<string, unknown>).vscode = {
+    ;(window as unknown as Record<string, unknown>).vscode = {
       postMessage: vi.fn().mockImplementation((msg: { command: string; requestId: string }) => {
         setTimeout(() => {
           let result: unknown
@@ -559,7 +559,7 @@ describe('marketplaceApi — webview path', () => {
   })
 
   it('handles proxyViaExtensionHost error response', async () => {
-    ;(window as Record<string, unknown>).vscode = {
+    ;(window as unknown as Record<string, unknown>).vscode = {
       postMessage: vi.fn().mockImplementation((msg: { command: string; requestId: string }) => {
         setTimeout(() => {
           // Return an error response for fetchCompetitorStats

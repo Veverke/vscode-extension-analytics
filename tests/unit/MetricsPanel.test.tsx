@@ -95,4 +95,24 @@ describe('MetricsPanel', () => {
     render(<MetricsPanel data={data} projectionMonths={1} />)
     expect(screen.getByTestId('metric-openvsx-projection')).toHaveTextContent('Not enough data')
   })
+
+  it('renders with single data point and shows stable acceleration', () => {
+    const data = [makePoint(100, '2026-01-01T00:00:00Z')]
+    render(<MetricsPanel data={data} projectionMonths={1} />)
+    // Should show velocity of 0 and stable acceleration
+    expect(screen.getByTestId('metric-velocity')).toHaveTextContent('0.0')
+    expect(screen.getByTestId('metric-acceleration')).toHaveTextContent('→ stable')
+    expect(screen.getByTestId('metric-projection')).toHaveTextContent('Not enough data')
+  })
+
+  it('renders with Open VSX data and shows projection', () => {
+    const data = [
+      makePoint(100, '2026-01-01T00:00:00Z', { openVsx: { downloads: 50, averageRating: 4.0, ratingCount: 5 } }),
+      makePoint(200, '2026-01-02T00:00:00Z', { openVsx: { downloads: 75, averageRating: 4.0, ratingCount: 5 } }),
+      makePoint(300, '2026-01-03T00:00:00Z', { openVsx: { downloads: 100, averageRating: 4.0, ratingCount: 5 } }),
+    ]
+    render(<MetricsPanel data={data} projectionMonths={1} />)
+    // Should show a projection value (not "Not enough data")
+    expect(screen.getByTestId('metric-openvsx-projection')).not.toHaveTextContent('Not enough data')
+  })
 })

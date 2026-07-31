@@ -68,4 +68,14 @@ describe('GitHubChart', () => {
     render(<GitHubChart data={data} />)
     expect(screen.getByText('Stars')).toBeInTheDocument()
   })
+
+  it('renders with all-zero stars and forks', () => {
+    const data: DataPoint[] = [
+      makeDataPoint('2025-01-01', { stars: 0, forks: 0, contributions: 0 }),
+      makeDataPoint('2025-01-02', { stars: 0, forks: 0, contributions: 0 }),
+    ]
+    render(<GitHubChart data={data} />)
+    expect(screen.getByText('Stars')).toBeInTheDocument()
+    expect(screen.getByText('Forks')).toBeInTheDocument()
+  })
 })

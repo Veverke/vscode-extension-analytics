@@ -198,6 +198,52 @@ describe('CompetitorList', () => {
     expect(screen.getByText(/Python/)).toBeInTheDocument()
   })
 
+  it('handles corrupted localStorage gracefully', () => {
+    // Corrupt the localStorage entry for stored competitor IDs
+    localStorage.setItem('competitors:myext.myext', 'not-valid-json{{{')
+
+    render(<CompetitorList {...defaultProps} />)
+    // Should still render with empty state
+    expect(screen.getByText(/No competitors added yet/)).toBeInTheDocument()
+  })
+
+  it('handles corrupted visibility localStorage gracefully', () => {
+    // Corrupt the localStorage entry for visibility
+    localStorage.setItem('competitors-vis:myext.myext', 'not-valid-json{{{')
+
+    render(<CompetitorList {...defaultProps} />)
+    // Should still render with empty state
+    expect(screen.getByText(/No competitors added yet/)).toBeInTheDocument()
+  })
+
+  it('toggles competitor visibility', () => {
+    mockUseCompetitor.mockReturnValue({
+      ...defaultMockReturn,
+      displayName: 'Python',
+      data: [{
+        ts: '2025-01-01',
+        marketplace: { installs: 10000, updates: 50, averageRating: 4.0, ratingCount: 200, trendingWeekly: 10, trendingMonthly: 50 },
+        openVsx: null,
+        github: null,
+      }],
+    })
+
+    render(<CompetitorList {...defaultProps} />)
+
+    const input = screen.getByLabelText('Competitor extension ID')
+    fireEvent.change(input, { target: { value: 'ms-python.python' } })
+    fireEvent.click(screen.getByRole('button', { name: 'Add' }))
+
+    // Should show the visibility toggle checkbox
+    const toggleCheckbox = screen.getByLabelText(/Toggle visibility of Python/)
+    expect(toggleCheckbox).toBeInTheDocument()
+    expect(toggleCheckbox).toBeChecked()
+
+    // Toggle visibility off
+    fireEvent.click(toggleCheckbox)
+    expect(toggleCheckbox).not.toBeChecked()
+  })
+
   it('persists competitors to localStorage', () => {
     const { unmount } = render(<CompetitorList {...defaultProps} />)
 

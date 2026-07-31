@@ -69,4 +69,19 @@ describe('StatsCards branch coverage', () => {
     const matches = screen.getAllByText(/-100/)
     expect(matches.length).toBeGreaterThanOrEqual(1)
   })
+
+  it('renders with trackedSince date more than 12 months ago', () => {
+    // Create a date more than 12 months in the past
+    const pastDate = new Date()
+    pastDate.setFullYear(pastDate.getFullYear() - 2) // 2 years ago
+    pastDate.setMonth(pastDate.getMonth() - 3) // 2 years 3 months ago
+
+    const data: DataPoint[] = [
+      makePoint(100, '2026-01-01T00:00:00Z'),
+      makePoint(200, '2026-01-02T00:00:00Z'),
+    ]
+    render(<StatsCards data={data} trackedSince={pastDate.toISOString()} />)
+    // Should show the date and a relative time string with years and months
+    expect(screen.getByText(/2 years?/)).toBeInTheDocument()
+  })
 })

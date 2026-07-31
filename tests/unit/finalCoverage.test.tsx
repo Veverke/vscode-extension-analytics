@@ -175,6 +175,35 @@ describe('InstallsChart buildChartData — OpenVSX projections', () => {
     expect(hasOpenVsxProj).toBe(true)
   })
 
+  it('handles openVsxProjections with non-overlapping timestamps not in regular projections map', () => {
+    const data = [
+      makePoint(100, '2026-01-01T00:00:00Z', { openVsx: { downloads: 50, averageRating: null, ratingCount: 0 } }),
+      makePoint(200, '2026-01-02T00:00:00Z', { openVsx: { downloads: 75, averageRating: null, ratingCount: 0 } }),
+      makePoint(300, '2026-01-03T00:00:00Z', { openVsx: { downloads: 100, averageRating: null, ratingCount: 0 } }),
+    ]
+    const projections = [{
+      model: 'linear' as const,
+      r2: 0.95,
+      points: [{ ts: Date.UTC(2026, 0, 10), value: 400 }],
+      equation: 'y = 50x + 100',
+    }]
+    // Open VSX projection timestamp is DIFFERENT from the regular projection timestamp
+    const openVsxProjections = [{
+      model: 'linear' as const,
+      r2: 0.90,
+      points: [{ ts: Date.UTC(2026, 0, 15), value: 200 }],
+      equation: 'y = 25x + 50',
+    }]
+    const result = buildInstallsChartData(data, projections, openVsxProjections)
+    // Should have both proj_linear and proj_openVsx_linear keys
+    const hasProj = result.some(p => p.proj_linear !== null && p.proj_linear !== undefined)
+    const hasOpenVsxProj = result.some(p => p.proj_openVsx_linear !== null && p.proj_openVsx_linear !== undefined)
+    expect(hasProj).toBe(true)
+    expect(hasOpenVsxProj).toBe(true)
+    // Should have more points than data (real + projection points)
+    expect(result.length).toBeGreaterThan(data.length)
+  })
+
   it('handles openVsxProjections without regular projections (returns only real points)', () => {
     // buildChartData returns early when projections is empty (line 78),
     // so OpenVSX projection keys are not added in this case.

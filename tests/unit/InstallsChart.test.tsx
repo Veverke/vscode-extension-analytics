@@ -82,6 +82,27 @@ describe('InstallsChart', () => {
     const { container } = render(<InstallsChart data={fixture} peaks={[]} />)
     expect(container.querySelector('svg')).toBeInTheDocument()
   })
+
+  it('renders with openVsxProjections', () => {
+    const linearProj = computeProjection(fixture, 'linear', 30)
+    const openVsxProjections = [linearProj!]
+    const { container } = render(<InstallsChart data={fixture} projections={[linearProj!]} openVsxProjections={openVsxProjections} />)
+    expect(container.querySelector('svg')).toBeInTheDocument()
+  })
+
+  it('renders with annotations', () => {
+    const { container } = render(
+      <InstallsChart
+        data={fixture}
+        annotations={[{
+          x: new Date(fixture[0].ts).getTime(),
+          stroke: 'red',
+          label: { value: 'Annotation test', position: 'top' },
+        }]}
+      />
+    )
+    expect(container.querySelector('svg')).toBeInTheDocument()
+  })
 })
 
 describe('formatInstallsTooltipValue', () => {

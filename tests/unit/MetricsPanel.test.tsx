@@ -26,7 +26,7 @@ vi.mock('recharts', () => {
   }
 })
 
-function makePoint(installs: number, ts: string): DataPoint {
+function makePoint(installs: number, ts: string, openVsx?: { downloads: number; averageRating: number; ratingCount: number }): DataPoint {
   return {
     ts,
     marketplace: {
@@ -37,7 +37,7 @@ function makePoint(installs: number, ts: string): DataPoint {
       trendingWeekly: 0,
       trendingMonthly: 0,
     },
-    openVsx: null,
+    openVsx: openVsx ?? null,
     github: null,
   }
 }
@@ -107,9 +107,9 @@ describe('MetricsPanel', () => {
 
   it('renders with Open VSX data and shows projection', () => {
     const data = [
-      makePoint(100, '2026-01-01T00:00:00Z', { openVsx: { downloads: 50, averageRating: 4.0, ratingCount: 5 } }),
-      makePoint(200, '2026-01-02T00:00:00Z', { openVsx: { downloads: 75, averageRating: 4.0, ratingCount: 5 } }),
-      makePoint(300, '2026-01-03T00:00:00Z', { openVsx: { downloads: 100, averageRating: 4.0, ratingCount: 5 } }),
+      makePoint(100, '2026-01-01T00:00:00Z', { downloads: 100, averageRating: 4.0, ratingCount: 5 }),
+      makePoint(200, '2026-01-02T00:00:00Z', { downloads: 75, averageRating: 4.0, ratingCount: 5 }),
+      makePoint(300, '2026-01-03T00:00:00Z', { downloads: 100, averageRating: 4.0, ratingCount: 5 }),
     ]
     render(<MetricsPanel data={data} projectionMonths={1} />)
     // Should show a projection value (not "Not enough data")

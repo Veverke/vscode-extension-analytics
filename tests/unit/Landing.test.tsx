@@ -49,7 +49,7 @@ describe('Landing', () => {
       screen.getByText('VS Code Extension Analytics'),
     ).toBeInTheDocument()
     expect(
-      screen.getByPlaceholderText('e.g. Veverke'),
+      screen.getByPlaceholderText('e.g. your-github-username'),
     ).toBeInTheDocument()
   })
 
@@ -63,7 +63,7 @@ describe('Landing', () => {
 
   it('shows validation error for invalid username format', () => {
     renderLanding()
-    fireEvent.change(screen.getByPlaceholderText('e.g. Veverke'), {
+    fireEvent.change(screen.getByPlaceholderText('e.g. your-github-username'), {
       target: { value: 'invalid username!' },
     })
     fireEvent.click(screen.getByText('Discover My Extensions'))
@@ -74,7 +74,7 @@ describe('Landing', () => {
 
   it('calls setUsername and navigates on valid submission', () => {
     const { setUsername } = renderLanding()
-    fireEvent.change(screen.getByPlaceholderText('e.g. Veverke'), {
+    fireEvent.change(screen.getByPlaceholderText('e.g. your-github-username'), {
       target: { value: 'validUser' },
     })
     fireEvent.click(screen.getByText('Discover My Extensions'))
@@ -86,7 +86,7 @@ describe('Landing', () => {
     fireEvent.click(screen.getByText('Discover My Extensions'))
     expect(screen.getByRole('alert')).toBeInTheDocument()
 
-    fireEvent.change(screen.getByPlaceholderText('e.g. Veverke'), {
+    fireEvent.change(screen.getByPlaceholderText('e.g. your-github-username'), {
       target: { value: 'v' },
     })
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()

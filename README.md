@@ -156,8 +156,7 @@ If you prefer to run your own instance (data collection on your GitHub Actions, 
 1. **Fork this repository** and clone it locally.
 2. **Enable GitHub Pages** in repo Settings → Pages → Source: GitHub Actions.
 3. **Set up the collector** by configuring the GitHub Action in `.github/workflows/collect.yml`:
-   - Optional: Add `GITHUB_TOKEN` as a repo secret for higher API rate limits.
-   - Optional: Set `GITHUB_USER` environment variable for auto-discovery on every collection run.
+   - Optional: Add `GITHUB_TOKEN` as a repo secret for higher GitHub API rate limits.
 4. **Build and deploy:**
    ```bash
    npm install

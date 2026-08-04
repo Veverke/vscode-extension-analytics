@@ -4,7 +4,7 @@ import {
   readExtensionRegistry,
   writeExtensionRegistry,
 } from './storage.js';
-import { discoverVSCodeExtensions, discoverFromRepos } from './github.js';
+import { discoverFromRepos } from './github.js';
 
 export function mergeRegistry(
   existing: ExtensionRegistry,
@@ -51,22 +51,11 @@ export async function scanRegistryRepos(
 }
 
 export async function runDiscover(
-  githubToken: string,
-  githubUser?: string
+  githubToken: string
 ): Promise<void> {
   const discovered: DiscoveredExtension[] = [];
 
-  // Phase 1: optionally scan a GitHub user's repos
-  if (githubUser) {
-    console.log(`[discover] Scanning repos for GitHub user: ${githubUser}`);
-    const userDiscovered = await discoverVSCodeExtensions(githubUser, githubToken);
-    discovered.push(...userDiscovered);
-    console.log(`[discover] Scanned ${userDiscovered.length} VS Code extensions from user repos`);
-  } else {
-    console.log('[discover] No GITHUB_USER provided, skipping user repo scan');
-  }
-
-  // Phase 2: scan registry's githubRepo fields for new/updated metadata
+  // Scan registry's githubRepo fields for new/updated metadata
   const registryDiscovered = await scanRegistryRepos(githubToken);
   discovered.push(...registryDiscovered);
 
@@ -80,11 +69,10 @@ export async function runDiscover(
   );
 }
 
-/* v8 ignore next 12 */
+/* v8 ignore next 10 */
 if (fileURLToPath(import.meta.url) === process.argv[1]) {
-  const githubUser = process.env.GITHUB_USER;
   const githubToken = process.env.GITHUB_TOKEN ?? '';
-  runDiscover(githubToken, githubUser).catch((err: unknown) => {
+  runDiscover(githubToken).catch((err: unknown) => {
     console.error('[discover] Fatal error:', err);
     process.exitCode = 1;
   });

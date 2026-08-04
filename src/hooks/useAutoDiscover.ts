@@ -66,6 +66,24 @@ async function fetchRepoFile(
 }
 
 /**
+ * Fetches a package.json from a given path in a repo and parses it.
+ * Returns null if the file doesn't exist or can't be parsed.
+ */
+async function tryFetchPackageJson(
+  repoFullName: string,
+  filePath: string,
+  headers: Record<string, string>
+): Promise<PackageJson | null> {
+  const raw = await fetchRepoFile(repoFullName, filePath, headers)
+  if (!raw) return null
+
+  const pkg = parsePackageJson(raw)
+  if (!pkg) return null
+
+  return pkg
+}
+
+/**
  * Parses a `package.json` string and returns structured info.
  */
 function parsePackageJson(raw: string): PackageJson | null {
@@ -143,11 +161,12 @@ export function useAutoDiscover(): UseAutoDiscoverResult {
       // ── Step 2: Check each repo for a VS Code extension package.json ──
       const repoChecks = repos.map(async (repo): Promise<DiscoveredExtension | null> => {
         try {
-          const raw = await fetchRepoFile(repo.full_name, 'package.json', headers)
-          if (!raw) return null
+          // Try root package.json first, then extension/package.json for monorepos
+          const pkg = await tryFetchPackageJson(repo.full_name, 'package.json', headers)
+            ?? await tryFetchPackageJson(repo.full_name, 'extension/package.json', headers);
+          if (!pkg) return null;
 
-          const pkg = parsePackageJson(raw)
-          if (!pkg || !isVSCodeExtension(pkg)) return null
+          if (!isVSCodeExtension(pkg)) return null;
 
           const namespace = pkg.publisher ?? ''
           const name = pkg.name ?? ''

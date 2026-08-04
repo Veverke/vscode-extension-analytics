@@ -1,5 +1,13 @@
 [
   {
+    "id": "Veverke.vscode-extension-analytics",
+    "namespace": "Veverke",
+    "name": "vscode-extension-analytics",
+    "displayName": "VS Code Extension Analytics",
+    "githubRepo": "Veverke/vscode-extension-analytics",
+    "trackedSince": "2026-08-05T00:00:00.000Z"
+  },
+  {
     "id": "Veverke.chatwizard",
     "namespace": "Veverke",
     "name": "chatwizard",

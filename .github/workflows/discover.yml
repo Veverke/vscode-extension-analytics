@@ -24,6 +24,7 @@ jobs:
           node-version: "20"
           cache: "npm"
       - run: npm ci
+      - run: npm ci --prefix extension
 
       # Scans all githubRepo fields in the existing registry for new/updated
       # extension metadata. New extension requests come through the GitHub

@@ -24,6 +24,7 @@ jobs:
           node-version: "20"
           cache: "npm"
       - run: npm ci
+      - run: npm ci --prefix extension
 
       # Reads data/extensions.json, fetches stats from both registries in parallel,
       # and appends a new DataPoint to each extension's time-series JSON file

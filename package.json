@@ -15,7 +15,8 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "preview": "vite preview",
-    "vsix": "npm run build:extension && cd extension && vsce package"
+    "vsix": "npm run build:extension && cd extension && vsce package",
+    "postinstall": "cd extension && npm install"
   },
   "repository": {
     "type": "git",

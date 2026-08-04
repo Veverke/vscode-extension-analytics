@@ -9,7 +9,6 @@ import type { ExtensionEntry } from '../../src/types/schema.js';
 import type { DiscoveredExtension } from '../github.js';
 
 vi.mock('../github.js', () => ({
-  discoverVSCodeExtensions: vi.fn(),
   discoverFromRepos: vi.fn(),
 }));
 
@@ -88,22 +87,22 @@ describe('runDiscover', () => {
     fs.rmSync(tmpDir, { recursive: true, force: true });
   });
 
-  it('adds new extension from user scan with GITHUB_USER', async () => {
-    vi.mocked(github.discoverVSCodeExtensions).mockResolvedValue([
-      discoveredChatwizard,
-    ]);
-    vi.mocked(github.discoverFromRepos).mockResolvedValue([]);
+  it('adds new extension from registry scan', async () => {
+    // Seed registry with an entry that has a githubRepo to trigger scan
+    fs.writeFileSync(
+      path.join(tmpDir, 'extensions.json'),
+      JSON.stringify([existingEntry], null, 2)
+    );
+    vi.mocked(github.discoverFromRepos).mockResolvedValue([discoveredChatwizard]);
 
-    await runDiscover('fake-token', 'Veverke');
+    await runDiscover('fake-token');
 
-    const registryFile = path.join(tmpDir, 'extensions.json');
-    const registry = JSON.parse(fs.readFileSync(registryFile, 'utf-8')) as ExtensionEntry[];
+    const registry = JSON.parse(fs.readFileSync(path.join(tmpDir, 'extensions.json'), 'utf-8')) as ExtensionEntry[];
     expect(registry).toHaveLength(1);
     expect(registry[0].id).toBe('Veverke.chatwizard');
   });
 
-  it('adds new extension without GITHUB_USER (registry-only scan)', async () => {
-    vi.mocked(github.discoverVSCodeExtensions).mockResolvedValue([]);
+  it('adds new extension (registry-only scan)', async () => {
     vi.mocked(github.discoverFromRepos).mockResolvedValue([discoveredChatwizard]);
 
     // Write a registry entry with a githubRepo to trigger registry scan
@@ -122,17 +121,14 @@ describe('runDiscover', () => {
     expect(registry[0].id).toBe('Veverke.chatwizard');
   });
 
-  it('does not duplicate existing entries on re-run with user', async () => {
+  it('does not duplicate existing entries on re-run', async () => {
     fs.writeFileSync(
       path.join(tmpDir, 'extensions.json'),
       JSON.stringify([existingEntry], null, 2)
     );
-    vi.mocked(github.discoverVSCodeExtensions).mockResolvedValue([
-      discoveredChatwizard,
-    ]);
-    vi.mocked(github.discoverFromRepos).mockResolvedValue([]);
+    vi.mocked(github.discoverFromRepos).mockResolvedValue([discoveredChatwizard]);
 
-    await runDiscover('fake-token', 'Veverke');
+    await runDiscover('fake-token');
 
     const registry = JSON.parse(
       fs.readFileSync(path.join(tmpDir, 'extensions.json'), 'utf-8')
@@ -140,24 +136,20 @@ describe('runDiscover', () => {
     expect(registry).toHaveLength(1);
   });
 
-  it('scans both user repos and registry repos', async () => {
+  it('scans registry repos and discovers new extensions', async () => {
     // Pre-populate registry with an entry that has a githubRepo for registry scan
     fs.writeFileSync(
       path.join(tmpDir, 'extensions.json'),
       JSON.stringify([existingEntry], null, 2)
     );
-    vi.mocked(github.discoverVSCodeExtensions).mockResolvedValue([
-      discoveredChatwizard,
-    ]);
     vi.mocked(github.discoverFromRepos).mockResolvedValue([discoveredNewExt]);
 
-    await runDiscover('fake-token', 'Veverke');
+    await runDiscover('fake-token');
 
     const registry = JSON.parse(
       fs.readFileSync(path.join(tmpDir, 'extensions.json'), 'utf-8')
     ) as ExtensionEntry[];
-    // existingEntry already exists, discoveredChatwizard is a duplicate of it,
-    // discoveredNewExt is new from registry scan → 2 total
+    // existingEntry already exists, discoveredNewExt is new from registry scan → 2 total
     expect(registry).toHaveLength(2);
     expect(registry.map((e) => e.id)).toContain('Veverke.chatwizard');
     expect(registry.map((e) => e.id)).toContain('Veverke.new-ext');

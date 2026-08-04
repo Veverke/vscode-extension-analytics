@@ -12,8 +12,8 @@
 # notes, and publishes to both extension registries.
 #
 # Required secrets:
-#   MARKETPLACE_TOKEN  — VS Code Publisher PAT (https://marketplace.visualstudio.com/manage)
-#   OPEN_VSX_TOKEN     — Open VSX PAT (https://open-vsx.org/user-settings/tokens)
+#   VSCE_TOKEN  — VS Code Publisher PAT (https://marketplace.visualstudio.com/manage)
+#   OVSX_TOKEN     — Open VSX PAT (https://open-vsx.org/user-settings/tokens)
 name: Release
 
 on:
@@ -151,7 +151,7 @@ jobs:
         run: |
           cd extension
           npx vsce publish \
-            --pat "${{ secrets.MARKETPLACE_TOKEN }}" \
+            --pat "${{ secrets.VSCE_TOKEN }}" \
             --packagePath vscode-extension-analytics-${{ env.TAG }}.vsix
 
       # Publish to Open VSX Registry (unless dry-run)
@@ -160,7 +160,7 @@ jobs:
         run: |
           cd extension
           npx ovsx publish \
-            --pat "${{ secrets.OPEN_VSX_TOKEN }}" \
+            --pat "${{ secrets.OVSX_TOKEN }}" \
             vscode-extension-analytics-${{ env.TAG }}.vsix
 
   # ─── Job 3: GitHub Release ───────────────────────────────────────────────────

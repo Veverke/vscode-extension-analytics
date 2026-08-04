@@ -6,6 +6,12 @@ Analytics dashboard for tracking VS Code extension metrics over time.
 
 ---
 
+## Documentation
+
+- **User Guide** — a comprehensive guide covering the dashboard, charts, metrics, and troubleshooting: [docs/user-guide.md](docs/user-guide.md)
+
+---
+
 ## Features
 
 | Feature | Description |
@@ -183,12 +189,26 @@ Discovered extensions show one of two states:
 
 ### 3. Request Tracking (GitHub Issue)
 
-Click **"Track on GitHub"** on any untracked extension. This opens a pre-filled GitHub issue using the `add-extension.yml` template with:
-- Extension ID auto-populated in the title and body.
-- `tracking-request` label applied.
-- The issue is **auto-processed within seconds** by a GitHub Action that validates and adds the extension to `data/extensions.json`.
-- The issue is automatically closed with a success comment.
-- You'll get a GitHub notification when someone requests tracking.
+To request tracking for a new extension, click **"Track on GitHub"** on any untracked extension — or open an issue manually using the **Request Extension Tracking** template. This opens a GitHub issue with a `[Tracking Request]` title and the `tracking-request` label.
+
+| Issue Field | Required | Description |
+|---|---|---|
+| **Extension ID** | ✅ | The unique extension identifier in `publisher.name` format (e.g., `Veverke.chatwizard`) |
+| **GitHub Repository** | Optional | URL of the extension's source repository |
+| **Notes** | Optional | Additional context about the extension |
+
+#### Processing Workflow
+
+1. The issue is opened with the `tracking-request` label.
+2. The **Process Tracking Requests** GitHub Action triggers automatically on issue open/reopen.
+3. The action parses the issue body and validates the extension ID against the Marketplace/Open VSX registries.
+4. On success, the extension is added to `data/extensions.json` and the change is committed to the repository.
+5. A completion comment is posted — ✅ added, or ℹ️ skipped if the extension is already tracked.
+6. The issue is automatically closed.
+7. Analytics appear on the dashboard after the next data collection run (every 6 hours).
+8. If processing fails, the issue is reopened with a ⚠️ comment explaining the error so it can be fixed and retried.
+
+You'll get a GitHub notification whenever a tracking request is submitted or processed.
 
 ### 4. Overview Dashboard
 

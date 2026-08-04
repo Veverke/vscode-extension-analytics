@@ -88,10 +88,27 @@ The auto-discovery feature scans all public repositories of a GitHub user to fin
 
 ### Requesting Tracking
 
-For untracked extensions, click **"Track on GitHub"**. This opens a pre-filled GitHub issue in the analytics repository with:
-- The extension ID in the title and body.
-- A `tracking-request` label.
-- Instructions for the maintainer to add the extension to `data/extensions.json`.
+For untracked extensions, click **"Track on GitHub"** — or open an issue manually using the **Request Extension Tracking** template. Both approaches create a GitHub issue with a `[Tracking Request]` title and the `tracking-request` label.
+
+#### Issue Fields
+
+| Field | Required | Description |
+|---|---|---|
+| **Extension ID** | ✅ | The unique extension identifier in `publisher.name` format (e.g., `Veverke.chatwizard`) |
+| **GitHub Repository** | Optional | URL of the extension's source repository |
+| **Notes** | Optional | Additional context about the extension |
+
+#### Issue Request Workflow
+
+1. **Submit the request** — open the issue with the extension ID (and optional repository/notes). The `tracking-request` label is applied automatically.
+2. **Automatic processing** — the **Process Tracking Requests** GitHub Action triggers on issue open/reopen, parses the issue body, and validates the extension ID.
+3. **Registry update** — on success, the extension is added to `data/extensions.json` and committed to the repository.
+4. **Completion comment** — a comment is posted on the issue: ✅ if the extension was added, or ℹ️ if it was already tracked.
+5. **Issue closed** — the issue is closed automatically on success.
+6. **Analytics appear** — the extension's charts populate on the dashboard after the next data collection run (every 6 hours).
+7. **Failure handling** — if processing fails (e.g., invalid extension ID), the issue is reopened with a ⚠️ comment explaining the error; fix the issue details and it will be re-processed on reopen.
+
+> **Note:** You'll receive a GitHub notification whenever a tracking request is submitted or processed.
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "name": "vscode-extension-analytics",
   "displayName": "VS Code Extension Analytics",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Self-hosted, zero-cost time-series analytics dashboard for VS Code extension authors. Collects install counts, ratings, GitHub stats, and release data from Marketplace and Open VSX.",
   "author": "Avraham Y. Kahana",
   "license": "SEE LICENSE IN LICENSE",

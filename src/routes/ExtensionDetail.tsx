@@ -244,6 +244,7 @@ export default function ExtensionDetail() {
         <section className="chart-section" aria-label="Competitors">
           <h2>Competitors</h2>
           <CompetitorList
+            key={extension.id}
             extensionId={extension.id}
             yourInstalls={currentInstalls}
             yourRating={data.length > 0 ? data[data.length - 1].marketplace.averageRating : undefined}

@@ -318,6 +318,68 @@ describe('scanSingleRepo', () => {
     const result = await scanSingleRepo('Veverke/chatwizard', 'fake-token');
     expect(result).toBeNull();
   });
+
+  it('falls back to extension/package.json when root has no engines.vscode (monorepo)', async () => {
+    // The repo has a root package.json without engines.vscode,
+    // and an extension/package.json WITH engines.vscode
+    global.fetch = vi.fn()
+      .mockResolvedValueOnce({
+        status: 200,
+        ok: true,
+        json: () => Promise.resolve(nonExtensionPkgFixture),
+      })
+      .mockResolvedValueOnce({
+        status: 200,
+        ok: true,
+        json: () => Promise.resolve(extensionPkgFixture),
+      });
+
+    const result = await scanSingleRepo('Veverke/vscode-extension-analytics', 'fake-token');
+    expect(result).not.toBeNull();
+    expect(result!.extensionId).toBe('Veverke.chatwizard');
+  });
+
+  it('falls back to extension/package.json when root returns 404 (monorepo)', async () => {
+    global.fetch = vi.fn()
+      .mockResolvedValueOnce({
+        status: 404,
+        ok: false,
+        json: () => Promise.resolve({ message: 'Not Found' }),
+        text: () => Promise.resolve('Not Found'),
+      })
+      .mockResolvedValueOnce({
+        status: 200,
+        ok: true,
+        json: () => Promise.resolve(extensionPkgFixture),
+      });
+
+    const result = await scanSingleRepo('Veverke/vscode-extension-analytics', 'fake-token');
+    expect(result).not.toBeNull();
+    expect(result!.extensionId).toBe('Veverke.chatwizard');
+  });
+
+  it('returns null when both root and extension/package.json are missing (404)', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      status: 404,
+      ok: false,
+      json: () => Promise.resolve({ message: 'Not Found' }),
+      text: () => Promise.resolve('Not Found'),
+    });
+
+    const result = await scanSingleRepo('Veverke/ghost', 'fake-token');
+    expect(result).toBeNull();
+  });
+
+  it('returns null when both root and extension/package.json lack engines.vscode', async () => {
+    global.fetch = vi.fn().mockResolvedValue({
+      status: 200,
+      ok: true,
+      json: () => Promise.resolve(nonExtensionPkgFixture),
+    });
+
+    const result = await scanSingleRepo('Veverke/some-website', 'fake-token');
+    expect(result).toBeNull();
+  });
 });
 
 describe('discoverFromRepos', () => {

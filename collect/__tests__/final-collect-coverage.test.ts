@@ -74,8 +74,8 @@ describe('github.ts — remaining coverage', () => {
 
     const { discoverVSCodeExtensions } = await import('../github.js');
     const results = await discoverVSCodeExtensions('owner', 'fake-token', { perPage: 100 });
-    // Should have 1 page call + 1 package.json call = 2 total calls
-    expect(callCount).toBe(2);
+    // Should have 1 page call + 1 root package.json (404) + 1 extension/package.json (404) = 3 total calls
+    expect(callCount).toBe(3);
     expect(results).toHaveLength(0);
   });
 });

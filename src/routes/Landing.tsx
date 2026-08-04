@@ -67,7 +67,7 @@ export default function Landing() {
               id="github-username"
               type="text"
               className={`landing__input${validationError ? ' landing__input--error' : ''}`}
-              placeholder="e.g. Veverke"
+              placeholder="e.g. your-github-username"
               value={inputValue}
               onChange={(e) => {
                 setInputValue(e.target.value)

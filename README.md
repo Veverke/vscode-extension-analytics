@@ -167,7 +167,7 @@ If you prefer to run your own instance (data collection on your GitHub Actions, 
    ```bash
    npm install
    npm run build          # builds frontend
-   git push origin main   # triggers GitHub Pages deploy
+   git push origin master # triggers GitHub Pages deploy
    ```
 5. **Add extensions to track** in `data/extensions.json`, or use the auto-discovery feature from the frontend.
 

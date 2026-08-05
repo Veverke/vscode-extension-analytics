@@ -1,6 +1,6 @@
 # CI — Continuous Integration
 #
-# Purpose: Gate every pull request and push to main with a full quality check.
+# Purpose: Gate every pull request and push to master with a full quality check.
 # Runs linting, TypeScript type-checking, unit tests with coverage reporting,
 # and Playwright E2E tests. Must pass before any code is merged or deployed.
 # Skips data-only and documentation-only commits to avoid unnecessary runs.
@@ -11,7 +11,7 @@ on:
     branches:
       - '**'
   push:
-    branches: [main]
+    branches: [master]
     paths-ignore:
       - "data/**"
       - "*.md"

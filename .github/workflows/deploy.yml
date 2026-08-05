@@ -1,7 +1,7 @@
 # Deploy to GitHub Pages
 #
 # Purpose: Builds the React/Vite frontend and publishes it to GitHub Pages
-# whenever source code changes are pushed to main. Intentionally skips runs
+# whenever source code changes are pushed to master. Intentionally skips runs
 # triggered solely by data collection commits (data/** changes) or collector
 # script changes, since those do not affect the built frontend bundle.
 # Can also be triggered manually via workflow_dispatch for out-of-band deploys.
@@ -9,7 +9,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths-ignore:
       - "data/**"
       - "collect/**"

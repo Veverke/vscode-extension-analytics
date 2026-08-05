@@ -12,7 +12,7 @@ The system is composed of three decoupled layers:
 └──────────────────────────┬──────────────────────────────┘
                            │ git push triggers GH Pages build
 ┌──────────────────────────▼──────────────────────────────┐
-│  STORAGE (GitHub repo — /data branch or main)           │
+│  STORAGE (GitHub repo — /data directory on master)      │
 │  Append-only JSON time series, one file per extension   │
 │  e.g. data/veverke.chatwizard.json                      │
 └──────────────────────────┬──────────────────────────────┘
@@ -106,14 +106,14 @@ The system is composed of three decoupled layers:
 
 ### Storage
 
-- Plain JSON files in the `main` branch under `/data/`
+- Plain JSON files in the `master` branch under `/data/`
 - Committed by the Actions bot after each successful collection run
 - Git history provides full audit log at no extra cost
 
 ### Frontend
 
 - Stack: React 18 + Vite + TypeScript
-- Hosting: GitHub Pages (`gh-pages` branch), deployed via GitHub Actions on every push to `main`
+- Hosting: GitHub Pages (`gh-pages` branch), deployed via GitHub Actions on every push to `master`
 - Routing: React Router (hash-based for GH Pages compatibility)
 - Charts: Recharts (composable, TypeScript-native)
 - Analytics: `regression-js` (projections), custom JS (velocity, acceleration, peaks)
@@ -222,7 +222,7 @@ vscode-extension-analytics/
 │   └── workflows/
 │       ├── collect.yml          # Cron: fetch stats, commit JSON
 │       ├── discover.yml         # Weekly: auto-discover new extensions
-│       └── deploy.yml           # Push to main: build & deploy GH Pages
+│       └── deploy.yml           # Push to master: build & deploy GH Pages
 ├── collect/
 │   ├── index.ts                 # Entry point — orchestrates collection
 │   ├── marketplace.ts           # VS Marketplace API client

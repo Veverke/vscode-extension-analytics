@@ -111,7 +111,7 @@ describe('dataLoader', () => {
       const result = await loadData('./data/extensions.json');
 
       expect(fetch).toHaveBeenCalledWith(
-        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/extensions.json',
+        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/master/data/extensions.json',
       );
       expect(result).toEqual(FIXTURE_DATA);
     });
@@ -128,7 +128,7 @@ describe('dataLoader', () => {
       await loadData('./data/Veverke.chatwizard.json');
 
       expect(fetch).toHaveBeenCalledWith(
-        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/Veverke.chatwizard.json',
+        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/master/data/Veverke.chatwizard.json',
       );
     });
 
@@ -175,7 +175,7 @@ describe('dataLoader', () => {
       expect(result).toBeNull();
 
       expect(fetch).toHaveBeenCalledWith(
-        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/test.releases.json',
+        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/master/data/test.releases.json',
       );
     });
 
@@ -194,7 +194,7 @@ describe('dataLoader', () => {
 
       expect(fetch).toHaveBeenCalledTimes(1);
       expect(fetch).toHaveBeenCalledWith(
-        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/extensions.json',
+        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/master/data/extensions.json',
       );
       expect(result).toEqual(FIXTURE_DATA);
     });
@@ -219,7 +219,7 @@ describe('dataLoader', () => {
       expect(fetchMock).toHaveBeenCalledTimes(2);
       expect(fetchMock).toHaveBeenNthCalledWith(
         1,
-        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/extensions.json',
+        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/master/data/extensions.json',
       );
       expect(fetchMock).toHaveBeenNthCalledWith(
         2,
@@ -252,7 +252,7 @@ describe('dataLoader', () => {
       expect(fetchMock).toHaveBeenCalledTimes(2);
       expect(fetchMock).toHaveBeenNthCalledWith(
         1,
-        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/extensions.json',
+        'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/master/data/extensions.json',
       );
       expect(fetchMock).toHaveBeenNthCalledWith(
         2,

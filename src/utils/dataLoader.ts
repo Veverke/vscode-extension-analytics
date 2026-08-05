@@ -23,7 +23,7 @@ declare global {
 }
 
 const GITHUB_RAW_BASE =
-  'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/main/data/';
+  'https://raw.githubusercontent.com/Veverke/vscode-extension-analytics/master/data/';
 const DATA_PREFIX = './data/';
 
 /**

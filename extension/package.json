@@ -2,7 +2,7 @@
   "name": "vscode-extension-analytics",
   "displayName": "VS Code Extension Analytics",
   "description": "View analytics and trends for tracked VS Code extensions directly inside VS Code",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publisher": "Veverke",
   "author": "Avraham Y. Kahana",
   "license": "MIT",

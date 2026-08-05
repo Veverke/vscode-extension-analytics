@@ -7,6 +7,10 @@ export default function Layout() {
   const extensions = useExtensionsContext()
   const { username, clearUsername } = useUser()
 
+  const sortedExtensions = [...extensions].sort((a, b) =>
+    a.displayName.localeCompare(b.displayName, undefined, { sensitivity: 'base' })
+  )
+
   return (
     <div className="app">
       <header className="app__header">
@@ -30,8 +34,13 @@ export default function Layout() {
       <div className="app__body">
         {extensions.length > 0 && (
           <nav className="app__sidebar" aria-label="Extension navigation">
+            <div className="sidebar__overview-link">
+              <NavLink to="/overview" className="sidebar__link">
+                📊 Overview
+              </NavLink>
+            </div>
             <ul className="sidebar__list">
-              {extensions.map(ext => (
+              {sortedExtensions.map(ext => (
                 <li key={ext.id} className="sidebar__item">
                   <NavLink
                     to={`/extension/${ext.id}`}
@@ -57,11 +66,6 @@ export default function Layout() {
                 </li>
               ))}
             </ul>
-            <div className="sidebar__overview-link">
-              <NavLink to="/overview" className="sidebar__link">
-                📊 Overview
-              </NavLink>
-            </div>
           </nav>
         )}
         <main className="app__main">

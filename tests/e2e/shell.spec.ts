@@ -12,9 +12,11 @@ test.describe('App shell', () => {
   test('clicking an extension link navigates to its detail page', async ({ page }) => {
     await page.goto('/#/overview')
     const nav = page.getByRole('navigation', { name: 'Extension navigation' })
-    const firstLink = nav.getByRole('link').first()
-    const linkText = await firstLink.textContent()
-    await firstLink.click()
+    // The sidebar contains an "Overview" link first, then extension links.
+    // Target only the extension links (href contains /extension/).
+    const firstExtensionLink = nav.locator('a[href*="/extension/"]').first()
+    const linkText = await firstExtensionLink.textContent()
+    await firstExtensionLink.click()
     await expect(page).toHaveURL(/#\/extension\//)
     await expect(page.getByRole('heading', { name: linkText ?? '' })).toBeVisible()
   })

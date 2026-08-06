@@ -3927,5 +3927,113 @@
         "reviews": 0
       }
     }
+  },
+  {
+    "ts": "2026-08-05T12:36:32.303Z",
+    "marketplace": {
+      "installs": 215,
+      "updates": 83,
+      "averageRating": 5,
+      "ratingCount": 1,
+      "trendingWeekly": 6.5420560747663545,
+      "trendingMonthly": 33.177570093457945
+    },
+    "openVsx": {
+      "downloads": 2214,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 6,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-08-05T18:32:46.376Z",
+    "marketplace": {
+      "installs": 215,
+      "updates": 83,
+      "averageRating": 5,
+      "ratingCount": 1,
+      "trendingWeekly": 6.046511627906977,
+      "trendingMonthly": 32.093023255813954
+    },
+    "openVsx": {
+      "downloads": 2214,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 6,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-08-06T00:26:33.144Z",
+    "marketplace": {
+      "installs": 215,
+      "updates": 83,
+      "averageRating": 5,
+      "ratingCount": 1,
+      "trendingWeekly": 6.046511627906977,
+      "trendingMonthly": 32.093023255813954
+    },
+    "openVsx": {
+      "downloads": 2216,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 6,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-08-06T06:54:55.891Z",
+    "marketplace": {
+      "installs": 215,
+      "updates": 83,
+      "averageRating": 5,
+      "ratingCount": 1,
+      "trendingWeekly": 5.116279069767442,
+      "trendingMonthly": 30.697674418604652
+    },
+    "openVsx": {
+      "downloads": 2216,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 6,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
   }
 ]

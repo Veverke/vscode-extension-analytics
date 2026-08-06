@@ -231,6 +231,12 @@ describe('InstallsChart buildChartData — OpenVSX projections', () => {
 
 describe('Layout — sidebar icon error handler', () => {
   it('hides icon on image error in sidebar', () => {
+    // Layout now calls useCollectSchedule which fetches extension data
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve([]),
+    }))
+
     render(
       <ExtensionsContext.Provider value={fixtureExtensions}>
         <MemoryRouter>
@@ -247,6 +253,10 @@ describe('Layout — sidebar icon error handler', () => {
     const firstImg = sidebarImages[0] as HTMLImageElement
     fireEvent.error(firstImg)
     expect(firstImg.style.display).toBe('none')
+
+    // Restore the global fetch so later marketplaceApi tests (which assign
+    // global.fetch directly) are not affected by this stub.
+    vi.unstubAllGlobals()
   })
 })
 

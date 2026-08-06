@@ -1,11 +1,17 @@
 import { NavLink, Link, Outlet } from 'react-router-dom'
 import { useExtensionsContext } from '../contexts/ExtensionsContext'
 import { useUser } from '../contexts/UserContext'
+import {
+  useCollectSchedule,
+  formatCollectTime,
+  COLLECT_SCHEDULE_LABEL,
+} from '../hooks/useCollectSchedule'
 import { getExtensionIconUrl } from '../utils/icons'
 
 export default function Layout() {
   const extensions = useExtensionsContext()
   const { username, clearUsername } = useUser()
+  const { lastRun, nextRun } = useCollectSchedule(extensions)
 
   const sortedExtensions = [...extensions].sort((a, b) =>
     a.displayName.localeCompare(b.displayName, undefined, { sensitivity: 'base' })
@@ -19,6 +25,17 @@ export default function Layout() {
             VS Code Extension Analytics
           </Link>
         </h1>
+        <div className="app__collect-schedule" title={COLLECT_SCHEDULE_LABEL}>
+          <span className="app__collect-schedule-item">
+            <span className="app__collect-schedule-label">Last run</span>
+            <span className="app__collect-schedule-value">{formatCollectTime(lastRun)}</span>
+          </span>
+          <span className="app__collect-schedule-separator">·</span>
+          <span className="app__collect-schedule-item">
+            <span className="app__collect-schedule-label">Next run</span>
+            <span className="app__collect-schedule-value">{formatCollectTime(nextRun)}</span>
+          </span>
+        </div>
         {username && (
           <div className="app__user-bar">
             <span className="app__user-name">{username}</span>

@@ -1756,6 +1756,42 @@ ol {
 }
 
 /* ============================================================
+   COLLECT SCHEDULE IN HEADER
+   ============================================================ */
+.app__collect-schedule {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-left: auto;
+  margin-right: var(--space-lg);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-dim);
+  white-space: nowrap;
+}
+
+.app__collect-schedule-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.app__collect-schedule-label {
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.app__collect-schedule-value {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  color: var(--color-text-muted);
+}
+
+.app__collect-schedule-separator {
+  color: var(--color-border);
+}
+
+/* ============================================================
    USER BAR IN HEADER
    ============================================================ */
 .app__user-bar {
@@ -1826,6 +1862,18 @@ ol {
   }
 
   .app__user-name {
+    display: none;
+  }
+
+  .app__collect-schedule {
+    margin-right: var(--space-md);
+    font-size: var(--font-size-xs);
+    gap: var(--space-xs);
+  }
+}
+
+@media (max-width: 640px) {
+  .app__collect-schedule-label {
     display: none;
   }
 }

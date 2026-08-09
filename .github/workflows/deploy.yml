@@ -14,6 +14,11 @@ on:
       - "data/**"
       - "collect/**"
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Collect Extension Stats"]
+    types:
+      - completed
+    branches: [master]
 
 permissions:
   contents: read
@@ -22,6 +27,7 @@ permissions:
 
 jobs:
   deploy:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     environment:
       name: github-pages

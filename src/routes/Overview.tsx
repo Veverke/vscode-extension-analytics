@@ -8,7 +8,7 @@ import Sparkline from '../components/charts/Sparkline'
 import VelocityBadge from '../components/cards/VelocityBadge'
 import MomentumBadge from '../components/cards/MomentumBadge'
 
-export type OverviewSortField = 'displayName' | 'currentInstalls' | 'velocity' | 'momentum'
+export type OverviewSortField = 'displayName' | 'currentInstalls' | 'currentDownloads' | 'velocity' | 'momentum'
 
 const SKELETON_ROW_COUNT = 3
 
@@ -16,6 +16,7 @@ function SkeletonRow() {
   return (
     <tr className="overview__skeleton-row" aria-hidden="true">
       <td><span className="skeleton skeleton--text" style={{ width: 120, height: 14, display: 'inline-block', background: '#e5e7eb', borderRadius: 4 }} /></td>
+      <td><span className="skeleton skeleton--text" style={{ width: 60, height: 14, display: 'inline-block', background: '#e5e7eb', borderRadius: 4 }} /></td>
       <td><span className="skeleton skeleton--text" style={{ width: 60, height: 14, display: 'inline-block', background: '#e5e7eb', borderRadius: 4 }} /></td>
       <td><span className="skeleton skeleton--sparkline" style={{ width: 80, height: 28, display: 'inline-block', background: '#e5e7eb', borderRadius: 4 }} /></td>
       <td><span className="skeleton skeleton--badge" style={{ width: 50, height: 14, display: 'inline-block', background: '#e5e7eb', borderRadius: 4 }} /></td>
@@ -37,6 +38,9 @@ export function sortSummaries(
         break
       case 'currentInstalls':
         diff = a.currentInstalls - b.currentInstalls
+        break
+      case 'currentDownloads':
+        diff = a.currentDownloads - b.currentDownloads
         break
       case 'velocity':
         diff = a.velocity - b.velocity
@@ -153,6 +157,12 @@ export default function Overview() {
             >
               Installs{sortIndicator('currentInstalls')}
             </th>
+            <th
+              style={{ cursor: 'pointer' }}
+              onClick={() => handleSort('currentDownloads')}
+            >
+              Downloads{sortIndicator('currentDownloads')}
+            </th>
             <th>Trend</th>
             <th
               style={{ cursor: 'pointer' }}
@@ -188,6 +198,7 @@ export default function Overview() {
                     </Link>
                   </td>
                   <td>{summary.currentInstalls.toLocaleString()}</td>
+                  <td>{summary.currentDownloads.toLocaleString()}</td>
                   <td>
                     <Sparkline points={summary.sparklinePoints} />
                   </td>
@@ -221,7 +232,7 @@ export default function Overview() {
                       extId
                     )}
                   </td>
-                  <td colSpan={4}>
+                  <td colSpan={5}>
                     <span
                       className="overview__error-icon"
                       role="img"

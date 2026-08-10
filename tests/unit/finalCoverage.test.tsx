@@ -45,6 +45,7 @@ describe('sortSummaries — momentum sort (default case)', () => {
     extension: { ...baseExt, id: displayName.toLowerCase().replace(/\s/g, '.'), displayName },
     data: [],
     currentInstalls,
+    currentDownloads: 0,
     velocity,
     momentum,
     sparklinePoints: [],

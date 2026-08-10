@@ -8,6 +8,7 @@ export interface ExtensionSummary {
   extension: ExtensionEntry;
   data: DataPoint[];
   currentInstalls: number;
+  currentDownloads: number; // most recent open vsx download count
   velocity: number; // most recent velocity value
   momentum: number; // computeMomentum result
   sparklinePoints: number[]; // last 14 install values for sparkline
@@ -57,6 +58,8 @@ export function useAllExtensionsData(
         const momentum = computeMomentum(data);
         const currentInstalls =
           data.length > 0 ? data[data.length - 1].marketplace.installs : 0;
+        const currentDownloads =
+          data.length > 0 ? data[data.length - 1].openVsx?.downloads ?? 0 : 0;
         const sparklinePoints = data
           .slice(-14)
           .map((p) => p.marketplace.installs);
@@ -65,6 +68,7 @@ export function useAllExtensionsData(
           extension: ext,
           data,
           currentInstalls,
+          currentDownloads,
           velocity: currentVelocity,
           momentum,
           sparklinePoints,

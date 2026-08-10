@@ -138,6 +138,37 @@ test.describe('Overview Dashboard', () => {
     expect(firstScore).toBeGreaterThanOrEqual(lastScore)
   })
 
+  test('downloads column renders open vsx download counts', async ({ page }) => {
+    await page.goto('/#/overview')
+
+    await expect(page.getByRole('heading', { name: 'Your Extensions' })).toBeVisible({
+      timeout: 10000,
+    })
+
+    // Downloads column header exists
+    await expect(page.getByRole('columnheader', { name: /Downloads/ })).toBeVisible()
+
+    // Chat Wizard has openVsx downloads (1,998); others have null → 0
+    const table = page.getByRole('table', { name: 'Extensions overview' })
+    const chatWizardRow = table.locator('tbody tr', { hasText: 'Chat Wizard' })
+    await expect(chatWizardRow).toContainText('1,998')
+  })
+
+  test('sort by downloads — highest download count row appears first', async ({ page }) => {
+    await page.goto('/#/overview')
+
+    await expect(page.getByRole('heading', { name: 'Your Extensions' })).toBeVisible({
+      timeout: 10000,
+    })
+
+    // Click Downloads column header
+    await page.getByRole('columnheader', { name: /Downloads/ }).click()
+
+    // Chat Wizard has 1998 downloads — should be first after sort
+    const firstRow = page.locator('tbody tr').first()
+    await expect(firstRow).toContainText('Chat Wizard')
+  })
+
   test('sort by installs — highest install count row appears first', async ({ page }) => {
     await page.goto('/#/overview')
 

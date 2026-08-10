@@ -13,6 +13,7 @@ function makeSummary(overrides: Partial<ExtensionSummary> & { id: string }): Ext
     extension: { id: overrides.id, displayName: overrides.extension?.displayName ?? overrides.id, ...baseExtension },
     data: overrides.data ?? [],
     currentInstalls: overrides.currentInstalls ?? 0,
+    currentDownloads: overrides.currentDownloads ?? 0,
     velocity: overrides.velocity ?? 0,
     momentum: overrides.momentum ?? 0,
     sparklinePoints: overrides.sparklinePoints ?? [],
@@ -22,9 +23,9 @@ function makeSummary(overrides: Partial<ExtensionSummary> & { id: string }): Ext
 describe('sortSummaries', () => {
   const baseEntry = { namespace: 'test', githubRepo: 'test/repo', trackedSince: '2026-01-01' }
   const summaries = [
-    makeSummary({ id: 'ext-a', extension: { id: 'ext-a', name: 'ext-a', displayName: 'Alpha', ...baseEntry }, currentInstalls: 100, velocity: 5, momentum: 0.8 }),
-    makeSummary({ id: 'ext-b', extension: { id: 'ext-b', name: 'ext-b', displayName: 'Beta', ...baseEntry }, currentInstalls: 200, velocity: 3, momentum: 0.5 }),
-    makeSummary({ id: 'ext-c', extension: { id: 'ext-c', name: 'ext-c', displayName: 'Gamma', ...baseEntry }, currentInstalls: 50, velocity: 10, momentum: 0.2 }),
+    makeSummary({ id: 'ext-a', extension: { id: 'ext-a', name: 'ext-a', displayName: 'Alpha', ...baseEntry }, currentInstalls: 100, currentDownloads: 1000, velocity: 5, momentum: 0.8 }),
+    makeSummary({ id: 'ext-b', extension: { id: 'ext-b', name: 'ext-b', displayName: 'Beta', ...baseEntry }, currentInstalls: 200, currentDownloads: 2000, velocity: 3, momentum: 0.5 }),
+    makeSummary({ id: 'ext-c', extension: { id: 'ext-c', name: 'ext-c', displayName: 'Gamma', ...baseEntry }, currentInstalls: 50, currentDownloads: 500, velocity: 10, momentum: 0.2 }),
   ]
 
   it('sorts by displayName ascending', () => {
@@ -49,6 +50,18 @@ describe('sortSummaries', () => {
     const result = sortSummaries(summaries, 'currentInstalls', false)
     expect(result[0].currentInstalls).toBe(200)
     expect(result[2].currentInstalls).toBe(50)
+  })
+
+  it('sorts by currentDownloads ascending', () => {
+    const result = sortSummaries(summaries, 'currentDownloads', true)
+    expect(result[0].currentDownloads).toBe(500)
+    expect(result[2].currentDownloads).toBe(2000)
+  })
+
+  it('sorts by currentDownloads descending', () => {
+    const result = sortSummaries(summaries, 'currentDownloads', false)
+    expect(result[0].currentDownloads).toBe(2000)
+    expect(result[2].currentDownloads).toBe(500)
   })
 
   it('sorts by velocity ascending', () => {

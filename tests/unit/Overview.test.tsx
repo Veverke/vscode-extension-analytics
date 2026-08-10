@@ -120,6 +120,39 @@ describe('Overview', () => {
     expect(scores[0]).toBeGreaterThanOrEqual(scores[scores.length - 1])
   })
 
+  it('renders Downloads column with open vsx download counts', async () => {
+    mockFetchForMulti()
+    renderOverview()
+
+    await waitFor(() =>
+      expect(screen.queryAllByRole('link').length).toBeGreaterThanOrEqual(3)
+    )
+
+    // Downloads header exists
+    expect(screen.getByText(/^Downloads/)).toBeInTheDocument()
+
+    // Chat Wizard has openVsx downloads (1,998); others have null → 0
+    const rows = screen.getAllByRole('row').slice(1)
+    const chatWizardRow = rows.find(r => r.textContent?.includes('Chat Wizard'))
+    expect(chatWizardRow).toHaveTextContent('1,998')
+  })
+
+  it('clicking Downloads header sorts by currentDownloads descending', async () => {
+    mockFetchForMulti()
+    renderOverview()
+
+    await waitFor(() =>
+      expect(screen.queryAllByRole('link').length).toBeGreaterThanOrEqual(3)
+    )
+
+    const downloadsHeader = screen.getByText(/^Downloads/)
+    fireEvent.click(downloadsHeader)
+
+    // After sort by downloads desc, chat-wizard (1998) should be first
+    const rows = screen.getAllByRole('row').slice(1)
+    expect(rows[0]).toHaveTextContent('Chat Wizard')
+  })
+
   it('clicking Installs header sorts by currentInstalls descending', async () => {
     mockFetchForMulti()
     renderOverview()

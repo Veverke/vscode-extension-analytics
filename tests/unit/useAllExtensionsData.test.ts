@@ -45,6 +45,7 @@ describe('useAllExtensionsData', () => {
     expect(typeof result.current.results[0].velocity).toBe('number');
     expect(typeof result.current.results[0].momentum).toBe('number');
     expect(result.current.results[0].currentInstalls).toBe(0);
+    expect(result.current.results[0].currentDownloads).toBe(0);
     expect(result.current.results[0].sparklinePoints).toEqual([]);
     expect(Object.keys(result.current.errors)).toHaveLength(0);
   });

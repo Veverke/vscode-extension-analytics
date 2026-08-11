@@ -54,6 +54,8 @@ jobs:
               const result = output.results[0];
               if (result.action === 'added') {
                 commentBody = `✅ ${result.message}\n\nThe extension has been added to the tracking registry and will appear in analytics after the next data collection run.`;
+              } else if (result.action === 'updated') {
+                commentBody = `ℹ️ ${result.message}\n\nThe extension is now associated with your account and will appear in your dashboard.`;
               } else if (result.action === 'skipped') {
                 commentBody = `ℹ️ ${result.message}`;
               }

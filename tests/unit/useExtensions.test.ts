@@ -154,7 +154,7 @@ describe('useExtensions', () => {
       expect(result.current.extensions).toHaveLength(4)
     })
 
-    it('filters to only matching user and legacy entries', async () => {
+    it('filters to only matching user extensions', async () => {
       vi.stubGlobal(
         'fetch',
         vi.fn().mockResolvedValue({
@@ -167,15 +167,15 @@ describe('useExtensions', () => {
 
       await waitFor(() => expect(result.current.loading).toBe(false))
 
-      expect(result.current.extensions).toHaveLength(3)
+      expect(result.current.extensions).toHaveLength(2)
       const ids = result.current.extensions.map(e => e.id)
       expect(ids).toContain('user1.ext-a')
       expect(ids).toContain('user1.ext-b')
-      expect(ids).toContain('legacy.ext') // legacy entries without requestedBy pass through
+      expect(ids).not.toContain('legacy.ext') // legacy entries without requestedBy are NOT shown to any user
       expect(ids).not.toContain('user2.ext-c')
     })
 
-    it('filters to only user2 extensions and legacy', async () => {
+    it('filters to only user2 extensions', async () => {
       vi.stubGlobal(
         'fetch',
         vi.fn().mockResolvedValue({
@@ -188,10 +188,10 @@ describe('useExtensions', () => {
 
       await waitFor(() => expect(result.current.loading).toBe(false))
 
-      expect(result.current.extensions).toHaveLength(2)
+      expect(result.current.extensions).toHaveLength(1)
       const ids = result.current.extensions.map(e => e.id)
       expect(ids).toContain('user2.ext-c')
-      expect(ids).toContain('legacy.ext')
+      expect(ids).not.toContain('legacy.ext')
       expect(ids).not.toContain('user1.ext-a')
     })
 
@@ -216,13 +216,54 @@ describe('useExtensions', () => {
 
       await waitFor(() => {
         expect(fetchMock).toHaveBeenCalledTimes(2)
-        expect(result.current.extensions).toHaveLength(3)
+        expect(result.current.extensions).toHaveLength(2)
       })
       const ids = result.current.extensions.map(e => e.id)
       expect(ids).toContain('user1.ext-a')
       expect(ids).toContain('user1.ext-b')
-      expect(ids).toContain('legacy.ext')
+      expect(ids).not.toContain('legacy.ext')
       expect(ids).not.toContain('user2.ext-c')
+    })
+
+    it('clears stale extensions and shows loading when username changes', async () => {
+      let resolveFetch!: (res: object) => void
+      const fetchMock = vi.fn().mockReturnValue(
+        new Promise(resolve => { resolveFetch = resolve })
+      )
+      vi.stubGlobal('fetch', fetchMock)
+
+      const { result, rerender } = renderHook(
+        (username?: string) => useExtensions(username),
+        { initialProps: 'user1' },
+      )
+
+      // Resolve the first fetch with user1's data
+      await act(async () => {
+        resolveFetch({ ok: true, json: () => Promise.resolve(mixedFixture) })
+        await new Promise<void>(r => setTimeout(r, 0))
+      })
+
+      expect(result.current.extensions).toHaveLength(2)
+      expect(result.current.loading).toBe(false)
+
+      // Change username — state must reset immediately (no stale extensions)
+      rerender('user2')
+
+      // Stale extensions from user1 must be cleared and loading must be true
+      expect(result.current.extensions).toEqual([])
+      expect(result.current.loading).toBe(true)
+
+      // Resolve the second fetch with user2's data
+      await act(async () => {
+        resolveFetch({ ok: true, json: () => Promise.resolve(mixedFixture) })
+        await new Promise<void>(r => setTimeout(r, 0))
+      })
+
+      expect(result.current.loading).toBe(false)
+      const ids = result.current.extensions.map(e => e.id)
+      expect(ids).toContain('user2.ext-c')
+      expect(ids).not.toContain('legacy.ext')
+      expect(ids).not.toContain('user1.ext-a')
     })
   })
 })

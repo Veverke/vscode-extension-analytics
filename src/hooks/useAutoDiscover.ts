@@ -95,10 +95,34 @@ function parsePackageJson(raw: string): PackageJson | null {
 }
 
 /**
- * Checks whether a parsed `package.json` is a VS Code extension.
+ * Determines whether a parsed `package.json` is a VS Code extension.
  */
 function isVSCodeExtension(pkg: PackageJson): boolean {
   return !!pkg.engines?.vscode
+}
+
+/**
+ * Converts a parsed package.json that is known to be a VS Code extension
+ * into a DiscoveredExtension result. Returns null if publisher or name
+ * are absent.
+ */
+function buildExtension(
+  repoFullName: string,
+  pkg: PackageJson
+): DiscoveredExtension | null {
+  const namespace = pkg.publisher ?? ''
+  const name = pkg.name ?? ''
+  const displayName = pkg.displayName ?? name
+
+  if (!namespace || !name) return null
+
+  return {
+    extensionId: `${namespace}.${name}`,
+    namespace,
+    name,
+    displayName,
+    githubRepo: repoFullName,
+  }
 }
 
 /**
@@ -161,26 +185,22 @@ export function useAutoDiscover(): UseAutoDiscoverResult {
       // ── Step 2: Check each repo for a VS Code extension package.json ──
       const repoChecks = repos.map(async (repo): Promise<DiscoveredExtension | null> => {
         try {
-          // Try root package.json first, then extension/package.json for monorepos
-          const pkg = await tryFetchPackageJson(repo.full_name, 'package.json', headers)
-            ?? await tryFetchPackageJson(repo.full_name, 'extension/package.json', headers);
-          if (!pkg) return null;
-
-          if (!isVSCodeExtension(pkg)) return null;
-
-          const namespace = pkg.publisher ?? ''
-          const name = pkg.name ?? ''
-          const displayName = pkg.displayName ?? name
-
-          if (!namespace || !name) return null
-
-          return {
-            extensionId: `${namespace}.${name}`,
-            namespace,
-            name,
-            displayName,
-            githubRepo: repo.full_name,
+          // Check the root package.json first.
+          const rootPkg = await tryFetchPackageJson(repo.full_name, 'package.json', headers)
+          if (rootPkg && isVSCodeExtension(rootPkg)) {
+            return buildExtension(repo.full_name, rootPkg)
           }
+
+          // Fall back to extension/package.json for monorepos. A root
+          // package.json may exist without being a VS Code extension (e.g. a
+          // web app whose extension lives in a subdirectory) — in that case we
+          // still need to check the subdirectory.
+          const extPkg = await tryFetchPackageJson(repo.full_name, 'extension/package.json', headers)
+          if (extPkg && isVSCodeExtension(extPkg)) {
+            return buildExtension(repo.full_name, extPkg)
+          }
+
+          return null
         } catch {
           // Silently skip repos that fail (network issues, etc.)
           return null
@@ -224,13 +244,14 @@ export function isExtensionTracked(
 
 /**
  * Filters the registry to only include extensions that match the given user.
+ * When a username is provided, only extensions explicitly requested by that
+ * user are returned — legacy entries without a requestedBy are NOT shown to
+ * any specific user (they are only visible when no username is set).
  */
 export function filterExtensionsByUser(
   extensions: ExtensionEntry[],
   username: string | null
 ): ExtensionEntry[] {
   if (!username) return extensions
-  return extensions.filter(
-    (e) => !e.requestedBy || e.requestedBy === username
-  )
+  return extensions.filter((e) => e.requestedBy === username)
 }

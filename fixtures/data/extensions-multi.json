@@ -5,7 +5,8 @@
     "name": "chatwizard",
     "displayName": "Chat Wizard",
     "githubRepo": "Veverke/ChatWizard",
-    "trackedSince": "2026-05-20T12:00:00.000Z"
+    "trackedSince": "2026-05-20T12:00:00.000Z",
+    "requestedBy": "Veverke"
   },
   {
     "id": "Veverke.fast-grower",
@@ -13,7 +14,8 @@
     "name": "fast-grower",
     "displayName": "Fast Grower",
     "githubRepo": "Veverke/fast-grower",
-    "trackedSince": "2026-05-20T12:00:00.000Z"
+    "trackedSince": "2026-05-20T12:00:00.000Z",
+    "requestedBy": "Veverke"
   },
   {
     "id": "Veverke.slow-grower",
@@ -21,6 +23,7 @@
     "name": "slow-grower",
     "displayName": "Slow Grower",
     "githubRepo": "Veverke/slow-grower",
-    "trackedSince": "2026-05-20T12:00:00.000Z"
+    "trackedSince": "2026-05-20T12:00:00.000Z",
+    "requestedBy": "Veverke"
   }
 ]

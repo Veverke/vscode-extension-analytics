@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor, act } from '@testing-library/react';
 import { useAllExtensionsData } from '../../src/hooks/useAllExtensionsData';
 import type { ExtensionEntry } from '../../src/types/schema';
 
@@ -76,5 +76,52 @@ describe('useAllExtensionsData', () => {
 
     expect(result.current.results).toHaveLength(0);
     expect(result.current.errors['Veverke.chatwizard']).toBe('Failed to load');
+  });
+
+  it('clears stale results and shows loading when extensions change', async () => {
+    let resolveFetch!: (res: object) => void;
+    const fetchMock = vi.fn().mockReturnValue(
+      new Promise(resolve => { resolveFetch = resolve })
+    );
+    vi.stubGlobal('fetch', fetchMock);
+
+    const secondExtension: ExtensionEntry = {
+      id: 'Veverke.fast-grower',
+      namespace: 'Veverke',
+      name: 'fast-grower',
+      displayName: 'Fast Grower',
+      githubRepo: 'Veverke/fast-grower',
+      trackedSince: '2026-05-20T12:00:00.000Z',
+    };
+
+    const { result, rerender } = renderHook(
+      (exts: ExtensionEntry[]) => useAllExtensionsData(exts),
+      { initialProps: testExtensions },
+    );
+
+    // Resolve the first fetch
+    await act(async () => {
+      resolveFetch({ ok: true, json: () => Promise.resolve([]) });
+      await new Promise<void>(r => setTimeout(r, 0));
+    });
+
+    expect(result.current.results).toHaveLength(1);
+    expect(result.current.loading).toBe(false);
+
+    // Change extensions — state must reset immediately (no stale results)
+    rerender([secondExtension]);
+
+    expect(result.current.results).toEqual([]);
+    expect(result.current.loading).toBe(true);
+
+    // Resolve the second fetch
+    await act(async () => {
+      resolveFetch({ ok: true, json: () => Promise.resolve([]) });
+      await new Promise<void>(r => setTimeout(r, 0));
+    });
+
+    expect(result.current.loading).toBe(false);
+    expect(result.current.results).toHaveLength(1);
+    expect(result.current.results[0].extension.id).toBe('Veverke.fast-grower');
   });
 });

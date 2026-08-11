@@ -2,6 +2,7 @@ import type { ExtensionRegistry, ExtensionEntry } from '../src/types/schema.js';
 import { fileURLToPath } from 'node:url';
 import {
   readExtensionRegistry,
+  readTimeSeries,
   writeExtensionRegistry,
 } from './storage.js';
 
@@ -86,7 +87,7 @@ export function validateGithubRepo(repo?: string): ValidationResult {
 // ─── Registry Update ────────────────────────────────────────────────────────
 
 export interface ProcessResult {
-  action: 'skipped' | 'added';
+  action: 'skipped' | 'added' | 'updated';
   extensionId: string;
   message: string;
 }
@@ -97,8 +98,30 @@ export function addExtensionToRegistry(
   requestedBy: string,
   githubRepo?: string
 ): { registry: ExtensionRegistry; result: ProcessResult } {
-  const existingIds = new Set(existing.map((e) => e.id));
-  if (existingIds.has(extensionId)) {
+  const existingEntry = existing.find((e) => e.id === extensionId);
+  if (existingEntry) {
+    // If the extension is already tracked but the requester isn't recorded
+    // (e.g. it was hardcoded into the registry before the requestedBy field
+    // existed), or a different user is now requesting it, update the
+    // requestedBy so it appears in that user's filtered view.
+    if (existingEntry.requestedBy !== requestedBy) {
+      const updated = existing.map((e) =>
+        e.id === extensionId ? { ...e, requestedBy } : e
+      );
+      return {
+        registry: updated,
+        result: {
+          action: 'updated',
+          extensionId,
+          message:
+            'Extension ' +
+            JSON.stringify(extensionId) +
+            ' is already tracked. Updated requester to ' +
+            JSON.stringify(requestedBy) +
+            '.',
+        },
+      };
+    }
     return {
       registry: existing,
       result: {
@@ -113,6 +136,15 @@ export function addExtensionToRegistry(
   const namespace = parts[0];
   const name = parts[1];
 
+  // Derive trackedSince from the oldest existing data point if historical
+  // data already exists for this extension (e.g. it was previously tracked
+  // and is being re-added). This preserves the true tracking start date.
+  const existingData = readTimeSeries(extensionId);
+  const trackedSince =
+    existingData.length > 0
+      ? existingData[0].ts
+      : new Date().toISOString();
+
   const newEntry: ExtensionEntry = {
     id: extensionId,
     namespace,
@@ -120,7 +152,7 @@ export function addExtensionToRegistry(
     displayName: name,
     githubRepo: githubRepo ?? '',
     requestedBy,
-    trackedSince: new Date().toISOString(),
+    trackedSince,
   };
 
   return {
@@ -196,7 +228,7 @@ export function processTrackingRequest(
   results.push(result);
 
   let registryUpdated = false;
-  if (result.action === 'added') {
+  if (result.action === 'added' || result.action === 'updated') {
     writeExtensionRegistry(registry);
     registryUpdated = true;
   }

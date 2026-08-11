@@ -322,6 +322,54 @@ describe('useAutoDiscover', () => {
     expect(result.current.results[0].extensionId).toBe('Veverke.chatwizard')
   })
 
+  it('discover — falls back to extension/package.json when root package.json is not a VS Code extension', async () => {
+    const singleReposFixture = {
+      ok: true,
+      headers: new Headers({ 'x-ratelimit-remaining': '59', 'x-ratelimit-reset': '9999999999' }),
+      json: () =>
+        Promise.resolve([
+          { name: 'vscode-extension-analytics', full_name: 'Veverke/vscode-extension-analytics' },
+        ]),
+    }
+    const rootNonExtensionPkg = {
+      name: 'vscode-extension-analytics',
+      engines: {},
+    }
+    const extensionPkg = {
+      name: 'vscode-extension-analytics',
+      publisher: 'Veverke',
+      displayName: 'VS Code Extension Analytics',
+      engines: { vscode: '^1.125.0' },
+    }
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      // Repos list
+      .mockResolvedValueOnce(singleReposFixture as unknown as Response)
+      // Root package.json — exists but is NOT a VS Code extension
+      .mockResolvedValueOnce(makeContentsResponse(rootNonExtensionPkg) as unknown as Response)
+      // extension/package.json — IS a VS Code extension
+      .mockResolvedValueOnce(makeContentsResponse(extensionPkg) as unknown as Response)
+
+    vi.stubGlobal('fetch', fetchMock)
+
+    const { result } = renderHook(() => useAutoDiscover())
+
+    await act(async () => {
+      await result.current.discover('Veverke')
+    })
+
+    expect(result.current.loading).toBe(false)
+    expect(result.current.error).toBeNull()
+    expect(result.current.results).toHaveLength(1)
+    expect(result.current.results[0]).toEqual({
+      extensionId: 'Veverke.vscode-extension-analytics',
+      namespace: 'Veverke',
+      name: 'vscode-extension-analytics',
+      displayName: 'VS Code Extension Analytics',
+      githubRepo: 'Veverke/vscode-extension-analytics',
+    })
+  })
+
   it('discover — skips repos without package.json', async () => {
     const fetchMock = vi
       .fn<typeof fetch>()
@@ -533,15 +581,14 @@ describe('filterExtensionsByUser', () => {
       displayName: 'Legacy',
       githubRepo: '',
       trackedSince: '2026-01-01T00:00:00Z',
-      // no requestedBy — legacy entry visible to all
+      // no requestedBy — legacy entry NOT shown to any specific user
     },
   ]
 
   it('filters by username', () => {
     const result = filterExtensionsByUser(extensions, 'user1')
-    expect(result).toHaveLength(2)
+    expect(result).toHaveLength(1)
     expect(result[0].id).toBe('A.one')
-    expect(result[1].id).toBe('C.legacy')
   })
 
   it('returns all when username is null', () => {
@@ -549,16 +596,14 @@ describe('filterExtensionsByUser', () => {
     expect(result).toHaveLength(3)
   })
 
-  it('includes legacy entries (no requestedBy) for any user', () => {
+  it('does NOT include legacy entries (no requestedBy) for a specific user', () => {
     const result = filterExtensionsByUser(extensions, 'user2')
-    expect(result).toHaveLength(2)
+    expect(result).toHaveLength(1)
     expect(result[0].id).toBe('B.two')
-    expect(result[1].id).toBe('C.legacy')
   })
 
   it('returns empty array for username with no matches', () => {
     const result = filterExtensionsByUser(extensions, 'unknown-user')
-    expect(result).toHaveLength(1) // only the legacy entry
-    expect(result[0].id).toBe('C.legacy')
+    expect(result).toHaveLength(0)
   })
 })

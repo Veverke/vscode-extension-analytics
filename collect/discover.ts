@@ -11,6 +11,37 @@ export function mergeRegistry(
   discovered: DiscoveredExtension[]
 ): ExtensionRegistry {
   const existingIds = new Set(existing.map((e) => e.id));
+  // Map of githubRepo → requestedBy from existing entries, so newly
+  // discovered extensions from repos already in the registry inherit
+  // the requester (e.g. monorepo with multiple extensions).
+  const requestersByRepo = new Map<string, string>();
+  for (const entry of existing) {
+    if (entry.githubRepo && entry.requestedBy) {
+      requestersByRepo.set(entry.githubRepo.toLowerCase(), entry.requestedBy);
+    }
+  }
+
+  // Map discovered extensions by ID for quick lookup.
+  const discoveredById = new Map(
+    discovered.map((d) => [d.extensionId, d])
+  );
+
+  // Update existing entries with fresh metadata from the Discover scan.
+  // This corrects displayName (e.g. from "chatwizard" to "Chat Wizard")
+  // and other fields that may have been set with best-effort values when
+  // the extension was added via a tracking request.
+  const updatedExisting = existing.map((entry) => {
+    const d = discoveredById.get(entry.id);
+    if (!d) return entry;
+    return {
+      ...entry,
+      namespace: d.namespace,
+      name: d.name,
+      displayName: d.displayName,
+      githubRepo: d.githubRepo,
+    };
+  });
+
   const newEntries: ExtensionEntry[] = discovered
     .filter((d) => !existingIds.has(d.extensionId))
     .map((d) => ({
@@ -20,9 +51,11 @@ export function mergeRegistry(
       displayName: d.displayName,
       githubRepo: d.githubRepo,
       trackedSince: new Date().toISOString(),
+      // Inherit the requester from an existing entry that shares the same repo.
+      requestedBy: requestersByRepo.get(d.githubRepo.toLowerCase()),
     }));
 
-  return [...existing, ...newEntries];
+  return [...updatedExisting, ...newEntries];
 }
 
 // Re-export for discoverFromRepos caller

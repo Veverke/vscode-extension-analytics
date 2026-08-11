@@ -66,6 +66,60 @@ describe('mergeRegistry', () => {
     expect(result[1].id).toBe('Veverke.new-ext');
   });
 
+  it('updates existing entry metadata from discovered extension', () => {
+    const registry: ExtensionEntry[] = [
+      {
+        ...existingEntry,
+        displayName: 'chatwizard', // best-effort from tracking request
+      },
+    ];
+    const result = mergeRegistry(registry, [discoveredChatwizard]);
+    expect(result).toHaveLength(1);
+    expect(result[0].displayName).toBe('Chat Wizard');
+    expect(result[0].namespace).toBe('Veverke');
+    expect(result[0].name).toBe('chatwizard');
+    expect(result[0].githubRepo).toBe('Veverke/chatwizard');
+    // trackedSince and requestedBy should be preserved
+    expect(result[0].trackedSince).toBe('2026-01-01T00:00:00Z');
+  });
+
+  it('preserves requestedBy when updating existing entry metadata', () => {
+    const registry: ExtensionEntry[] = [
+      {
+        ...existingEntry,
+        displayName: 'chatwizard',
+        requestedBy: 'Veverke',
+      },
+    ];
+    const result = mergeRegistry(registry, [discoveredChatwizard]);
+    expect(result[0].displayName).toBe('Chat Wizard');
+    expect(result[0].requestedBy).toBe('Veverke');
+  });
+
+  it('inherits requestedBy from existing entry with same repo', () => {
+    const registry: ExtensionEntry[] = [
+      { ...existingEntry, requestedBy: 'Veverke' },
+    ];
+    // Discovered extension from the SAME repo as the existing entry
+    const result = mergeRegistry(registry, [
+      { ...discoveredNewExt, githubRepo: 'Veverke/chatwizard' },
+    ]);
+    expect(result).toHaveLength(2);
+    expect(result[1].id).toBe('Veverke.new-ext');
+    expect(result[1].requestedBy).toBe('Veverke');
+  });
+
+  it('does not set requestedBy when no existing entry shares the repo', () => {
+    const registry: ExtensionEntry[] = [
+      { ...existingEntry, requestedBy: 'Veverke' },
+    ];
+    const result = mergeRegistry(registry, [
+      { ...discoveredNewExt, githubRepo: 'Other/repo' },
+    ]);
+    expect(result).toHaveLength(2);
+    expect(result[1].requestedBy).toBeUndefined();
+  });
+
   it('no discovered extensions returns registry unchanged', () => {
     const registry = [existingEntry];
     const result = mergeRegistry(registry, []);

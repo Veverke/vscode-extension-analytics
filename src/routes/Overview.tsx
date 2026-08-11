@@ -60,8 +60,14 @@ export default function Overview() {
   const { extensions: allExtensions } = useExtensions()
   const [showAll, setShowAll] = useState(false)
 
-  // Determine which extensions to display
-  const displayExtensions = showAll || userExtensions.length === 0
+  // Determine which extensions to display.
+  // Only fall back to "all extensions" when there is no session user
+  // (e.g. landing page) or the user explicitly toggles "show all".
+  // When a username IS set, always show ONLY that user's extensions —
+  // never fall back to all users' extensions just because this user
+  // has none tracked yet (otherwise switching users would show the
+  // previous user's extensions).
+  const displayExtensions = showAll || !username
     ? allExtensions
     : userExtensions
 

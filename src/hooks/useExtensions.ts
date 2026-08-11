@@ -12,8 +12,8 @@ export interface UseExtensionsResult {
  * Loads the extension registry.
  *
  * When a username is provided, filters the registry to only include
- * extensions requested by that user (or legacy entries without a requestedBy).
- * When no username is given, returns all extensions.
+ * extensions requested by that user. When no username is given, returns
+ * all extensions.
  */
 export function useExtensions(username?: string): UseExtensionsResult {
   const [extensions, setExtensions] = useState<ExtensionEntry[]>([])
@@ -23,6 +23,13 @@ export function useExtensions(username?: string): UseExtensionsResult {
   useEffect(() => {
     let cancelled = false
 
+    // Reset state immediately when the username changes so stale
+    // extensions from a previous user are never shown while the
+    // new user's data is being fetched.
+    setLoading(true)
+    setError(null)
+    setExtensions([])
+
     loadData<ExtensionRegistry>('./data/extensions.json')
       .then((data) => {
         if (cancelled) return
@@ -31,9 +38,7 @@ export function useExtensions(username?: string): UseExtensionsResult {
           setExtensions([])
         } else {
           const filtered = username
-            ? data.filter(
-                (e) => !e.requestedBy || e.requestedBy === username,
-              )
+            ? data.filter((e) => e.requestedBy === username)
             : data
           setExtensions(filtered)
         }

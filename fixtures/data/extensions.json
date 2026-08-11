@@ -5,7 +5,8 @@
     "name": "chatwizard",
     "displayName": "Chat Wizard",
     "githubRepo": "Veverke/ChatWizard",
-    "trackedSince": "2026-05-28T11:04:43.476Z"
+    "trackedSince": "2026-05-28T11:04:43.476Z",
+    "requestedBy": "Veverke"
   },
   {
     "id": "Veverke.copilot-reviewer-assistant",
@@ -13,6 +14,7 @@
     "name": "copilot-reviewer-assistant",
     "displayName": "Copilot Reviewer Assistant",
     "githubRepo": "Veverke/CopilotReviewerAssistant",
-    "trackedSince": "2026-05-28T11:04:43.483Z"
+    "trackedSince": "2026-05-28T11:04:43.483Z",
+    "requestedBy": "Veverke"
   }
 ]

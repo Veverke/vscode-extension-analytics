@@ -3,6 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 vi.mock('../storage.js', () => ({
   readExtensionRegistry: vi.fn(),
+  readTimeSeries: vi.fn(),
   writeExtensionRegistry: vi.fn(),
 }));
 
@@ -176,6 +177,11 @@ describe('validateGithubRepo', () => {
 });
 
 describe('addExtensionToRegistry', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.mocked(storage.readTimeSeries).mockReturnValue([]);
+  });
+
   it('adds a new extension to an empty registry', () => {
     const { registry, result } = addExtensionToRegistry(
       [],
@@ -192,15 +198,43 @@ describe('addExtensionToRegistry', () => {
     expect(registry[0].githubRepo).toBe('New/ext');
   });
 
-  it('skips duplicate extension IDs', () => {
+  it('skips duplicate extension IDs when requester matches', () => {
+    const registryWithRequester: ExtensionRegistry = [
+      {
+        ...existingRegistry[0],
+        requestedBy: 'requesterUser',
+      },
+    ];
     const { registry, result } = addExtensionToRegistry(
-      existingRegistry,
+      registryWithRequester,
       'Existing.publisher',
       'requesterUser'
     );
     expect(result.action).toBe('skipped');
-    expect(registry).toHaveLength(existingRegistry.length);
+    expect(registry).toHaveLength(registryWithRequester.length);
     expect(result.message).toContain('already tracked');
+  });
+
+  it('updates requestedBy when extension is already tracked by a different requester', () => {
+    const { registry, result } = addExtensionToRegistry(
+      existingRegistry,
+      'Existing.publisher',
+      'new-requester'
+    );
+    expect(result.action).toBe('updated');
+    expect(registry).toHaveLength(existingRegistry.length);
+    expect(registry[0].requestedBy).toBe('new-requester');
+    expect(result.message).toContain('Updated requester');
+  });
+
+  it('updates requestedBy when extension is already tracked without a requester (hardcoded)', () => {
+    const { registry, result } = addExtensionToRegistry(
+      existingRegistry,
+      'Existing.publisher',
+      'hardcoded-requester'
+    );
+    expect(result.action).toBe('updated');
+    expect(registry[0].requestedBy).toBe('hardcoded-requester');
   });
 
   it('adds extension without githubRepo', () => {
@@ -226,12 +260,22 @@ describe('addExtensionToRegistry', () => {
   });
 
   it('includes trackedSince with valid ISO timestamp', () => {
+    vi.mocked(storage.readTimeSeries).mockReturnValue([]);
     const before = Date.now();
     const { registry } = addExtensionToRegistry([], 'New.ext', 'user');
     const after = Date.now();
     const ts = new Date(registry[0].trackedSince).getTime();
     expect(ts).toBeGreaterThanOrEqual(before);
     expect(ts).toBeLessThanOrEqual(after);
+  });
+
+  it('derives trackedSince from oldest data point when historical data exists', () => {
+    vi.mocked(storage.readTimeSeries).mockReturnValue([
+      { ts: '2026-01-15T00:00:00Z', marketplace: { installs: 100, updates: 0, averageRating: 4.0, ratingCount: 1, trendingWeekly: 0, trendingMonthly: 0 }, openVsx: null, github: null },
+      { ts: '2026-01-16T00:00:00Z', marketplace: { installs: 120, updates: 0, averageRating: 4.0, ratingCount: 1, trendingWeekly: 0, trendingMonthly: 0 }, openVsx: null, github: null },
+    ]);
+    const { registry } = addExtensionToRegistry([], 'Readded.ext', 'user');
+    expect(registry[0].trackedSince).toBe('2026-01-15T00:00:00Z');
   });
 
   it('handles extension with hyphens in parts', () => {
@@ -244,6 +288,7 @@ describe('addExtensionToRegistry', () => {
 describe('processTrackingRequest', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.mocked(storage.readTimeSeries).mockReturnValue([]);
   });
 
   it('processes a valid tracking request successfully', () => {
@@ -262,8 +307,14 @@ describe('processTrackingRequest', () => {
     expect(storage.writeExtensionRegistry).toHaveBeenCalledOnce();
   });
 
-  it('skips when extension is already tracked', () => {
-    vi.mocked(storage.readExtensionRegistry).mockReturnValue(existingRegistry);
+  it('skips when extension is already tracked by the same requester', () => {
+    const registryWithRequester: ExtensionRegistry = [
+      {
+        ...existingRegistry[0],
+        requestedBy: 'testuser',
+      },
+    ];
+    vi.mocked(storage.readExtensionRegistry).mockReturnValue(registryWithRequester);
 
     const body = '### Extension ID\nExisting.publisher';
     const output = processTrackingRequest({ issueBody: body, requestedBy: 'testuser' });
@@ -272,6 +323,20 @@ describe('processTrackingRequest', () => {
     expect(output.registryUpdated).toBe(false);
     expect(output.results[0].action).toBe('skipped');
     expect(storage.writeExtensionRegistry).not.toHaveBeenCalled();
+  });
+
+  it('updates requestedBy when extension is already tracked without a requester', () => {
+    vi.mocked(storage.readExtensionRegistry).mockReturnValue(existingRegistry);
+
+    const body = '### Extension ID\nExisting.publisher';
+    const output = processTrackingRequest({ issueBody: body, requestedBy: 'testuser' });
+
+    expect(output.success).toBe(true);
+    expect(output.registryUpdated).toBe(true);
+    expect(output.results[0].action).toBe('updated');
+    expect(storage.writeExtensionRegistry).toHaveBeenCalledOnce();
+    const written = vi.mocked(storage.writeExtensionRegistry).mock.calls[0][0];
+    expect(written[0].requestedBy).toBe('testuser');
   });
 
   it('returns errors for invalid extension ID', () => {
@@ -356,14 +421,23 @@ describe('processTrackingRequest', () => {
     expect(output.registryUpdated).toBe(true);
   });
 
-  it('sets requestedBy for skipped entries', () => {
-    vi.mocked(storage.readExtensionRegistry).mockReturnValue(existingRegistry);
+  it('updates requestedBy when a different user requests an already-tracked extension', () => {
+    const registryWithRequester: ExtensionRegistry = [
+      {
+        ...existingRegistry[0],
+        requestedBy: 'original-user',
+      },
+    ];
+    vi.mocked(storage.readExtensionRegistry).mockReturnValue(registryWithRequester);
 
     const body = '### Extension ID\nExisting.publisher';
     const output = processTrackingRequest({ issueBody: body, requestedBy: 'another-user' });
 
     expect(output.success).toBe(true);
-    expect(output.registryUpdated).toBe(false);
-    expect(storage.writeExtensionRegistry).not.toHaveBeenCalled();
+    expect(output.registryUpdated).toBe(true);
+    expect(output.results[0].action).toBe('updated');
+    expect(storage.writeExtensionRegistry).toHaveBeenCalledOnce();
+    const written = vi.mocked(storage.writeExtensionRegistry).mock.calls[0][0];
+    expect(written[0].requestedBy).toBe('another-user');
   });
 });

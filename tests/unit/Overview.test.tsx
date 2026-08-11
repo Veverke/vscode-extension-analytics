@@ -312,6 +312,30 @@ describe('Overview', () => {
     expect(screen.getByText(/Show all tracked extensions/)).toBeInTheDocument()
   })
 
+  it('does NOT fall back to all extensions when user has none tracked', async () => {
+    mockFetchForMulti()
+    // User has no extensions in the registry — must NOT show all users' extensions
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <UserContext.Provider value={{ username: 'new-user', setUsername: () => {}, clearUsername: () => {} }}>
+          <ExtensionsContext.Provider value={[]}>
+            <Overview />
+          </ExtensionsContext.Provider>
+        </UserContext.Provider>
+      </MemoryRouter>
+    )
+
+    // Should show the empty state, not the previous user's extensions
+    await waitFor(() =>
+      expect(screen.getByText('No extensions found for your GitHub username.')).toBeInTheDocument()
+    )
+
+    // None of the other users' extensions should be displayed
+    expect(screen.queryByRole('link', { name: 'Chat Wizard' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Fast Grower' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Slow Grower' })).not.toBeInTheDocument()
+  })
+
   it('toggling "Show all tracked extensions" maintains data display', async () => {
     mockFetchForMulti()
     renderOverview()

@@ -38,9 +38,13 @@ export function useAllExtensionsData(
     : extensions.map((e) => e.id).join(',');
 
   useEffect(() => {
+    // Reset state immediately when the extension list changes so stale
+    // data from a previous user is never shown while the new data loads.
+    setResults([]);
+    setErrors({});
+    setLoading(true);
+
     if (extensions.length === 0) {
-      setResults([]);
-      setErrors({});
       setLoading(false);
       return;
     }

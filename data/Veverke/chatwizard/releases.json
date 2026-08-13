@@ -8,5 +8,10 @@
     "version": "1.5.0",
     "publishedAt": "2026-05-26T13:16:00.543Z",
     "installsAtRelease": 106
+  },
+  {
+    "version": "1.6.0",
+    "publishedAt": "2026-08-13T11:36:23.877Z",
+    "installsAtRelease": 234
   }
 ]

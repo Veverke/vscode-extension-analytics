@@ -8,6 +8,10 @@ export interface ReleaseImpact {
   installsGained: number; // installsCurrent - installsAtRelease
   daysElapsed: number; // days since release
   installsPerDay: number; // installsGained / daysElapsed
+  downloadsAtRelease: number | null;
+  downloadsCurrent: number | null;
+  downloadsGained: number | null; // downloadsCurrent - downloadsAtRelease
+  downloadsPerDay: number | null; // downloadsGained / daysElapsed
 }
 
 /**
@@ -23,7 +27,8 @@ export interface ReleaseImpact {
  */
 export function computeReleaseImpact(
   releases: ReleaseEntry[],
-  currentInstalls: number
+  currentInstalls: number,
+  currentDownloads: number | null | undefined = null
 ): ReleaseImpact[] {
   if (releases.length === 0) return [];
 
@@ -50,6 +55,15 @@ export function computeReleaseImpact(
 
     const installsPerDay = installsGained / daysElapsed;
 
+    const downloadsAtRelease = release.downloadsAtRelease ?? null;
+    const downloadsCurrent = currentDownloads ?? null;
+    const downloadsGained =
+      downloadsAtRelease !== null && downloadsCurrent !== null
+        ? downloadsCurrent - downloadsAtRelease
+        : null;
+    const downloadsPerDay =
+      downloadsGained !== null ? downloadsGained / daysElapsed : null;
+
     return {
       version: release.version,
       publishedAt: release.publishedAt,
@@ -58,6 +72,10 @@ export function computeReleaseImpact(
       installsGained,
       daysElapsed,
       installsPerDay,
+      downloadsAtRelease,
+      downloadsCurrent,
+      downloadsGained,
+      downloadsPerDay,
     };
   });
 

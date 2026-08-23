@@ -13,6 +13,7 @@ import releasesFixture from '../../fixtures/data/Veverke.chatwizard.releases.jso
 // currentInstalls: 1380
 
 const CURRENT_INSTALLS = 1380;
+const CURRENT_DOWNLOADS = 400;
 
 describe('computeReleaseImpact', () => {
   afterEach(() => {
@@ -126,5 +127,62 @@ describe('computeReleaseImpact', () => {
     );
     const v100 = result.find((r) => r.version === '1.0.0')!;
     expect(v100.installsAtRelease).toBe(450);
+  });
+
+  it('downloads fields are null when no current downloads data is provided', () => {
+    const result = computeReleaseImpact(
+      releasesFixture as ReleaseEntry[],
+      CURRENT_INSTALLS
+    );
+    for (const impact of result) {
+      // downloadsAtRelease comes from the release entry (fixture has values)
+      expect(impact.downloadsAtRelease).not.toBeNull();
+      expect(impact.downloadsCurrent).toBeNull();
+      expect(impact.downloadsGained).toBeNull();
+      expect(impact.downloadsPerDay).toBeNull();
+    }
+  });
+
+  it('computes downloadsGained and downloadsPerDay when downloads data is provided', () => {
+    vi.setSystemTime(new Date('2026-06-05T00:00:00.000Z').getTime());
+
+    const result = computeReleaseImpact(
+      releasesFixture as ReleaseEntry[],
+      CURRENT_INSTALLS,
+      CURRENT_DOWNLOADS
+    );
+
+    // Fixture downloadsAtRelease: v1.0.0=120, v1.1.0=180, v1.2.0=260
+    const v100 = result.find((r) => r.version === '1.0.0')!;
+    const v110 = result.find((r) => r.version === '1.1.0')!;
+    const v120 = result.find((r) => r.version === '1.2.0')!;
+
+    expect(v100.downloadsAtRelease).toBe(120);
+    expect(v100.downloadsCurrent).toBe(CURRENT_DOWNLOADS);
+    expect(v100.downloadsGained).toBe(CURRENT_DOWNLOADS - 120);
+    expect(v100.downloadsPerDay).toBeCloseTo(
+      (CURRENT_DOWNLOADS - 120) / v100.daysElapsed,
+      5
+    );
+
+    expect(v110.downloadsAtRelease).toBe(180);
+    expect(v110.downloadsGained).toBe(CURRENT_DOWNLOADS - 180);
+
+    expect(v120.downloadsAtRelease).toBe(260);
+    expect(v120.downloadsGained).toBe(CURRENT_DOWNLOADS - 260);
+  });
+
+  it('downloadsPerDay is null when downloadsAtRelease is missing', () => {
+    const releases: ReleaseEntry[] = [
+      {
+        version: '1.0.0',
+        publishedAt: '2026-05-01T00:00:00.000Z',
+        installsAtRelease: 100,
+      },
+    ];
+    const result = computeReleaseImpact(releases, 300, 500);
+    expect(result[0].downloadsAtRelease).toBeNull();
+    expect(result[0].downloadsGained).toBeNull();
+    expect(result[0].downloadsPerDay).toBeNull();
   });
 });

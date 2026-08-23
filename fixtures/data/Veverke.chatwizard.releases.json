@@ -2,16 +2,19 @@
   {
     "version": "1.0.0",
     "publishedAt": "2026-05-18T08:00:00.000Z",
-    "installsAtRelease": 450
+    "installsAtRelease": 450,
+    "downloadsAtRelease": 120
   },
   {
     "version": "1.1.0",
     "publishedAt": "2026-05-21T10:00:00.000Z",
-    "installsAtRelease": 620
+    "installsAtRelease": 620,
+    "downloadsAtRelease": 180
   },
   {
     "version": "1.2.0",
     "publishedAt": "2026-05-24T14:00:00.000Z",
-    "installsAtRelease": 980
+    "installsAtRelease": 980,
+    "downloadsAtRelease": 260
   }
 ]

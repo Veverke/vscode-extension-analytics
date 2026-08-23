@@ -189,7 +189,7 @@ Discovered extensions show one of two states:
 
 ### 3. Request Tracking (GitHub Issue)
 
-To request tracking for a new extension, click **"Track on GitHub"** on any untracked extension — or open an issue manually using the **Request Extension Tracking** template. This opens a GitHub issue with a `[Tracking Request]` title and the `tracking-request` label.
+To request tracking for a new extension, click **"Track on GitHub"** on any untracked extension — or open an issue manually using the **Request Extension Tracking** template. This opens a GitHub issue with a `[Tracking Request]` title and the `tracking-request` label (applied automatically by the template's frontmatter).
 
 | Issue Field | Required | Description |
 |---|---|---|
@@ -199,8 +199,8 @@ To request tracking for a new extension, click **"Track on GitHub"** on any untr
 
 #### Processing Workflow
 
-1. The issue is opened with the `tracking-request` label.
-2. The **Process Tracking Requests** GitHub Action triggers automatically on issue open/reopen.
+1. The issue is opened with the `tracking-request` label (applied by the template's frontmatter).
+2. The **Process Tracking Requests** GitHub Action triggers automatically on issue open/reopen — it identifies tracking requests by label **or** title pattern (`Add extension:` / `[Tracking Request]`).
 3. The action parses the issue body and validates the extension ID against the Marketplace/Open VSX registries.
 4. On success, the extension is added to `data/extensions.json` and the change is committed to the repository.
 5. A completion comment is posted — ✅ added, or ℹ️ skipped if the extension is already tracked.

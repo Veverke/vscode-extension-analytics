@@ -15,18 +15,24 @@ import { computeMonthlyRollup, writeMonthlyRollup } from './monthly.js';
 
 /**
  * Merges newly fetched release entries with the stored ones.
- * Only adds versions not already present. Sets installsAtRelease on first detection.
+ * Only adds versions not already present. Sets installsAtRelease
+ * and downloadsAtRelease on first detection.
  * Returns the updated list (does not mutate stored array in place).
  */
 export function mergeReleases(
   stored: import('../src/types/schema.js').ReleaseEntry[],
   fetched: import('../src/types/schema.js').ReleaseEntry[],
-  currentInstalls: number
+  currentInstalls: number,
+  currentDownloads: number | null | undefined
 ): import('../src/types/schema.js').ReleaseEntry[] {
   const storedVersions = new Set(stored.map((r) => r.version));
   const newEntries = fetched
     .filter((r) => !storedVersions.has(r.version))
-    .map((r) => ({ ...r, installsAtRelease: currentInstalls }));
+    .map((r) => ({
+      ...r,
+      installsAtRelease: currentInstalls,
+      downloadsAtRelease: currentDownloads ?? null,
+    }));
   return [...stored, ...newEntries];
 }
 
@@ -84,7 +90,8 @@ export async function runCollector(): Promise<number> {
       const mergedReleases = mergeReleases(
         storedReleases,
         fetchedReleases,
-        marketplace.installs
+        marketplace.installs,
+        openVsx?.downloads
       );
       if (mergedReleases.length !== storedReleases.length) {
         writeReleases(entry.id, mergedReleases);

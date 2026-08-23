@@ -80,9 +80,15 @@ export default function ExtensionDetail() {
 
   const currentInstalls =
     data.length > 0 ? data[data.length - 1].marketplace.installs : 0
+  const currentDownloads =
+    data.length > 0 ? (data[data.length - 1].openVsx?.downloads ?? null) : null
 
   const annotations = buildEventReferenceLines(events, releases)
-  const releaseImpacts = computeReleaseImpact(releases, currentInstalls)
+  const releaseImpacts = computeReleaseImpact(
+    releases,
+    currentInstalls,
+    currentDownloads
+  )
 
   return (
     <div>

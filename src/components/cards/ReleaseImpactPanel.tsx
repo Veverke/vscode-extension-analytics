@@ -3,7 +3,11 @@ import type { ReleaseImpact } from '../../metrics/releaseCorrelation';
 
 export type SortField = keyof Pick<
   ReleaseImpact,
-  'installsGained' | 'installsPerDay' | 'daysElapsed' | 'installsAtRelease'
+  | 'installsGained'
+  | 'installsPerDay'
+  | 'daysElapsed'
+  | 'installsAtRelease'
+  | 'downloadsPerDay'
 >;
 
 interface Props {
@@ -45,7 +49,13 @@ export default function ReleaseImpactPanel({ impacts, githubRepo }: Props) {
   }
 
   const sorted = [...impacts].sort((a, b) => {
-    const diff = a[sortField] - b[sortField];
+    const aVal = a[sortField];
+    const bVal = b[sortField];
+    // Null values sort last regardless of direction
+    if (aVal === null && bVal === null) return 0;
+    if (aVal === null) return 1;
+    if (bVal === null) return -1;
+    const diff = aVal - bVal;
     return sortAsc ? diff : -diff;
   });
 
@@ -104,6 +114,12 @@ export default function ReleaseImpactPanel({ impacts, githubRepo }: Props) {
             >
               Installs/Day{sortIndicator('installsPerDay')}
             </th>
+            <th
+              style={{ cursor: 'pointer' }}
+              onClick={() => handleSort('downloadsPerDay')}
+            >
+              Downloads/Day{sortIndicator('downloadsPerDay')}
+            </th>
             {githubRepo && <th>Diff</th>}
           </tr>
         </thead>
@@ -127,6 +143,11 @@ export default function ReleaseImpactPanel({ impacts, githubRepo }: Props) {
                 <td>{impact.installsGained.toLocaleString()}</td>
                 <td>{impact.daysElapsed}</td>
                 <td>{impact.installsPerDay.toFixed(1)}</td>
+                <td>
+                  {impact.downloadsPerDay === null
+                    ? 'N/A'
+                    : impact.downloadsPerDay.toFixed(1)}
+                </td>
                 {githubRepo && (
                   <td>
                     <a

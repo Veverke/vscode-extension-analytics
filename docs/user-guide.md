@@ -88,7 +88,7 @@ The auto-discovery feature scans all public repositories of a GitHub user to fin
 
 ### Requesting Tracking
 
-For untracked extensions, click **"Track on GitHub"** — or open an issue manually using the **Request Extension Tracking** template. Both approaches create a GitHub issue with a `[Tracking Request]` title and the `tracking-request` label.
+For untracked extensions, click **"Track on GitHub"** — or open an issue manually using the **Request Extension Tracking** template. Both approaches create a GitHub issue with a `[Tracking Request]` title and the `tracking-request` label (applied automatically by the template's frontmatter).
 
 #### Issue Fields
 
@@ -100,8 +100,8 @@ For untracked extensions, click **"Track on GitHub"** — or open an issue manua
 
 #### Issue Request Workflow
 
-1. **Submit the request** — open the issue with the extension ID (and optional repository/notes). The `tracking-request` label is applied automatically.
-2. **Automatic processing** — the **Process Tracking Requests** GitHub Action triggers on issue open/reopen, parses the issue body, and validates the extension ID.
+1. **Submit the request** — open the issue with the extension ID (and optional repository/notes). The `tracking-request` label is applied automatically by the template's frontmatter.
+2. **Automatic processing** — the **Process Tracking Requests** GitHub Action triggers on issue open/reopen. It identifies tracking requests by label **or** title pattern (`Add extension:` / `[Tracking Request]`), parses the issue body, and validates the extension ID.
 3. **Registry update** — on success, the extension is added to `data/extensions.json` and committed to the repository.
 4. **Completion comment** — a comment is posted on the issue: ✅ if the extension was added, or ℹ️ if it was already tracked.
 5. **Issue closed** — the issue is closed automatically on success.
@@ -402,12 +402,13 @@ Where:
 
 ### 6.7 Release Impact
 
-**What it shows:** How many installs each version contributed, sorted by impact.
+**What it shows:** How many installs and Open VSX downloads each version contributed, sorted by impact.
 
 **Formula:**
 
 ```
 InstallsGained[version] = NextReleaseInstalls - ThisReleaseInstalls
+DownloadsGained[version] = CurrentDownloads - ThisReleaseDownloads
 ```
 
 For the latest version: `InstallsGained = CurrentInstalls - ThisReleaseInstalls`
@@ -416,16 +417,16 @@ For the latest version: `InstallsGained = CurrentInstalls - ThisReleaseInstalls`
 
 ```
 Release Impact (sorted by installs gained)
-┌──────────┬──────────────┬──────────┬──────────────┐
-│ Version  │ Published    │ Gained   │ Per Day      │
-├──────────┼──────────────┼──────────┼──────────────┤
-│ 2.0.0    │ 2026-06-01   │ +5,200   │ +173/day     │
-│ 1.5.0    │ 2026-04-15   │ +2,100   │ +35/day      │
-│ 1.0.0    │ 2026-03-01   │ +800     │ +10/day      │
-└──────────┴──────────────┴──────────┴──────────────┘
+┌──────────┬──────────────┬──────────┬──────────────┬──────────────┬──────────────┐
+│ Version  │ Published    │ Gained   │ Per Day      │ DL Gained    │ DL Per Day   │
+├──────────┼──────────────┼──────────┼──────────────┼──────────────┼──────────────┤
+│ 2.0.0    │ 2026-06-01   │ +5,200   │ +173/day     │ +1,100       │ +37/day      │
+│ 1.5.0    │ 2026-04-15   │ +2,100   │ +35/day      │ +450         │ +8/day       │
+│ 1.0.0    │ 2026-03-01   │ +800     │ +10/day      │ +120         │ +2/day       │
+└──────────┴──────────────┴──────────┴──────────────┴──────────────┴──────────────┘
 ```
 
-**Interpretation:** Version 2.0.0 drove the most installs (5,200 gained at 173/day), suggesting it was a significant release that attracted new users.
+**Interpretation:** Version 2.0.0 drove the most installs (5,200 gained at 173/day), suggesting it was a significant release that attracted new users. The Downloads/Day column shows the same impact measured against Open VSX downloads — if the extension isn't published on Open VSX, this column shows **N/A**.
 
 ### 6.8 Rating Chart
 

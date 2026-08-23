@@ -69,10 +69,14 @@ The system is composed of three decoupled layers:
     "version": "1.2.0",
     "publishedAt": "2026-04-15T08:00:00Z",
     "installsAtRelease": 9800,
+    "downloadsAtRelease": 2100,
     "changelog": "Added chat history export"
   }
 ]
 ```
+
+- `installsAtRelease` — VS Marketplace install count at the time the version was first detected by the collector.
+- `downloadsAtRelease` — Open VSX download count at the time the version was first detected by the collector (`null` if the extension isn't on Open VSX).
 
 ### Extension Registry (`data/extensions.json`)
 

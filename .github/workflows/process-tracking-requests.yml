@@ -1,19 +1,27 @@
 # Process Tracking Requests
 #
 # Purpose: Automatically process issue-based extension tracking requests.
-# Triggered when an issue is opened with the `tracking-request` label.
-# Parses the issue body, validates the extension ID, and updates the
-# extensions registry (data/extensions.json) idempotently.
+# Triggered when an issue is opened or reopened.
+# Identifies tracking requests by label OR title/body pattern, then:
+#   1. Ensures the `tracking-request` label is applied
+#   2. Parses the issue body, validates the extension ID, and updates the
+#      extensions registry (data/extensions.json) idempotently.
 name: Process Tracking Requests
 
 on:
   issues:
-    types: [opened, reopened]
+    types: [opened, reopened, edited]
 
 jobs:
   process:
-    # Only run when the tracking-request label is present
-    if: contains(github.event.issue.labels.*.name, 'tracking-request')
+    # Run for tracking requests identified by label OR title/body pattern.
+    # This ensures the pipeline works even if the label wasn't applied at
+    # creation time (e.g. label didn't exist yet, or URL param was ignored).
+    if: |
+      contains(github.event.issue.labels.*.name, 'tracking-request') ||
+      startsWith(github.event.issue.title, '[Tracking Request]') ||
+      startsWith(github.event.issue.title, 'Add extension:') ||
+      (github.event.issue.body != null && contains(github.event.issue.body, 'Extension ID'))
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -29,9 +37,53 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Ensure tracking-request label is applied
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Ensure the tracking-request label exists in the repo first,
+            // then apply it to the issue if not already applied.
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            try {
+              await github.rest.issues.getLabel({
+                owner,
+                repo,
+                name: 'tracking-request',
+              });
+            } catch {
+              await github.rest.issues.createLabel({
+                owner,
+                repo,
+                name: 'tracking-request',
+                color: '1d76db',
+                description: 'Issue requesting that an extension be tracked in the analytics registry',
+              });
+            }
+
+            const labels = github.event.issue.labels.map((l) => l.name);
+            if (!labels.includes('tracking-request')) {
+              await github.rest.issues.addLabels({
+                owner,
+                repo,
+                issue_number: context.issue.number,
+                labels: ['tracking-request'],
+              });
+            }
+
       - name: Process tracking request
         id: process
         run: |
+          # If the issue body is empty (e.g. template wasn't applied),
+          # construct a synthetic body from the title as a fallback.
+          # Title format: "Add extension: publisher.name" or "[Tracking Request] publisher.name"
+          if [ -z "$ISSUE_BODY" ]; then
+            EXT_ID=$(echo "$ISSUE_TITLE" | sed -E 's/^(Add extension: |\[Tracking Request\] )//' | xargs)
+            if [ -n "$EXT_ID" ]; then
+              ISSUE_BODY=$(printf '### Extension ID\n%s' "$EXT_ID")
+            fi
+          fi
           OUTPUT=$(npx tsx collect/process-tracking-request.ts 2>&1)
           echo "$OUTPUT"
           echo "output<<EOF" >> "$GITHUB_OUTPUT"
@@ -39,6 +91,7 @@ jobs:
           echo "EOF" >> "$GITHUB_OUTPUT"
         env:
           ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
           REQUESTED_BY: ${{ github.event.issue.user.login }}
 
       - name: Add completion comment

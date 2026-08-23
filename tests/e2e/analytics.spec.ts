@@ -1,22 +1,56 @@
 import { test, expect } from '@playwright/test'
 import { readFileSync } from 'fs'
 import { join } from 'path'
+import { createRequire } from 'module'
 
+const require = createRequire(import.meta.url)
+
+const extensionsFixture = require('../../fixtures/data/extensions.json') as object[]
+
+// Use the committed real time-series data — it contains velocity peaks
+// that the peak-marker test asserts (the 30-point fixture has none).
 const fixtureBody = readFileSync(
-  join(process.cwd(), 'fixtures/data/Veverke.chatwizard.json'),
+  join(process.cwd(), 'data/Veverke/chatwizard/data.json'),
   'utf-8',
 )
 
 test.describe('Phase 5 Analytics features', () => {
   test.beforeEach(async ({ page }) => {
-    // Use the 30-point fixture which has growth and velocity peaks
-    await page.route('**/data/Veverke.chatwizard.json', route =>
+    // Stub the extension registry so tests are independent of the real
+    // (mutable) data/extensions.json file.
+    await page.route('**/data/extensions.json', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(extensionsFixture),
+      })
+    )
+
+    // The app fetches time-series from the tree structure
+    // (data/<namespace>/<name>/data.json).
+    await page.route('**/data/Veverke/chatwizard/data.json', (route) =>
       route.fulfill({
         status: 200,
         contentType: 'application/json',
         body: fixtureBody,
-      }),
+      })
     )
+
+    // Stub optional companion data files to keep the page quiet.
+    await page.route('**/data/Veverke/chatwizard/releases.json', (route) =>
+      route.fulfill({ status: 404, body: 'Not Found' })
+    )
+    await page.route('**/data/Veverke/chatwizard/monthly.json', (route) =>
+      route.fulfill({ status: 404, body: 'Not Found' })
+    )
+    await page.route('**/data/events.json', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: '[]',
+      })
+    )
+
     await page.goto('/#/extension/Veverke.chatwizard')
     // Wait for charts to render
     await expect(page.locator('svg').first()).toBeVisible({ timeout: 10000 })
@@ -81,8 +115,9 @@ test.describe('Phase 5 Analytics features', () => {
     expect(projectionText).toBeTruthy()
     expect(projectionText).not.toBe('Not enough data')
 
-    // Parse the projected value (remove commas) and compare to last fixture install count (136)
+    // Parse the projected value (remove commas) and compare to the last
+    // install count in the real time-series data (226).
     const projectedValue = parseInt((projectionText ?? '').replace(/,/g, ''), 10)
-    expect(projectedValue).toBeGreaterThan(136) // fixture last install count
+    expect(projectedValue).toBeGreaterThan(226)
   })
 })

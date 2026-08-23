@@ -4,10 +4,14 @@ import { createRequire } from 'module'
 const require = createRequire(import.meta.url)
 
 // Load fixture data via require (avoids ESM import assertion requirements)
+const extensionsFixture = require('../../fixtures/data/extensions.json') as object[]
+const chatwizardData = require('../../fixtures/data/Veverke.chatwizard.json') as object[]
+
 const releasesFixture = require('../../fixtures/data/Veverke.chatwizard.releases.json') as {
   version: string
   publishedAt: string
   installsAtRelease: number
+  downloadsAtRelease?: number | null
 }[]
 
 const eventsFixture = require('../../fixtures/data/events.json') as {
@@ -18,6 +22,26 @@ const eventsFixture = require('../../fixtures/data/events.json') as {
 
 test.describe('Phase 6 — Annotations and Release Impact', () => {
   test.beforeEach(async ({ page }) => {
+    // Stub the extension registry so tests are independent of the real
+    // (mutable) data/extensions.json file.
+    await page.route('**/data/extensions.json', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(extensionsFixture),
+      })
+    )
+
+    // The app fetches time-series from the tree structure
+    // (data/<namespace>/<name>/data.json).
+    await page.route('**/data/Veverke/chatwizard/data.json', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(chatwizardData),
+      })
+    )
+
     // Intercept releases and events JSON with fixture data
     await page.route('**/data/Veverke/chatwizard/releases.json', (route) =>
       route.fulfill({
@@ -101,6 +125,7 @@ test.describe('Phase 6 — Annotations and Release Impact', () => {
     await expect(page.getByText(/Installs Gained/)).toBeVisible()
     await expect(page.getByText(/Days Active/)).toBeVisible()
     await expect(page.getByText(/Installs\/Day/)).toBeVisible()
+    await expect(page.getByText(/Downloads\/Day/)).toBeVisible()
   })
 
   test('release impact panel shows empty state when releases file is 404', async ({ page }) => {

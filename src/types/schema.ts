@@ -53,6 +53,8 @@ export interface ReleaseEntry {
   version: string;
   publishedAt: string; // ISO 8601
   installsAtRelease: number; // marketplace.installs at time of fetch (approximation)
+  /** Open VSX downloads at time of first detection (approximation), or null if the extension isn't on Open VSX. */
+  downloadsAtRelease?: number | null;
   changelog?: string; // not available from API — left empty, filled manually
 }
 

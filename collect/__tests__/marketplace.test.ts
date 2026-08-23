@@ -231,7 +231,7 @@ describe('mergeReleases', () => {
       { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 0 },
       { version: '1.1.0', publishedAt: '2026-04-01T00:00:00.000Z', installsAtRelease: 0 },
     ];
-    const result = mergeReleases(stored, fetched, 120);
+    const result = mergeReleases(stored, fetched, 120, null);
 
     expect(result).toHaveLength(2);
     // Existing entry kept with original installsAtRelease
@@ -239,6 +239,7 @@ describe('mergeReleases', () => {
     // New entry gets current installs
     expect(result[1].version).toBe('1.1.0');
     expect(result[1].installsAtRelease).toBe(120);
+    expect(result[1].downloadsAtRelease).toBeNull();
   });
 
   it('no new versions — returns stored unchanged', () => {
@@ -248,7 +249,7 @@ describe('mergeReleases', () => {
     const fetched = [
       { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 0 },
     ];
-    const result = mergeReleases(stored, fetched, 120);
+    const result = mergeReleases(stored, fetched, 120, null);
     expect(result).toHaveLength(1);
     expect(result[0].installsAtRelease).toBe(50);
   });
@@ -259,9 +260,11 @@ describe('mergeReleases', () => {
       { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 0 },
       { version: '1.1.0', publishedAt: '2026-04-01T00:00:00.000Z', installsAtRelease: 0 },
     ];
-    const result = mergeReleases(stored, fetched, 200);
+    const result = mergeReleases(stored, fetched, 200, null);
     expect(result).toHaveLength(2);
     expect(result[0].installsAtRelease).toBe(200);
+    expect(result[0].downloadsAtRelease).toBeNull();
     expect(result[1].installsAtRelease).toBe(200);
+    expect(result[1].downloadsAtRelease).toBeNull();
   });
 });

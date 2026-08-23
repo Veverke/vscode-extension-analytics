@@ -25,7 +25,10 @@ describe('useCreateTrackingIssue', () => {
     expect(url).toContain('github.com/Veverke/vscode-extension-analytics/issues/new')
     expect(url).toContain('template=add-extension.yml')
     expect(url).toContain('title=Add+extension%3A+TestPublisher.test-extension')
-    expect(url).toContain('labels=tracking-request')
+    // The labels query param is intentionally NOT included — GitHub doesn't
+    // reliably apply labels via URL params. The issue template frontmatter
+    // handles applying the `tracking-request` label.
+    expect(url).not.toContain('labels=')
     expect((window.open as ReturnType<typeof vi.fn>).mock.calls[0][1]).toBe('_blank')
     expect((window.open as ReturnType<typeof vi.fn>).mock.calls[0][2]).toBe('noopener,noreferrer')
   })

@@ -166,18 +166,20 @@ describe('collector index', () => {
 describe('mergeReleases', () => {
   it('new version detection — only appends versions not already stored', () => {
     const stored = [
-      { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 50 },
+      { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 50, downloadsAtRelease: 10 },
     ];
     const fetched = [
       { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 0 },
       { version: '1.1.0', publishedAt: '2026-04-01T00:00:00.000Z', installsAtRelease: 0 },
     ];
-    const result = mergeReleases(stored, fetched, 120);
+    const result = mergeReleases(stored, fetched, 120, 60);
 
     expect(result).toHaveLength(2);
     expect(result[0].installsAtRelease).toBe(50);
+    expect(result[0].downloadsAtRelease).toBe(10);
     expect(result[1].version).toBe('1.1.0');
     expect(result[1].installsAtRelease).toBe(120);
+    expect(result[1].downloadsAtRelease).toBe(60);
   });
 
   it('no new versions — returns stored unchanged', () => {
@@ -187,20 +189,32 @@ describe('mergeReleases', () => {
     const fetched = [
       { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 0 },
     ];
-    const result = mergeReleases(stored, fetched, 120);
+    const result = mergeReleases(stored, fetched, 120, 60);
     expect(result).toHaveLength(1);
     expect(result[0].installsAtRelease).toBe(50);
   });
 
-  it('empty stored — all fetched are new with currentInstalls', () => {
+  it('empty stored — all fetched are new with currentInstalls and currentDownloads', () => {
     const stored: import('../../src/types/schema.js').ReleaseEntry[] = [];
     const fetched = [
       { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 0 },
       { version: '1.1.0', publishedAt: '2026-04-01T00:00:00.000Z', installsAtRelease: 0 },
     ];
-    const result = mergeReleases(stored, fetched, 200);
+    const result = mergeReleases(stored, fetched, 200, 90);
     expect(result).toHaveLength(2);
     expect(result[0].installsAtRelease).toBe(200);
+    expect(result[0].downloadsAtRelease).toBe(90);
     expect(result[1].installsAtRelease).toBe(200);
+    expect(result[1].downloadsAtRelease).toBe(90);
+  });
+
+  it('sets downloadsAtRelease to null when currentDownloads is null', () => {
+    const stored: import('../../src/types/schema.js').ReleaseEntry[] = [];
+    const fetched = [
+      { version: '1.0.0', publishedAt: '2026-03-18T00:00:00.000Z', installsAtRelease: 0 },
+    ];
+    const result = mergeReleases(stored, fetched, 200, null);
+    expect(result).toHaveLength(1);
+    expect(result[0].downloadsAtRelease).toBeNull();
   });
 });

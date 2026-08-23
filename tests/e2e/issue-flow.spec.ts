@@ -202,7 +202,10 @@ test.describe('Issue Flow — Track on GitHub', () => {
     expect(captured).toContain('github.com/Veverke/vscode-extension-analytics/issues/new')
     expect(captured).toContain('template=add-extension.yml')
     expect(captured).toContain('title=Add+extension%3A+Veverke.chatwizard')
-    expect(captured).toContain('labels=tracking-request')
+    // The labels query param is intentionally NOT included — GitHub doesn't
+    // reliably apply labels via URL params. The issue template frontmatter
+    // handles applying the `tracking-request` label.
+    expect(captured).not.toContain('labels=')
   })
 
   test('already-tracked extensions show "Tracked" badge instead of CTA', async ({ page }) => {

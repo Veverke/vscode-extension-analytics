@@ -1,6 +1,38 @@
 import { test, expect } from '@playwright/test'
+import { createRequire } from 'module'
+
+const require = createRequire(import.meta.url)
+
+const extensionsFixture = require('../../fixtures/data/extensions.json') as object[]
 
 test.describe('Extension detail page', () => {
+  test.beforeEach(async ({ page }) => {
+    // Stub the extension registry so tests are independent of the real
+    // (mutable) data/extensions.json file.
+    await page.route('**/data/extensions.json', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify(extensionsFixture),
+      })
+    )
+
+    // Stub optional companion data files to keep the page quiet.
+    await page.route('**/data/Veverke/chatwizard/releases.json', (route) =>
+      route.fulfill({ status: 404, body: 'Not Found' })
+    )
+    await page.route('**/data/Veverke/chatwizard/monthly.json', (route) =>
+      route.fulfill({ status: 404, body: 'Not Found' })
+    )
+    await page.route('**/data/events.json', (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: '[]',
+      })
+    )
+  })
+
   test('shows charts after data loads', async ({ page }) => {
     await page.goto('/#/extension/Veverke.chatwizard')
 

@@ -6,9 +6,14 @@ import type { ReleaseEntry } from '../../src/types/schema';
 import releasesFixture from '../../fixtures/data/Veverke.chatwizard.releases.json';
 
 const CURRENT_INSTALLS = 1380;
+const CURRENT_DOWNLOADS = 400;
 
 function getImpacts() {
-  return computeReleaseImpact(releasesFixture as ReleaseEntry[], CURRENT_INSTALLS);
+  return computeReleaseImpact(
+    releasesFixture as ReleaseEntry[],
+    CURRENT_INSTALLS,
+    CURRENT_DOWNLOADS
+  );
 }
 
 describe('ReleaseImpactPanel', () => {
@@ -62,6 +67,7 @@ describe('ReleaseImpactPanel', () => {
     expect(screen.getByText(/Installs Gained/)).toBeInTheDocument();
     expect(screen.getByText(/Days Active/)).toBeInTheDocument();
     expect(screen.getByText(/Installs\/Day/)).toBeInTheDocument();
+    expect(screen.getByText(/Downloads\/Day/)).toBeInTheDocument();
   });
 
   it('does not render Diff column when githubRepo is not provided', () => {
@@ -133,6 +139,31 @@ describe('ReleaseImpactPanel', () => {
     );
     const rows = screen.getAllByRole('row').slice(1);
     expect(rows[0]).toHaveTextContent(impactsByPerDay[0].version);
+  });
+
+  it('clicking Downloads/Day header sorts by downloadsPerDay descending', () => {
+    render(<ReleaseImpactPanel impacts={getImpacts()} />);
+    const perDayHeader = screen.getByText(/Downloads\/Day/);
+    fireEvent.click(perDayHeader);
+
+    const impactsByPerDay = [...getImpacts()].sort((a, b) => {
+      if (a.downloadsPerDay === null && b.downloadsPerDay === null) return 0;
+      if (a.downloadsPerDay === null) return 1;
+      if (b.downloadsPerDay === null) return -1;
+      return b.downloadsPerDay - a.downloadsPerDay;
+    });
+    const rows = screen.getAllByRole('row').slice(1);
+    expect(rows[0]).toHaveTextContent(impactsByPerDay[0].version);
+  });
+
+  it('renders N/A for Downloads/Day when downloads data is unavailable', () => {
+    const impacts = computeReleaseImpact(
+      releasesFixture as ReleaseEntry[],
+      CURRENT_INSTALLS
+    );
+    render(<ReleaseImpactPanel impacts={impacts} />);
+    const naCells = screen.getAllByText('N/A');
+    expect(naCells.length).toBeGreaterThan(0);
   });
 
   it('View diff link for first release (no prev) uses tag URL', () => {

@@ -1,7 +1,10 @@
 name: Request Extension Tracking
 description: Request that an extension be tracked in the analytics registry
 title: "[Tracking Request] "
-labels: ["tracking-request"]
+# Note: `labels` is intentionally NOT set here. GitHub fails to load the
+# template when a frontmatter label doesn't exist in the repository.
+# The process-tracking-requests workflow auto-creates and applies the
+# `tracking-request` label when it processes the issue.
 assignees: []
 body:
   - type: markdown

@@ -1,10 +1,16 @@
 name: Request Extension Tracking
 description: Request that an extension be tracked in the analytics registry
 title: "[Tracking Request] "
-# Note: `labels` is intentionally NOT set here. GitHub fails to load the
-# template when a frontmatter label doesn't exist in the repository.
-# The process-tracking-requests workflow auto-creates and applies the
-# `tracking-request` label when it processes the issue.
+# IMPORTANT: `labels: ["tracking-request"]` is applied by GitHub AT CREATION
+# TIME (so the user sees the label while the issue is being created) ONLY IF
+# the `tracking-request` label already exists in the repository.
+#   - If the label exists -> GitHub auto-applies it on creation. ✓
+#   - If the label does NOT exist -> GitHub fails to load this template
+#     entirely (blank issue with no body). ✗
+# So the `tracking-request` label MUST already exist in the repo (created once
+# in repo Settings -> Labels, or by one successful run of the workflow). The
+# process-tracking-requests workflow also auto-creates it as a fallback.
+labels: ["tracking-request"]
 assignees: []
 body:
   - type: markdown

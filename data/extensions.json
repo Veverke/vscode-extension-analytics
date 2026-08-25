@@ -7,5 +7,14 @@
     "githubRepo": "Veverke/chatwizard",
     "requestedBy": "Veverke",
     "trackedSince": "2026-05-20T12:00:00Z"
+  },
+  {
+    "id": "Veverke.copilot-reviewer-assistant",
+    "namespace": "Veverke",
+    "name": "copilot-reviewer-assistant",
+    "displayName": "copilot-reviewer-assistant",
+    "githubRepo": "Veverke/CopilotReviewerAssistant",
+    "requestedBy": "Veverke",
+    "trackedSince": "2026-05-28T11:05:11.925Z"
   }
 ]

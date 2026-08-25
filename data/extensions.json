@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "Veverke.chatwizard",
+    "namespace": "Veverke",
+    "name": "chatwizard",
+    "displayName": "chatwizard",
+    "githubRepo": "Veverke/chatwizard",
+    "requestedBy": "Veverke",
+    "trackedSince": "2026-05-20T12:00:00Z"
+  }
+]

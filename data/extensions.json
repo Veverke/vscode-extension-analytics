@@ -16,5 +16,14 @@
     "githubRepo": "Veverke/CopilotReviewerAssistant",
     "requestedBy": "Veverke",
     "trackedSince": "2026-05-28T11:05:11.925Z"
+  },
+  {
+    "id": "Veverke.vscode-extension-analytics",
+    "namespace": "Veverke",
+    "name": "vscode-extension-analytics",
+    "displayName": "vscode-extension-analytics",
+    "githubRepo": "Veverke/vscode-extension-analytics",
+    "requestedBy": "Veverke",
+    "trackedSince": "2026-08-05T00:29:39.253Z"
   }
 ]

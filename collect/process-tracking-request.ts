@@ -5,6 +5,7 @@ import {
   readTimeSeries,
   writeExtensionRegistry,
 } from './storage.js';
+import { scanSingleRepo } from './github.js';
 
 // ─── Issue Body Parsing ─────────────────────────────────────────────────────
 
@@ -96,7 +97,8 @@ export function addExtensionToRegistry(
   existing: ExtensionRegistry,
   extensionId: string,
   requestedBy: string,
-  githubRepo?: string
+  githubRepo?: string,
+  displayName?: string
 ): { registry: ExtensionRegistry; result: ProcessResult } {
   const existingEntry = existing.find((e) => e.id === extensionId);
   if (existingEntry) {
@@ -149,7 +151,9 @@ export function addExtensionToRegistry(
     id: extensionId,
     namespace,
     name,
-    displayName: name,
+    // Use the real DisplayName from package.json when the tracking request was
+    // able to resolve it; otherwise fall back to the short name.
+    displayName: displayName ?? name,
     githubRepo: githubRepo ?? '',
     requestedBy,
     trackedSince,
@@ -179,9 +183,9 @@ export interface ProcessTrackingRequestOutput {
   registryUpdated: boolean;
 }
 
-export function processTrackingRequest(
+export async function processTrackingRequest(
   input: ProcessTrackingRequestInput
-): ProcessTrackingRequestOutput {
+): Promise<ProcessTrackingRequestOutput> {
   const { issueBody, requestedBy } = input;
   const results: ProcessResult[] = [];
 
@@ -219,11 +223,31 @@ export function processTrackingRequest(
   }
 
   const existing = readExtensionRegistry();
+
+  // When a repo is provided for a NEW extension, resolve the real DisplayName
+  // from that repo's package.json so new extensions show their proper title
+  // immediately (instead of the short name). Falls back to `name` on any
+  // failure — e.g. the repo isn't reachable, isn't a VS Code extension, or
+  // package.json can't be discovered/parsed. Already-tracked extensions keep
+  // their metadata (the weekly discover sweep refreshes those).
+  let displayName: string | undefined;
+  if (parsed.githubRepo && !existing.some((e) => e.id === parsed.extensionId)) {
+    try {
+      const discovered = await scanSingleRepo(parsed.githubRepo, '');
+      if (discovered) {
+        displayName = discovered.displayName;
+      }
+    } catch {
+      // Best-effort: ignore lookup errors and use the name fallback.
+    }
+  }
+
   const { registry, result } = addExtensionToRegistry(
     existing,
     parsed.extensionId,
     requestedBy,
-    parsed.githubRepo
+    parsed.githubRepo,
+    displayName
   );
   results.push(result);
 
@@ -252,7 +276,7 @@ if (fileURLToPath(import.meta.url) === process.argv[1]) {
     console.error('ISSUE_BODY environment variable is required.');
     process.exitCode = 1;
   } else {
-    const output = processTrackingRequest({ issueBody, requestedBy });
+    const output = await processTrackingRequest({ issueBody, requestedBy });
 
     console.log(JSON.stringify(output, null, 2));
 

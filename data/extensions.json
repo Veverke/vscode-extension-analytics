@@ -3,7 +3,7 @@
     "id": "Veverke.chatwizard",
     "namespace": "Veverke",
     "name": "chatwizard",
-    "displayName": "chatwizard",
+    "displayName": "Chat Wizard",
     "githubRepo": "Veverke/chatwizard",
     "requestedBy": "Veverke",
     "trackedSince": "2026-05-20T12:00:00Z"
@@ -12,7 +12,7 @@
     "id": "Veverke.copilot-reviewer-assistant",
     "namespace": "Veverke",
     "name": "copilot-reviewer-assistant",
-    "displayName": "copilot-reviewer-assistant",
+    "displayName": "Copilot Reviewer Assistant",
     "githubRepo": "Veverke/CopilotReviewerAssistant",
     "requestedBy": "Veverke",
     "trackedSince": "2026-05-28T11:05:11.925Z"
@@ -21,7 +21,7 @@
     "id": "Veverke.vscode-extension-analytics",
     "namespace": "Veverke",
     "name": "vscode-extension-analytics",
-    "displayName": "vscode-extension-analytics",
+    "displayName": "VS Code Extension Analytics",
     "githubRepo": "Veverke/vscode-extension-analytics",
     "requestedBy": "Veverke",
     "trackedSince": "2026-08-05T00:29:39.253Z"

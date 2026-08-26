@@ -7,6 +7,10 @@ vi.mock('../storage.js', () => ({
   writeExtensionRegistry: vi.fn(),
 }));
 
+vi.mock('../github.js', () => ({
+  scanSingleRepo: vi.fn(),
+}));
+
 import {
   parseIssueBody,
   validateExtensionId,
@@ -15,7 +19,17 @@ import {
   processTrackingRequest,
 } from '../process-tracking-request.js';
 import * as storage from '../storage.js';
+import * as github from '../github.js';
 import type { ExtensionRegistry } from '../../src/types/schema.js';
+import type { DiscoveredExtension } from '../github.js';
+
+const mockDiscovered: DiscoveredExtension = {
+  githubRepo: 'Veverke/ChatWizard',
+  extensionId: 'Veverke.chatwizard',
+  namespace: 'Veverke',
+  name: 'chatwizard',
+  displayName: 'Chat Wizard',
+};
 
 const validIssueBody = [
   '### Extension ID',
@@ -252,6 +266,17 @@ describe('addExtensionToRegistry', () => {
     expect(registry[0].displayName).toBe('ext');
   });
 
+  it('uses the provided displayName (from package.json) for the new entry', () => {
+    const { registry } = addExtensionToRegistry(
+      [],
+      'Test.ext',
+      'user',
+      'Owner/Repo',
+      'Test Extension'
+    );
+    expect(registry[0].displayName).toBe('Test Extension');
+  });
+
   it('does not mutate the original registry array', () => {
     const original = [...existingRegistry];
     const { registry } = addExtensionToRegistry(existingRegistry, 'New.ext', 'user');
@@ -289,12 +314,13 @@ describe('processTrackingRequest', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(storage.readTimeSeries).mockReturnValue([]);
+    vi.mocked(github.scanSingleRepo).mockResolvedValue(mockDiscovered);
   });
 
-  it('processes a valid tracking request successfully', () => {
+  it('processes a valid tracking request successfully', async () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([]);
 
-    const output = processTrackingRequest({
+    const output = await processTrackingRequest({
       issueBody: validIssueBody,
       requestedBy: 'testuser',
     });
@@ -305,9 +331,10 @@ describe('processTrackingRequest', () => {
     expect(output.results[0].action).toBe('added');
     expect(output.errors).toHaveLength(0);
     expect(storage.writeExtensionRegistry).toHaveBeenCalledOnce();
+    const written = vi.mocked(storage.writeExtensionRegistry).mock.calls[0][0];
+    expect(written[0].displayName).toBe('Chat Wizard');
   });
-
-  it('skips when extension is already tracked by the same requester', () => {
+it('skips when extension is already tracked by the same requester', async () => {
     const registryWithRequester: ExtensionRegistry = [
       {
         ...existingRegistry[0],
@@ -317,19 +344,21 @@ describe('processTrackingRequest', () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue(registryWithRequester);
 
     const body = '### Extension ID\nExisting.publisher';
-    const output = processTrackingRequest({ issueBody: body, requestedBy: 'testuser' });
+    const output = await processTrackingRequest({ issueBody: body, requestedBy: 'testuser' });
 
     expect(output.success).toBe(true);
     expect(output.registryUpdated).toBe(false);
     expect(output.results[0].action).toBe('skipped');
     expect(storage.writeExtensionRegistry).not.toHaveBeenCalled();
+    // Already-tracked extensions are not rescanned via package.json.
+    expect(github.scanSingleRepo).not.toHaveBeenCalled();
   });
 
-  it('updates requestedBy when extension is already tracked without a requester', () => {
+  it('updates requestedBy when extension is already tracked without a requester', async () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue(existingRegistry);
 
     const body = '### Extension ID\nExisting.publisher';
-    const output = processTrackingRequest({ issueBody: body, requestedBy: 'testuser' });
+    const output = await processTrackingRequest({ issueBody: body, requestedBy: 'testuser' });
 
     expect(output.success).toBe(true);
     expect(output.registryUpdated).toBe(true);
@@ -339,11 +368,11 @@ describe('processTrackingRequest', () => {
     expect(written[0].requestedBy).toBe('testuser');
   });
 
-  it('returns errors for invalid extension ID', () => {
+  it('returns errors for invalid extension ID', async () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([]);
 
     const body = '### Extension ID\ninvalid id with spaces';
-    const output = processTrackingRequest({ issueBody: body, requestedBy: 'testuser' });
+    const output = await processTrackingRequest({ issueBody: body, requestedBy: 'testuser' });
 
     expect(output.success).toBe(false);
     expect(output.registryUpdated).toBe(false);
@@ -351,21 +380,21 @@ describe('processTrackingRequest', () => {
     expect(storage.writeExtensionRegistry).not.toHaveBeenCalled();
   });
 
-  it('returns errors for invalid GitHub repo', () => {
+  it('returns errors for invalid GitHub repo', async () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([]);
 
     const body = '### Extension ID\nValid.id\n### GitHub Repository (optional)\ninvalid';
-    const output = processTrackingRequest({ issueBody: body, requestedBy: 'testuser' });
+    const output = await processTrackingRequest({ issueBody: body, requestedBy: 'testuser' });
 
     expect(output.success).toBe(false);
     expect(output.registryUpdated).toBe(false);
     expect(storage.writeExtensionRegistry).not.toHaveBeenCalled();
   });
 
-  it('returns errors when extension ID cannot be parsed', () => {
+  it('returns errors when extension ID cannot be parsed', async () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([]);
 
-    const output = processTrackingRequest({
+    const output = await processTrackingRequest({
       issueBody: 'No relevant content here',
       requestedBy: 'testuser',
     });
@@ -373,37 +402,50 @@ describe('processTrackingRequest', () => {
     expect(output.success).toBe(false);
     expect(output.errors).toContain('Could not parse extension ID from issue body.');
   });
-
-  it('sets requestedBy in the new entry', () => {
+it('sets requestedBy in the new entry', async () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([]);
 
     const body = '### Extension ID\nTracked.bythisuser';
-    processTrackingRequest({ issueBody: body, requestedBy: 'the-requester' });
+    await processTrackingRequest({ issueBody: body, requestedBy: 'the-requester' });
 
     const written = vi.mocked(storage.writeExtensionRegistry).mock.calls[0][0];
     expect(written[0].requestedBy).toBe('the-requester');
   });
 
-  it('includes githubRepo when provided', () => {
+  it('includes githubRepo when provided and resolves displayName from package.json', async () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([]);
 
     const body = '### Extension ID\nWith.repo\n### GitHub Repository (optional)\nOwner/Repo';
-    processTrackingRequest({ issueBody: body, requestedBy: 'user' });
+    await processTrackingRequest({ issueBody: body, requestedBy: 'user' });
 
     const written = vi.mocked(storage.writeExtensionRegistry).mock.calls[0][0];
+    expect(github.scanSingleRepo).toHaveBeenCalledWith('Owner/Repo', '');
+    expect(written[0].githubRepo).toBe('Owner/Repo');
+    expect(written[0].displayName).toBe('Chat Wizard');
+  });
+
+  it('falls back to the short name as displayName when package.json cannot be discovered', async () => {
+    vi.mocked(storage.readExtensionRegistry).mockReturnValue([]);
+    vi.mocked(github.scanSingleRepo).mockResolvedValue(null);
+
+    const body = '### Extension ID\nWith.repo\n### GitHub Repository (optional)\nOwner/Repo';
+    await processTrackingRequest({ issueBody: body, requestedBy: 'user' });
+
+    const written = vi.mocked(storage.writeExtensionRegistry).mock.calls[0][0];
+    expect(written[0].displayName).toBe('repo');
     expect(written[0].githubRepo).toBe('Owner/Repo');
   });
 
-  it('handles empty body gracefully', () => {
+  it('handles empty body gracefully', async () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([]);
 
-    const output = processTrackingRequest({ issueBody: '', requestedBy: 'user' });
+    const output = await processTrackingRequest({ issueBody: '', requestedBy: 'user' });
 
     expect(output.success).toBe(false);
     expect(output.errors).toContain('Could not parse extension ID from issue body.');
   });
 
-  it('handles body with actual newlines correctly', () => {
+  it('handles body with actual newlines correctly', async () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue([]);
 
     const body = [
@@ -415,13 +457,13 @@ describe('processTrackingRequest', () => {
       '### Notes (optional)',
       'Some notes',
     ].join('\n');
-    const output = processTrackingRequest({ issueBody: body, requestedBy: 'user' });
+    const output = await processTrackingRequest({ issueBody: body, requestedBy: 'user' });
 
     expect(output.success).toBe(true);
     expect(output.registryUpdated).toBe(true);
   });
 
-  it('updates requestedBy when a different user requests an already-tracked extension', () => {
+  it('updates requestedBy when a different user requests an already-tracked extension', async () => {
     const registryWithRequester: ExtensionRegistry = [
       {
         ...existingRegistry[0],
@@ -431,7 +473,7 @@ describe('processTrackingRequest', () => {
     vi.mocked(storage.readExtensionRegistry).mockReturnValue(registryWithRequester);
 
     const body = '### Extension ID\nExisting.publisher';
-    const output = processTrackingRequest({ issueBody: body, requestedBy: 'another-user' });
+    const output = await processTrackingRequest({ issueBody: body, requestedBy: 'another-user' });
 
     expect(output.success).toBe(true);
     expect(output.registryUpdated).toBe(true);

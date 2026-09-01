@@ -253,5 +253,8 @@ export function filterExtensionsByUser(
   username: string | null
 ): ExtensionEntry[] {
   if (!username) return extensions
-  return extensions.filter((e) => e.requestedBy === username)
+  return extensions.filter(
+    (e) =>
+      e.requestedBy?.trim().toLowerCase() === username.trim().toLowerCase()
+  )
 }

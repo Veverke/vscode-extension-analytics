@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { useExtensionsContext } from '../contexts/ExtensionsContext'
+import { useExtensions } from '../hooks/useExtensions'
 import { useExtensionData } from '../hooks/useExtensionData'
 import { useReleaseData } from '../hooks/useReleaseData'
 import { useEvents } from '../hooks/useEvents'
@@ -25,7 +25,15 @@ import type { MonthlyRollup, DataPoint } from '../types/schema'
 
 export default function ExtensionDetail() {
   const { extensionId } = useParams<{ extensionId: string }>()
-  const extensions = useExtensionsContext()
+  // Resolve the extension from the FULL registry. The detail route can be
+  // reached for any tracked extension (e.g. via the "View all tracked
+  // extensions" list), not just the extensions owned by the current session
+  // user, so the username-filtered context is intentionally NOT used here.
+  const {
+    extensions,
+    loading: extensionsLoading,
+    error: extensionsError,
+  } = useExtensions()
   const { data, loading, error } = useExtensionData(extensionId ?? '')
   const { releases } = useReleaseData(extensionId ?? '')
   const { events } = useEvents()
@@ -33,6 +41,36 @@ export default function ExtensionDetail() {
   const [projectionMonths, setProjectionMonths] = useState(1)
 
   const extension = extensions.find(ext => ext.id === extensionId)
+
+  // Wait for the registry first so we never flash "Extension not found"
+  // while the registry is still loading.
+  if (extensionsLoading) {
+    return (
+      <div className="detail-skeleton" role="status" aria-label="Loading extension data">
+        <div className="detail-skeleton__header">
+          <div className="detail-skeleton__icon" />
+          <div className="detail-skeleton__title" />
+        </div>
+        <div className="detail-skeleton__stats">
+          <div className="detail-skeleton__stat" />
+          <div className="detail-skeleton__stat" />
+          <div className="detail-skeleton__stat" />
+          <div className="detail-skeleton__stat" />
+        </div>
+        <div className="detail-skeleton__chart" />
+        <div className="detail-skeleton__chart" style={{ animationDelay: '0.3s' }} />
+        <div className="detail-skeleton__chart" style={{ animationDelay: '0.4s' }} />
+      </div>
+    )
+  }
+
+  if (extensionsError) {
+    return (
+      <div className="error" role="alert">
+        <span>{extensionsError}</span>
+      </div>
+    )
+  }
 
   if (!extension) {
     return (

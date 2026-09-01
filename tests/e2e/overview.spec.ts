@@ -116,6 +116,30 @@ test.describe('Overview Dashboard', () => {
     ).toBeVisible({ timeout: 10000 })
   })
 
+  test('user with no own extensions can open a detail page via "View all tracked extensions"', async ({ page }) => {
+    // Session user has no requested extensions (registry entries are owned by "Veverke").
+    await page.goto('/#/overview?username=no-match')
+
+    // Empty state for the user's own extensions…
+    await expect(
+      page.getByText('No extensions found for your GitHub username.')
+    ).toBeVisible({ timeout: 10000 })
+
+    // …but "View all tracked extensions" surfaces the full registry.
+    await page.getByRole('button', { name: 'View all tracked extensions' }).click()
+    const rows = page.locator('tbody tr')
+    await expect(rows).toHaveCount(3)
+
+    // Clicking a tracked extension must open its detail page (regression:
+    // previously rendered "Extension not found" when the extension wasn't
+    // owned by the session user).
+    await page.getByRole('link', { name: 'Chat Wizard' }).first().click()
+    await expect(page.getByRole('heading', { name: 'Chat Wizard' })).toBeVisible({
+      timeout: 10000,
+    })
+    await expect(page.getByText('Extension not found')).not.toBeVisible()
+  })
+
   test('overview sorted by momentum by default — highest momentum score in first row', async ({ page }) => {
     await page.goto('/#/overview')
 

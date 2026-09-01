@@ -195,6 +195,27 @@ describe('useExtensions', () => {
       expect(ids).not.toContain('user1.ext-a')
     })
 
+    it('filters case-insensitively (session username casing differs from registry)', async () => {
+      vi.stubGlobal(
+        'fetch',
+        vi.fn().mockResolvedValue({
+          ok: true,
+          json: () => Promise.resolve(mixedFixture),
+        }),
+      )
+
+      const { result } = renderHook(() => useExtensions('USER1'))
+
+      await waitFor(() => expect(result.current.loading).toBe(false))
+
+      expect(result.current.extensions).toHaveLength(2)
+      const ids = result.current.extensions.map(e => e.id)
+      expect(ids).toContain('user1.ext-a')
+      expect(ids).toContain('user1.ext-b')
+      expect(ids).not.toContain('legacy.ext')
+      expect(ids).not.toContain('user2.ext-c')
+    })
+
     it('re-fetches when username changes', async () => {
       const fetchMock = vi.fn().mockResolvedValue({
         ok: true,

@@ -38,7 +38,11 @@ export function useExtensions(username?: string): UseExtensionsResult {
           setExtensions([])
         } else {
           const filtered = username
-            ? data.filter((e) => e.requestedBy === username)
+            ? data.filter(
+                (e) =>
+                  e.requestedBy?.trim().toLowerCase() ===
+                  username.trim().toLowerCase()
+              )
             : data
           setExtensions(filtered)
         }

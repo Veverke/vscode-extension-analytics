@@ -9,6 +9,14 @@ import * as useEventsModule from '../../src/hooks/useEvents'
 import * as useMonthlyRollupsModule from '../../src/hooks/useMonthlyRollups'
 import type { ExtensionEntry, MonthlyRollup, DataPoint } from '../../src/types/schema'
 
+const { mockUseExtensions } = vi.hoisted(() => ({
+  mockUseExtensions: vi.fn(),
+}))
+
+vi.mock('../../src/hooks/useExtensions', () => ({
+  useExtensions: mockUseExtensions,
+}))
+
 vi.mock('../../src/hooks/useExtensionData')
 vi.mock('../../src/hooks/useReleaseData')
 vi.mock('../../src/hooks/useEvents')
@@ -74,19 +82,22 @@ const mockDataPoint: DataPoint = {
 
 function renderExtensionDetail(extensionId: string = 'test.test-ext') {
   return render(
-    <ExtensionsContext.Provider value={[mockExtension]}>
-      <MemoryRouter initialEntries={[`/extension/${extensionId}`]}>
-        <Routes>
-          <Route path="/extension/:extensionId" element={<ExtensionDetail />} />
-        </Routes>
-      </MemoryRouter>
-    </ExtensionsContext.Provider>
+    <MemoryRouter initialEntries={[`/extension/${extensionId}`]}>
+      <Routes>
+        <Route path="/extension/:extensionId" element={<ExtensionDetail />} />
+      </Routes>
+    </MemoryRouter>
   )
 }
 
 describe('ExtensionDetail', () => {
   beforeEach(() => {
     vi.resetAllMocks()
+    mockUseExtensions.mockReturnValue({
+      extensions: [mockExtension],
+      loading: false,
+      error: null,
+    })
     mockUseExtensionData.mockReturnValue({ data: [], loading: true, error: null })
     mockUseReleaseData.mockReturnValue({ releases: [], loading: true, error: null })
     mockUseEvents.mockReturnValue({ events: [], loading: true, error: null })
@@ -115,6 +126,37 @@ describe('ExtensionDetail', () => {
   it('renders extension not found when extension ID does not match', () => {
     renderExtensionDetail('nonexistent.ext')
     expect(screen.getByText('Extension not found')).toBeInTheDocument()
+  })
+
+  it('renders detail for a tracked extension outside the session-user filter ("View all" flow)', () => {
+    mockUseExtensionData.mockReturnValue({ data: [mockDataPoint], loading: false, error: null })
+    // The session user's filtered list is empty, but the extension exists in
+    // the full registry — exactly what happens when opening an extension from
+    // the "View all tracked extensions" list.
+    render(
+      <ExtensionsContext.Provider value={[]}>
+        <MemoryRouter initialEntries={['/extension/test.test-ext']}>
+          <Routes>
+            <Route path="/extension/:extensionId" element={<ExtensionDetail />} />
+          </Routes>
+        </MemoryRouter>
+      </ExtensionsContext.Provider>
+    )
+    expect(screen.getByText('Test Extension')).toBeInTheDocument()
+    expect(screen.queryByText('Extension not found')).not.toBeInTheDocument()
+  })
+
+  it('shows loading skeleton while the registry is still loading', () => {
+    mockUseExtensions.mockReturnValue({ extensions: [], loading: true, error: null })
+    renderExtensionDetail()
+    expect(screen.getByRole('status', { name: /Loading extension data/ })).toBeInTheDocument()
+    expect(screen.queryByText('Extension not found')).not.toBeInTheDocument()
+  })
+
+  it('shows error state when the registry fails to load', () => {
+    mockUseExtensions.mockReturnValue({ extensions: [], loading: false, error: 'Failed to load registry' })
+    renderExtensionDetail()
+    expect(screen.getByRole('alert')).toHaveTextContent('Failed to load registry')
   })
 
   it('renders VS Marketplace link', () => {

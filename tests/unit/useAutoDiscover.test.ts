@@ -606,4 +606,10 @@ describe('filterExtensionsByUser', () => {
     const result = filterExtensionsByUser(extensions, 'unknown-user')
     expect(result).toHaveLength(0)
   })
+
+  it('matches username case-insensitively', () => {
+    const result = filterExtensionsByUser(extensions, 'USER2')
+    expect(result).toHaveLength(1)
+    expect(result[0].id).toBe('B.two')
+  })
 })

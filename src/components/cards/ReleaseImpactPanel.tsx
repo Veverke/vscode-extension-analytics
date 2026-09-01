@@ -23,16 +23,33 @@ function formatDate(iso: string): string {
   });
 }
 
+/**
+ * Normalize a registry `githubRepo` value (a bare "owner/repo" or a full
+ * "https://github.com/owner/repo.git" URL) into a clean base GitHub URL.
+ */
+function toBaseRepoUrl(githubRepo: string): string {
+  const trimmed = githubRepo.trim().replace(/\/+$/, '').replace(/\.git$/, '');
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed;
+  }
+  return `https://github.com/${trimmed.replace(/^\/+/, '')}`;
+}
+
+/** GitHub tags use a "v" prefix ("v1.6.0") — ensure exactly one, whatever the data has. */
+function toGithubTag(version: string): string {
+  return `v${version.trim().replace(/^v/i, '')}`;
+}
+
 function buildGithubCompareUrl(
   githubRepo: string,
   prevVersion: string | undefined,
   version: string
 ): string {
-  const base = githubRepo.replace(/\.git$/, '');
+  const base = toBaseRepoUrl(githubRepo);
   if (prevVersion) {
-    return `${base}/compare/v${prevVersion}...v${version}`;
+    return `${base}/compare/${toGithubTag(prevVersion)}...${toGithubTag(version)}`;
   }
-  return `${base}/releases/tag/v${version}`;
+  return `${base}/releases/tag/${toGithubTag(version)}`;
 }
 
 export default function ReleaseImpactPanel({ impacts, githubRepo }: Props) {

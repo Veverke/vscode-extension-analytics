@@ -185,4 +185,52 @@ describe('ReleaseImpactPanel', () => {
     );
     expect(tagLink).toBeDefined();
   });
+it('builds absolute github.com URLs when githubRepo is a bare owner/repo string', () => {
+    render(
+      <ReleaseImpactPanel
+        impacts={getImpacts()}
+        githubRepo="Veverke/chatwizard"
+      />
+    );
+    const links = screen.getAllByRole('link', { name: 'View diff' });
+    expect(links).toHaveLength(3);
+    for (const link of links) {
+      const href = link.getAttribute('href') ?? '';
+      expect(href).toMatch(
+        /^https:\/\/github\.com\/Veverke\/chatwizard\/(compare\/v.+(?:\.\.\.v.+)|releases\/tag\/v.+)$/
+      );
+      expect(href).not.toMatch(/^Veverke/);
+    }
+  });
+
+  it('normalizes a .git suffix on githubRepo', () => {
+    render(
+      <ReleaseImpactPanel
+        impacts={getImpacts()}
+        githubRepo="Veverke/chatwizard.git"
+      />
+    );
+    for (const link of screen.getAllByRole('link', { name: 'View diff' })) {
+      const href = link.getAttribute('href') ?? '';
+      expect(href).toMatch(/^https:\/\/github\.com\/Veverke\/chatwizard\//);
+      expect(href).not.toContain('.git');
+    }
+  });
+
+  it('does not double the v tag prefix when version already starts with v', () => {
+    const impacts = getImpacts().map((impact) => ({
+      ...impact,
+      version: `v${impact.version}`,
+    }));
+    render(
+      <ReleaseImpactPanel
+        impacts={impacts}
+        githubRepo="Veverke/chatwizard"
+      />
+    );
+    for (const link of screen.getAllByRole('link', { name: 'View diff' })) {
+      const href = link.getAttribute('href') ?? '';
+      expect(href).not.toMatch(/vv\d/);
+    }
+  });
 });

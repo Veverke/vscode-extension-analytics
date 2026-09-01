@@ -142,4 +142,29 @@ test.describe('Phase 6 — Annotations and Release Impact', () => {
 
     await expect(page.getByText('No release data available yet.')).toBeVisible()
   })
+test('View diff links are absolute github.com URLs (no app-relative 404 redirects)', async ({ page }) => {
+    await page.goto('/#/extension/Veverke.chatwizard')
+
+    await expect(page.getByRole('region', { name: 'Release Impact' })).toBeVisible({
+      timeout: 10000,
+    })
+
+    const releaseSection = page.getByRole('region', { name: 'Release Impact' })
+    const diffLinks = releaseSection.getByRole('link', { name: 'View diff' })
+    await expect(diffLinks).toHaveCount(releasesFixture.length)
+
+    const hrefs = await diffLinks.evaluateAll((links) =>
+      links.map((l) => l.getAttribute('href') ?? '')
+    )
+
+    // Absolute github.com URLs (the registry stores a bare "owner/repo" string).
+    for (const href of hrefs) {
+      expect(href).toMatch(/^https:\/\/github\.com\/Veverke\/ChatWizard\//)
+    }
+
+    // None may be app-relative (which would resolve against the hash base → 404).
+    for (const href of hrefs) {
+      expect(href).toMatch(/^[a-z]+:\/\//i)
+    }
+  })
 })

@@ -58,5 +58,17 @@
     "starsEndOfMonth": 8,
     "forksEndOfMonth": 1,
     "contributionsEndOfMonth": 5
+  },
+  {
+    "yearMonth": "2026-10",
+    "installsEndOfMonth": 338,
+    "installsGained": 0,
+    "avgRating": 5,
+    "ratingCountEndOfMonth": 1,
+    "openVsxDownloadsEndOfMonth": 3164,
+    "dataPointsInMonth": 1,
+    "starsEndOfMonth": 8,
+    "forksEndOfMonth": 1,
+    "contributionsEndOfMonth": 5
   }
 ]

@@ -12633,5 +12633,31 @@
         "reviews": 0
       }
     }
+  },
+  {
+    "ts": "2026-10-20T06:12:41.126Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 3816,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
   }
 ]

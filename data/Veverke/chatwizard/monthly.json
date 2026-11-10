@@ -73,14 +73,14 @@
   },
   {
     "yearMonth": "2026-11",
-    "installsEndOfMonth": 409,
-    "installsGained": 22,
+    "installsEndOfMonth": 412,
+    "installsGained": 25,
     "avgRating": 5,
     "ratingCountEndOfMonth": 1,
     "openVsxDownloadsEndOfMonth": 3893,
-    "dataPointsInMonth": 38,
+    "dataPointsInMonth": 39,
     "starsEndOfMonth": 8,
     "forksEndOfMonth": 1,
-    "contributionsEndOfMonth": 5
+    "contributionsEndOfMonth": 3
   }
 ]

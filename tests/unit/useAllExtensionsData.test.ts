@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 import { useAllExtensionsData } from '../../src/hooks/useAllExtensionsData';
-import type { ExtensionEntry } from '../../src/types/schema';
+import type { DataPoint, ExtensionEntry } from '../../src/types/schema';
 
 const testExtensions: ExtensionEntry[] = [
   {
@@ -48,6 +48,52 @@ describe('useAllExtensionsData', () => {
     expect(result.current.results[0].currentDownloads).toBe(0);
     expect(result.current.results[0].sparklinePoints).toEqual([]);
     expect(Object.keys(result.current.errors)).toHaveLength(0);
+  });
+
+  it('builds sparklinePoints from marketplace installs + Open VSX downloads', async () => {
+    const points: DataPoint[] = [
+      {
+        ts: '2026-06-01T00:00:00Z',
+        marketplace: {
+          installs: 100,
+          updates: 0,
+          averageRating: 4.5,
+          ratingCount: 1,
+          trendingWeekly: 0,
+          trendingMonthly: 0,
+        },
+        openVsx: { downloads: 40, averageRating: null, ratingCount: 0 },
+        github: null,
+      },
+      {
+        ts: '2026-06-02T00:00:00Z',
+        marketplace: {
+          installs: 150,
+          updates: 0,
+          averageRating: 4.5,
+          ratingCount: 1,
+          trendingWeekly: 0,
+          trendingMonthly: 0,
+        },
+        // Not published / not collected on Open VSX for this data point
+        openVsx: null,
+        github: null,
+      },
+    ];
+
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve(points),
+      }),
+    );
+
+    const { result, unmount } = renderHook(() => useAllExtensionsData(testExtensions));
+    await waitFor(() => expect(result.current.loading).toBe(false));
+
+    expect(result.current.results[0].sparklinePoints).toEqual([140, 150]);
+    unmount();
   });
 
   it('handles fetch failure for an extension — records error', async () => {

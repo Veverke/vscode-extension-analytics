@@ -11,7 +11,7 @@ export interface ExtensionSummary {
   currentDownloads: number; // most recent open vsx download count
   velocity: number; // most recent velocity value
   momentum: number; // computeMomentum result
-  sparklinePoints: number[]; // last 14 install values for sparkline
+  sparklinePoints: number[]; // last 14 combined marketplace installs + Open VSX downloads for sparkline
 }
 
 export interface UseAllExtensionsDataResult {
@@ -64,9 +64,13 @@ export function useAllExtensionsData(
           data.length > 0 ? data[data.length - 1].marketplace.installs : 0;
         const currentDownloads =
           data.length > 0 ? data[data.length - 1].openVsx?.downloads ?? 0 : 0;
+        // Trend must reflect BOTH distribution channels, not just the
+        // Marketplace installs. Mirror the "total downloads" convention used
+        // in StatsCards: marketplace installs + Open VSX downloads (0 when an
+        // extension is not published on Open VSX for that data point).
         const sparklinePoints = data
           .slice(-14)
-          .map((p) => p.marketplace.installs);
+          .map((p) => p.marketplace.installs + (p.openVsx?.downloads ?? 0));
 
         return {
           extension: ext,

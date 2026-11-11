@@ -122,7 +122,7 @@ The overview dashboard shows all tracked extensions in a sortable table.
 |---|---|---|
 | **Extension** | Display name of the extension | ✅ |
 | **Installs** | Current install count from VS Marketplace | ✅ |
-| **Trend** | Sparkline chart showing recent install trend | ❌ |
+| **Trend** | Sparkline chart showing the recent combined trend of Marketplace installs **and** Open VSX downloads | ❌ |
 | **Velocity** | Badge indicating growth rate (green = growing, red = declining) | ✅ |
 | **Momentum** | Badge showing the composite momentum score | ✅ |
 

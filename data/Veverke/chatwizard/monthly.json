@@ -49,14 +49,38 @@
   },
   {
     "yearMonth": "2026-09",
-    "installsEndOfMonth": 276,
-    "installsGained": 1,
+    "installsEndOfMonth": 338,
+    "installsGained": 63,
     "avgRating": 5,
     "ratingCountEndOfMonth": 1,
-    "openVsxDownloadsEndOfMonth": 2784,
-    "dataPointsInMonth": 4,
-    "starsEndOfMonth": 6,
-    "forksEndOfMonth": 0,
-    "contributionsEndOfMonth": 0
+    "openVsxDownloadsEndOfMonth": 3156,
+    "dataPointsInMonth": 120,
+    "starsEndOfMonth": 8,
+    "forksEndOfMonth": 1,
+    "contributionsEndOfMonth": 5
+  },
+  {
+    "yearMonth": "2026-10",
+    "installsEndOfMonth": 387,
+    "installsGained": 49,
+    "avgRating": 5,
+    "ratingCountEndOfMonth": 1,
+    "openVsxDownloadsEndOfMonth": 3735,
+    "dataPointsInMonth": 124,
+    "starsEndOfMonth": 8,
+    "forksEndOfMonth": 1,
+    "contributionsEndOfMonth": 5
+  },
+  {
+    "yearMonth": "2026-11",
+    "installsEndOfMonth": 414,
+    "installsGained": 27,
+    "avgRating": 5,
+    "ratingCountEndOfMonth": 1,
+    "openVsxDownloadsEndOfMonth": 3901,
+    "dataPointsInMonth": 43,
+    "starsEndOfMonth": 8,
+    "forksEndOfMonth": 1,
+    "contributionsEndOfMonth": 5
   }
 ]

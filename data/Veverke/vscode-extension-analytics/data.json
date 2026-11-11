@@ -2754,5 +2754,7311 @@
         "reviews": 0
       }
     }
+  },
+  {
+    "ts": "2026-09-02T00:21:42.521Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 0,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1170,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-02T06:18:00.387Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 0,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1204,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-02T12:11:58.649Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 1,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1238,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-02T18:10:09.771Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 1,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1238,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-03T00:22:00.224Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 1,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1238,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-03T06:14:20.185Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 1,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1246,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-03T12:12:30.280Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 1,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1248,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-03T18:10:05.795Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 1,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1252,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-04T00:33:32.663Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1252,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-04T06:23:29.304Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1254,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-04T12:11:35.134Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1256,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-04T18:09:29.511Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1256,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-05T00:20:16.331Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1258,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-05T06:11:58.531Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1258,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-05T12:09:57.468Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1262,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-05T18:08:08.465Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1262,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-06T00:23:22.972Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1262,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-06T06:11:53.712Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1266,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-06T12:10:04.039Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1270,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-06T18:08:09.776Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1270,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-07T00:22:46.978Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1270,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-07T06:16:55.576Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1274,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-07T12:11:48.098Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1276,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-07T18:09:22.763Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1280,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-08T00:21:12.577Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1282,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-08T06:13:17.468Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1282,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 408,
+      "contributionsBreakdown": {
+        "commits": 408,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-08T12:11:50.944Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1286,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-08T18:10:07.054Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1286,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-09T00:21:21.463Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1288,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-09T06:13:20.215Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 2,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1288,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-09T18:09:41.716Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1290,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-10T00:19:39.042Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1290,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-10T06:13:51.067Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1290,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-10T12:11:34.838Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1294,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-10T18:09:24.780Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1294,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-11T00:21:04.548Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1294,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-11T06:12:57.597Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1294,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-11T12:12:19.854Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1296,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-11T18:08:41.910Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1296,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-12T00:19:44.445Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1298,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-12T06:11:57.253Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1298,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-12T12:10:12.932Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1300,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-12T18:08:20.952Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1300,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-13T00:23:27.028Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1300,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-13T06:16:08.934Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1300,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-13T12:10:24.950Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1304,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-13T18:08:46.055Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1306,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-14T00:22:53.266Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1308,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-14T06:17:32.919Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1308,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-14T12:12:09.581Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1310,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-14T18:08:54.905Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1310,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-15T00:21:41.660Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1312,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-15T06:13:45.304Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 3,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1312,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-15T12:11:10.924Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1316,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-15T18:08:31.663Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1316,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-16T00:20:08.378Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1320,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-16T06:13:45.094Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1320,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-16T12:11:58.518Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1324,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-16T18:09:19.234Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1324,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-17T00:20:22.118Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1324,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-17T06:13:57.698Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1324,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-17T12:11:51.488Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1326,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-17T18:09:56.584Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1326,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-18T00:20:30.071Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1326,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-18T06:13:12.014Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1328,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-18T12:11:16.266Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1330,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-18T18:08:53.044Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1330,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-19T00:20:22.396Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1330,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-19T06:12:13.356Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1330,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-19T12:10:12.644Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1334,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-19T18:08:34.979Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1334,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-20T00:23:07.319Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1334,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-20T06:11:54.477Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1334,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-20T12:10:25.762Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1338,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-20T18:09:03.163Z",
+    "marketplace": {
+      "installs": 3,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1338,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-21T00:22:53.052Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1338,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-21T06:17:57.126Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1348,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-21T12:11:35.231Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1350,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-21T18:09:44.262Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1350,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-22T00:21:09.743Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1350,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-22T06:13:35.982Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1350,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-22T12:11:28.964Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1352,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-22T18:10:28.217Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1354,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-23T00:19:49.009Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1356,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-23T06:13:43.991Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1356,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-23T12:12:07.809Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1358,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-23T18:10:36.204Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1358,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-24T00:20:13.595Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1358,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-24T06:13:49.364Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1358,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-24T12:11:44.079Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1360,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-24T18:09:58.602Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1360,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-25T00:21:34.952Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1370,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-25T06:14:00.714Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1382,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-25T12:12:20.211Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1384,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-25T18:09:40.324Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1384,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-26T00:20:23.194Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1394,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-26T06:12:40.213Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 4,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1394,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-26T12:10:21.782Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1396,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-26T18:08:52.031Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1396,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-27T00:24:32.789Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1400,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-27T06:13:17.913Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1400,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-27T12:11:17.524Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1402,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-27T18:09:27.565Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1402,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-28T00:24:15.281Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1402,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-28T06:19:01.094Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1402,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-28T12:13:36.826Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1404,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-28T18:10:53.831Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1404,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-29T00:22:29.484Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1406,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-29T06:14:06.694Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1406,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-29T12:12:46.408Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1408,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-29T18:10:42.150Z",
+    "marketplace": {
+      "installs": 4,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1408,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-30T00:23:13.036Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1414,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-30T06:14:14.220Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1414,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-30T12:13:09.491Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1416,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-09-30T18:10:42.236Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1416,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-01T00:26:15.529Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1416,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-01T06:14:38.320Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1417,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-01T12:13:06.895Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1420,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-01T18:11:16.635Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1420,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-02T00:23:03.516Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1422,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-02T12:12:44.964Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1424,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-02T18:10:52.043Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1424,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-03T00:21:00.069Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1426,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-03T06:15:32.154Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1426,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-03T13:42:18.362Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1428,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-03T18:38:12.089Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1430,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-04T01:03:09.537Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1430,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-04T08:01:53.494Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1430,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-04T13:55:25.152Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1434,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-04T18:55:35.614Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1434,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-05T00:24:19.042Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1434,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-05T06:22:30.425Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1434,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-05T12:13:24.848Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1436,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-05T18:10:47.794Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1440,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-06T00:22:36.070Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1440,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-06T06:14:07.737Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1442,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-06T12:12:09.370Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1444,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-06T18:10:30.315Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1444,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-07T00:23:10.800Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1446,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-07T06:13:18.701Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1448,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-07T12:13:09.260Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1450,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-07T18:10:25.702Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1450,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-08T00:22:09.063Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1450,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-08T06:14:44.303Z",
+    "marketplace": {
+      "installs": 5,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1450,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-08T12:12:23.913Z",
+    "marketplace": {
+      "installs": 8,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1452,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-08T18:10:11.956Z",
+    "marketplace": {
+      "installs": 8,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1452,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-09T00:23:30.273Z",
+    "marketplace": {
+      "installs": 8,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1454,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-09T06:14:25.668Z",
+    "marketplace": {
+      "installs": 8,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1456,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-09T12:11:44.008Z",
+    "marketplace": {
+      "installs": 8,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1456,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-09T18:09:53.331Z",
+    "marketplace": {
+      "installs": 8,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1458,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-10T00:23:19.617Z",
+    "marketplace": {
+      "installs": 8,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1458,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-10T06:13:04.406Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1464,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-10T12:11:16.795Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1468,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-10T18:09:39.539Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1468,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-11T00:25:41.664Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1474,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-11T06:13:22.072Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1474,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-11T12:11:53.682Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1478,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-11T18:09:56.195Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1480,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-12T00:26:13.582Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1480,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-12T06:21:48.158Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1480,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-12T12:17:18.683Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1484,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-12T18:09:43.195Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1484,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-13T00:24:43.340Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1484,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-13T06:16:23.229Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1486,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-13T12:13:28.288Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1494,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-13T18:11:27.345Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1498,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-14T00:19:08.056Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1500,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-14T06:12:54.009Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1506,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-14T12:11:41.021Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1510,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-14T18:09:35.060Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1512,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-15T00:19:14.564Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1512,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-15T06:13:38.682Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1514,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-15T12:11:27.199Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1516,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-15T18:10:16.405Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1516,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-16T00:18:18.976Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1520,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-16T06:13:09.801Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1522,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-16T12:11:16.802Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1522,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-16T18:09:13.412Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1522,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-17T00:19:26.841Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1522,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-17T06:11:16.627Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1522,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-17T12:09:50.093Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1524,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-17T18:08:14.485Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1526,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-18T00:21:14.546Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1526,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-18T06:11:35.919Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1526,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-18T12:10:17.067Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1530,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-18T18:08:17.889Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1530,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-19T00:22:04.324Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1530,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-19T06:17:09.548Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1534,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-19T12:12:52.851Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1538,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-19T18:10:14.649Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1540,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-20T00:19:53.077Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1544,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-20T06:12:43.102Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1544,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-20T12:11:35.403Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1548,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-20T18:09:41.047Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1562,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-21T00:19:12.897Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1564,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-21T06:13:12.405Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1572,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-21T12:11:18.776Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1574,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-21T18:10:10.205Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1576,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-22T00:19:01.258Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1578,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-22T06:12:49.120Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1582,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-22T12:12:16.405Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1584,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-22T18:09:31.759Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1590,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-23T00:20:29.039Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1594,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-23T06:13:16.162Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1596,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-23T12:10:41.268Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1600,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-23T18:09:08.291Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1604,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-24T00:19:31.959Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1604,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-24T06:11:54.664Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1610,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-24T12:09:56.328Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1614,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-24T18:08:15.455Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1616,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-25T00:21:43.399Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1618,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-25T06:11:55.927Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1620,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-25T12:09:58.662Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1624,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-25T18:08:30.674Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1628,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-26T00:20:53.073Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1634,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-26T06:17:07.681Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1636,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-26T13:34:40.784Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1640,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-26T18:12:07.724Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1644,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-27T00:19:23.980Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1646,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-27T06:13:47.238Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1650,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-27T12:12:04.795Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1654,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-27T18:07:35.072Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1660,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-28T00:15:32.033Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1664,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-28T06:10:11.272Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1668,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-28T12:08:48.609Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1670,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-28T18:07:12.944Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1672,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-29T00:15:49.896Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1682,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-29T06:10:09.038Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1687,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-29T12:09:08.449Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1694,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-29T18:07:38.702Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1708,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-30T00:15:56.119Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1712,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-30T06:10:01.561Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1716,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-30T12:09:05.173Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1724,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-30T18:06:18.956Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1726,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-31T00:12:59.137Z",
+    "marketplace": {
+      "installs": 9,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1730,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-31T06:07:59.841Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1734,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-31T12:06:51.392Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1740,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-10-31T18:06:05.958Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1742,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-01T00:16:20.069Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1746,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-01T06:08:30.745Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1748,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-01T12:06:52.748Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1754,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-01T18:05:46.311Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1756,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-02T00:15:16.524Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1762,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-02T06:11:28.538Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1766,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-02T12:09:03.381Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1770,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-02T18:06:48.054Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1776,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-03T00:13:40.111Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1778,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-03T06:09:05.094Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1784,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-03T12:08:03.079Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1788,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-03T18:07:00.727Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1790,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-04T00:14:04.283Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1796,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-04T06:08:56.628Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1804,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-04T12:07:51.199Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1812,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-04T18:06:12.296Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1816,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-05T00:13:52.322Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1820,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-05T06:09:01.246Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1822,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-05T12:08:19.303Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1828,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-05T18:07:17.265Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1830,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-06T00:14:04.368Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1836,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-06T06:09:48.018Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1838,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-06T12:07:53.140Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1844,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-06T18:07:35.171Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1848,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-07T00:11:55.770Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1852,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-07T06:08:01.687Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1854,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-07T12:06:47.438Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1860,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-07T18:05:38.598Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1862,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-08T00:15:19.834Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1868,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-08T06:08:02.871Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1870,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-08T12:06:47.558Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1874,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-08T18:05:42.651Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1876,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-09T00:15:27.595Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1878,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-09T06:12:25.411Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1880,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-09T12:08:34.414Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1882,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-10T00:13:03.447Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1888,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-10T06:08:51.917Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1888,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-10T12:07:51.542Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1888,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-10T18:06:01.379Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1888,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-11T00:13:31.179Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1890,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-11T06:08:42.117Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1896,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-11T12:08:20.051Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1896,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 0,
+      "contributionsBreakdown": {
+        "commits": 0,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
+  },
+  {
+    "ts": "2026-11-11T18:06:10.377Z",
+    "marketplace": {
+      "installs": 10,
+      "updates": 5,
+      "ratingCount": 0,
+      "trendingWeekly": 0,
+      "trendingMonthly": 0
+    },
+    "openVsx": {
+      "downloads": 1896,
+      "averageRating": null,
+      "ratingCount": 0
+    },
+    "github": {
+      "stars": 0,
+      "forks": 0,
+      "contributions": 665,
+      "contributionsBreakdown": {
+        "commits": 665,
+        "issues": 0,
+        "prs": 0,
+        "reviews": 0
+      }
+    }
   }
 ]

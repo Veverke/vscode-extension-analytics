@@ -13,5 +13,11 @@
     "version": "1.6.0",
     "publishedAt": "2026-08-13T11:36:23.877Z",
     "installsAtRelease": 234
+  },
+  {
+    "version": "1.7.0",
+    "publishedAt": "2026-11-15T00:49:45.467Z",
+    "installsAtRelease": 421,
+    "downloadsAtRelease": 4211
   }
 ]
